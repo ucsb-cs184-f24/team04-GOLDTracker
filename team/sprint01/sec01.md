@@ -1,4 +1,4 @@
-#Sec01 Meeting
+Sec01 Meeting
 Attendance: Daniel Jensen, Simon Mann, Xinyao Song, June Bi, Allen Hu, Karsten Lansing; Bharat Kathi is absent
 
 Notes:
