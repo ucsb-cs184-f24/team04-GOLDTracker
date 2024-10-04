@@ -1,6 +1,5 @@
-# a list of ideal team behaviors, e.g. everyone arrives to meetings on time or everyone starts things tasks early...)
-
-Team Norms:
+# Team Norms:
+### A list of ideal team behaviors
 1. Have more than one person approve pull requests before merging to main.
 2. Communicate on Slack if absent in person.
 3. Ask questions and place personal checkpoints on Slack.
