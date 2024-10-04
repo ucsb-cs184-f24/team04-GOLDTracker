@@ -6,3 +6,5 @@ June Bi: I have took the CS148 and made a mobile IOS app for UCSB students to se
 Karsten Lansing: I have taken CS156 in which I worked with React through a SCURM framework. Most of my experience is in C++ and Python.
 
 Simon Mann: I have taken CS156 where I worked with React and programmed with Java and Javascript. I do have experience working with both C++ and Python as well. 
+
+Allen Hu: I have taken CS156 too. Last summer I did some scraping using Python. Specifically, I used LLMs like ChatGpt and Claude to automatically generate scraping scripts and run them and ask LLM to review the result. 
