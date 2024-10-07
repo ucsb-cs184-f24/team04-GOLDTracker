@@ -75,13 +75,3 @@
 
 #### **BLOCKERS**  
 -
-
-## **Bharat Kathi:**  
-#### **I DID**  
-- 
-
-#### **I WILL DO**  
-- 
-
-#### **BLOCKERS** 
--
