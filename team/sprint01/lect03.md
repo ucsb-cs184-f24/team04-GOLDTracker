@@ -15,63 +15,18 @@
 - [x] Simranjit Mann 
 
 # **Scribed Discussion:**
+1. Each team member decided on a platform they would like to work on for Hw0
 
-## **Allen Hu:**  
-#### **I DID**  
-- 
+    React Native: 
+    - Daniel Jensen
+    - Simranjit Mann
+    - Karsten Lansing
+    
+    Expo: 
+    - Allen Hu
+    - Xinyao Song
+    - Zhen Bi 
 
-#### **I WILL DO**  
-- 
+2. Decided next meeting time to be Oct 8, 2024 8PM through Discord
 
-#### **BLOCKERS**  
-- 
 
-## **Xinyao Song:**  
-#### **I DID**  
-- 
-
-#### **I WILL DO**  
-- 
-
-#### **BLOCKERS**  
-- 
-
-## **Zhen Bi:**  
-#### **I DID**  
-- 
-
-#### **I WILL DO**  
-- 
-
-#### **BLOCKERS**  
-- 
-
-## **Karsten Lansing:**  
-#### **I DID**  
-- 
-
-#### **I WILL DO**  
-- 
-
-#### **BLOCKERS**  
-- 
-
-## **Daniel Jensen:**  
-#### **I DID**  
-- 
-
-#### **I WILL DO**  
-- 
-
-#### **BLOCKERS**  
--
-
-## **Simranjit Mann:**  
-#### **I DID**  
-- 
-
-#### **I WILL DO**  
-- 
-
-#### **BLOCKERS**  
--
