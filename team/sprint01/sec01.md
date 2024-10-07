@@ -22,3 +22,4 @@ We are performing the initial set-up as described in the [Sec01 assignment](http
 2. Created `team/<FirstnameLastinitial>.md` for all members
 3. Added `team/LEARNING.md` for all members
 4. Reached consensus on `team/NORMS.md` 
+5. Created `team/PROBLEM_SCENARIO.md`
