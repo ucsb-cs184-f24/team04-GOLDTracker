@@ -13,7 +13,6 @@
 - [x] Karsten Lansing 
 - [x] Daniel Jensen 
 - [x] Simranjit Mann 
-- [x] Bharat Kathi
 
 # **Scribed Discussion:**
 
