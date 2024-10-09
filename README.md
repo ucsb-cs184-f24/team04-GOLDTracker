@@ -1,12 +1,15 @@
 # team04-Goldxxx
+<br />
 
-Description: This is a class availability notifying app. 
+### Description: 
+This is a class availability notification app. <br /><br />
 
-Project members:
-Name, Github ID
-Simranjit Mann, Simonmann17
-Daniel Jensen, Division7
-Xinyao Song, xinyao-song
-Karsten Lansing, KarstenLansing
-June Bi, zhenbi93
-Allen Hu, AllenHsm
+### Project members:  
+| Name            | GithubID       |
+|-----------------|----------------|
+| Simranjit Mann  | Simonmann17    |
+| Daniel Jesen    | Division7      |
+| Xinyao Song     | xinyao-song    |
+| Karsten Lansing | KarstenLansing |
+| June Bi         | zhenbi93       |
+| Allen Hu        | AllenHsm       |
