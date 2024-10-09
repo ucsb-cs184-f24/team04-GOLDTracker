@@ -2,7 +2,7 @@
 <br />
 
 ### Description: 
-This is a class availability notification app. <br /><br />
+This is a class availability notification app. <br />
 
 ### Project members:  
 | Name            | GithubID       |
