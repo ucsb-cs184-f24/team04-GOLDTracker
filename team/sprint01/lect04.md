@@ -15,7 +15,7 @@
 - [x] Simranjit Mann 
 
 # **Scribed Discussion:**
-- Our team decided to use React Native as our platform and Expo as our framework.
+- Our team decided to use `React Native` as our platform and `Expo` as our framework.
 
 ## **Allen Hu:**  
 #### **I DID**  
