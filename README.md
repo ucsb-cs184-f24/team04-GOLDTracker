@@ -13,3 +13,8 @@ This is a class availability notification app. <br />
 | Karsten Lansing | KarstenLansing |
 | June Bi         | zhenbi93       |
 | Allen Hu        | AllenHsm       |
+
+### Which tech stack(s) your group plans to evaluate/use? 
+We are planning to use React Native with Expo Go
+
+Planning about what what you want your app to do for the user.
