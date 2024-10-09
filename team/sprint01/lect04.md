@@ -15,6 +15,7 @@
 - [x] Simranjit Mann 
 
 # **Scribed Discussion:**
+- Our team decided to use React Native as our platform and Expo as our framework.
 
 ## **Allen Hu:**  
 #### **I DID**  
@@ -28,13 +29,13 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- 
+- Finished HW 1
 
 #### **I WILL DO**  
-- 
+- Set up the sckeleton application for our team
 
 #### **BLOCKERS**  
-- 
+- N/A 
 
 ## **Zhen Bi:**  
 #### **I DID**  
