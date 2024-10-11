@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- I completed HW 1 and started to scrape RMP
 
 #### **I WILL DO**  
-- 
+- Scrape the UCSB professor list from RMP
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
