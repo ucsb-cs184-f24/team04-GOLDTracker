@@ -20,6 +20,7 @@ We are planning to use React Native with Expo Go
 ### Uer Roles
 - UCSB students
   1. They could check information of courses they are interested in.
-  2. They could search courses in different subjects and could use filters to see the rank based on professors' scores.
-  3. They could save courses in their cart, and when the course has spare space, they will receive notifications.
-  4. They could use Join button to copy the course number and quickly added course in the GOLD.
+  2. They could login with their UCSB account to save their information.
+  3. They could search courses in different subjects and could use filters to see the rank based on professors' scores.
+  4. They could save courses in their cart, and when the course has spare space, they will receive notifications.
+  5. They could use Join button to copy the course number and quickly added course in the GOLD.
