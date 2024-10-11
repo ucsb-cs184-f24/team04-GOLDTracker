@@ -59,13 +59,13 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- I completed homework 1
 
 #### **I WILL DO**  
-- 
+- I will look into background tasks for react apps
 
 #### **BLOCKERS**  
--
+-N/A
 
 ## **Simranjit Mann:**  
 #### **I DID**  
