@@ -69,10 +69,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Finished Homework 1
 
 #### **I WILL DO**  
-- 
+- Continue work on the app with React and work specifically on my delegated issues
 
 #### **BLOCKERS**  
--
+- Delegation of work at the moment, need to decide who exactly is working on what
