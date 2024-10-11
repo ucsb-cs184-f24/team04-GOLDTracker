@@ -48,13 +48,13 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Completed Homework 1 
 
 #### **I WILL DO**  
-- 
+- Figure out and set up firebase 
 
 #### **BLOCKERS**  
-- 
+- None
 
 ## **Daniel Jensen:**  
 #### **I DID**  
