@@ -38,13 +38,13 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- 
+- Started bottom bar
 
 #### **I WILL DO**  
-- 
+- Finished bottom bar
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Karsten Lansing:**  
 #### **I DID**  
