@@ -58,13 +58,13 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- I completed HW 1
 
 #### **I WILL DO**  
-- 
+- create a framework for requesting course api data in the background
 
 #### **BLOCKERS**  
--
+- none
 
 ## **Simranjit Mann:**  
 #### **I DID**  
