@@ -65,7 +65,7 @@
 - I will look into background tasks for react apps
 
 #### **BLOCKERS**  
--N/A
+- N/A
 
 ## **Simranjit Mann:**  
 #### **I DID**  
