@@ -39,13 +39,13 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- 
+- Finished homework1
 
 #### **I WILL DO**  
-- 
+- Implemented the bottom bar.
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Karsten Lansing:**  
 #### **I DID**  
