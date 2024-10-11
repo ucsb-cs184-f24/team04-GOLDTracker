@@ -8,5 +8,6 @@
 |---------------|-----------------------------------|
 | Allen Hu      | Product Owner                     |
 | Daniel Jensen | Scrum Master                      |
-| Xinyao Song   | Scribe                             |
+| Xinyao Song   | Scribe  for week 1                |
+|June Bi        | First Retro Leader                |
 
