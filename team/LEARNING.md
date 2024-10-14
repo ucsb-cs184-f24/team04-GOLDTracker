@@ -15,10 +15,15 @@
 
 ### Posts or Comments Recording.
 **June Bi:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940098346929
+
 **Karsten Lansing:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940698760459
+
 **Simon Mann:** 
+
 **Allen Hu:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940608896919
+
 **Xinyao Song:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940199075639
+
 **Daniel Jensen:** 
 
 ### Reflections of Our Platform(react-naive)
