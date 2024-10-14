@@ -28,21 +28,21 @@
 - The difference between Expo Go and react native
 
 ## **Xinyao Song:**  
-#### **I DID**  
-- Finished HW 1
+#### **I DID:**
+Had firebase project set up, and did a simple goole login page.
 
-#### **I WILL DO**  
-- Set up the sckeleton application for our team
+#### *I Will DO:*
+Firebase andriod setup
 
-#### **BLOCKERS**  
-- N/A 
+#### *Blockers:*
+N/A
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- Finished homework1
+- Finished bottom bar
 
 #### **I WILL DO**  
-- Implemented the bottom bar.
+- Implement Profile Page and do HW2
 
 #### **BLOCKERS**  
 - N/A
