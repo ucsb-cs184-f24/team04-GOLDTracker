@@ -12,3 +12,19 @@
 **Xinyao Song:** I have taken both CS148 and CS156, and I also have some experience with Unity 3D game development. I am very familiar with React Native. I enjoy working with front-end and UI design, but I am also somewhat experienced with back-end servers like Firebase.
 
 **Daniel Jensen:** I've taken CS156, and have familiarity with spring boot, React, Java, and Javascript. I also have a good amount of knowledge in Python. 
+
+### Posts or Comments Recording.
+**June Bi:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940098346929
+**Karsten Lansing:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940698760459
+**Simon Mann:** 
+**Allen Hu:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940608896919
+**Xinyao Song:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940199075639
+**Daniel Jensen:** 
+
+### Reflections of Our Platform(react-naive)
+**June Bi:** 
+**Karsten Lansing:** 
+**Simon Mann:** 
+**Allen Hu:** 
+**Xinyao Song:** 
+**Daniel Jensen:** 
