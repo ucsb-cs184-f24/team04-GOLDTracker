@@ -18,7 +18,7 @@
 
 **Karsten Lansing:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940698760459
 
-**Simon Mann:** 
+**Simon Mann:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728948637284299
 
 **Allen Hu:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940608896919
 
