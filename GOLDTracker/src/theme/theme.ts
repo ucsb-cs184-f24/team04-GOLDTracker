@@ -34,6 +34,8 @@ interface Color {
     darkGrey:string;
 
     ucsbBlue: string;
+
+    tabSelected: string;
 }
   
   
@@ -52,6 +54,9 @@ export const COLORS: Color = {
 
     // UCSB ICON Blue
     ucsbBlue: '#062f5a',
+
+    //tab selected blue
+    tabSelected:'0062CC',
 };
   
 interface FontFamily {
