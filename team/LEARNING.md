@@ -24,7 +24,7 @@
 
 **Xinyao Song:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940199075639
 
-**Daniel Jensen:** 
+**Daniel Jensen:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940136634799
 
 ### Reflections of Our Platform(react-naive)
 **June Bi:** 
