@@ -1,20 +1,23 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useState } from "react";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>GOLD Tracker</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { NavigationContainer } from "@react-navigation/native";
+import Navigator from "./src/components/Navigator";
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const Stack = createNativeStackNavigator();
+const App = () => {
+      return (
+              <NavigationContainer independent={true}>
+                  <Stack.Navigator screenOptions={{ headerShown: false }}>
+                      <Stack.Screen
+                          name="Tab"
+                          component={Navigator}
+                          options={{ animation: "slide_from_bottom" }}
+                      ></Stack.Screen>
+
+                  </Stack.Navigator>
+              </NavigationContainer>
+    );
+};
+
+export default App;
