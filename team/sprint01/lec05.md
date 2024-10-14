@@ -19,13 +19,14 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- Finished HW 1
+- Got information from RateMyProfessor
 
 #### **I WILL DO**  
-- We will discuss and decide which platform that works for both Android and iOS and we will use 
-
+- Finished the spider
+- implemented into the app
+ 
 #### **BLOCKERS**  
-- The difference between Expo Go and react native
+
 
 ## **Xinyao Song:**  
 #### **I DID:**
