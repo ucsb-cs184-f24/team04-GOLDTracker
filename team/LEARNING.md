@@ -27,9 +27,14 @@
 **Daniel Jensen:** https://ucsb-cs184-f24.slack.com/archives/C07QZBBNBU7/p1728940136634799
 
 ### Reflections of Our Platform(react-naive)
-**June Bi:** 
+**June Bi:** The version of the platform is really small, so coders have to learning something frequently. The benefit of using it is that there are many resources you can easily find.
+
 **Karsten Lansing:** 
+
 **Simon Mann:** 
+
 **Allen Hu:** 
+
 **Xinyao Song:** 
+
 **Daniel Jensen:** 
