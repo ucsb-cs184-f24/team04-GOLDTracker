@@ -26,17 +26,17 @@
 - implemented into the app
  
 #### **BLOCKERS**  
-
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID:**
-Had firebase project set up, and did a simple goole login page.
+- Had firebase project set up, and did a simple goole login page.
 
 #### *I Will DO:*
-Firebase andriod setup
+- Firebase andriod setup
 
 #### *Blockers:*
-N/A
+- N/A
 
 ## **Zhen Bi:**  
 #### **I DID**  
