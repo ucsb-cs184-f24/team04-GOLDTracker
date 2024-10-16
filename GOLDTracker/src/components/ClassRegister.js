@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-async function registerClass(id){
+export async function registerClass(id){
     let classList = await AsyncStorage.getItem("class-list");
     if(!classList){
         let newClass = [id];
@@ -11,7 +11,7 @@ async function registerClass(id){
     }
 }
 
-async function deregisterClass(id){
+export async function deregisterClass(id){
     let classList = await AsyncStorage.getItem("class-list");
     if(!classList){
         return false;
@@ -27,7 +27,7 @@ async function deregisterClass(id){
     }
 }
 
-async function getClasses(){
+export async function getClasses(){
     let classList = await AsyncStorage.getItem("class-list");
 
     if(!classList){
