@@ -37,4 +37,4 @@
 
 **Xinyao Song:** 
 
-**Daniel Jensen:** 
+**Daniel Jensen:** I think it's beneficial that React-native presents an overall unified experience for creating apps for both ios and android -- you can have one codebase for both platforms. However, the negative is that at times it falls apart at the seams -- you have to generate project directories for both individual platforms and occasionally make changes -- which doesn't always give the unifying experience it seems.
