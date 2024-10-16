@@ -33,7 +33,7 @@
 
 **Simon Mann:** 
 
-**Allen Hu:** 
+**Allen Hu:** One benefit of using react native is that it is easy to learn and many of us have experiences in this platform. The biggest challenge for me is that, I have no experience in developing a complete mobile app based on react-native before. 
 
 **Xinyao Song:** 
 
