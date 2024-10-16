@@ -31,7 +31,7 @@
 
 **Karsten Lansing:** 
 
-**Simon Mann:** 
+**Simon Mann:** I have developed apps based on React Native before so the familiarity might be a benefit. However, I never tried to build a cross-platform mobile app so there can be some unforeseeable problems. 
 
 **Allen Hu:** One benefit of using react native is that it is easy to learn and many of us have experiences in this platform. The biggest challenge for me is that, I have no experience in developing a complete mobile app based on react-native before. 
 
