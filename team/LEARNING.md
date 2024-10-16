@@ -29,12 +29,12 @@
 ### Reflections of Our Platform(react-naive)
 **June Bi:** The version of the platform is really small, so coders have to learning something frequently. The benefit of using it is that there are many resources you can easily find.
 
-**Karsten Lansing:** 
+**Karsten Lansing:** React native is a good choice when we want to do cross-platform mobile app development, while to combine the platform with back-end and database might be challenging. 
 
 **Simon Mann:** I have developed apps based on React Native before so the familiarity might be a benefit. However, I never tried to build a cross-platform mobile app so there can be some unforeseeable problems. 
 
 **Allen Hu:** One benefit of using react native is that it is easy to learn and many of us have experiences in this platform. The biggest challenge for me is that, I have no experience in developing a complete mobile app based on react-native before. 
 
-**Xinyao Song:** React native is a good choice when we want to do cross-platform mobile app development, while to combine the platform with back-end and database might be challenging. 
+**Xinyao Song:** The benifits I found using React Native is that its super platform friendly and consist of a variatly of implimented UI libraries like React Native Paper for developers to impliment within their application design. However, since we are working with a cross-platform application, it is quite difficult to set the backend up as everything has to be repeated for iOS and Andriod. 
 
 **Daniel Jensen:** I think it's beneficial that React-native presents an overall unified experience for creating apps for both ios and android -- you can have one codebase for both platforms. However, the negative is that at times it falls apart at the seams -- you have to generate project directories for both individual platforms and occasionally make changes -- which doesn't always give the unifying experience it seems.
