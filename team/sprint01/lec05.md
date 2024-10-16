@@ -49,31 +49,15 @@
 - N/A
 
 ## **Karsten Lansing:**  
-#### **I DID**  
-- 
 
-#### **I WILL DO**  
-- 
-
-#### **BLOCKERS**  
-- 
+I did: got started creating ios auth with firebase through google
+I will: complete ios auth login process
+Blockers: Most resources expect you to be in xcode making it very hard to figure out what to do next
 
 ## **Daniel Jensen:**  
-#### **I DID**  
-- 
 
-#### **I WILL DO**  
-- I will look into background tasks for react apps
-
-#### **BLOCKERS**  
-- N/A
+I did: added a background class register to add/remove classes students are following:
+I will: add a background task register to check whether or not classes are open
+blockers: npm packages are giving me a headache
 
 ## **Simranjit Mann:**  
-#### **I DID**  
-- Finished Homework 1
-
-#### **I WILL DO**  
-- Continue work on the app with React and work specifically on my delegated issues
-
-#### **BLOCKERS**  
-- Delegation of work at the moment, need to decide who exactly is working on what
