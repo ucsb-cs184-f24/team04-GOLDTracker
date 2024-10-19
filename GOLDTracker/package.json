@@ -14,7 +14,11 @@
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
     "expo": "~51.0.28",
+    "expo-auth-session": "~5.5.2",
+    "expo-crypto": "~13.0.2",
     "expo-status-bar": "~1.12.1",
+    "expo-web-browser": "~13.0.3",
+    "firebase": "^10.14.1",
     "native": "^0.3.3",
     "react": "18.2.0",
     "react-native": "0.74.5"
