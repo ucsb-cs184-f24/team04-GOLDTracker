@@ -46,13 +46,13 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Worked on HW2
 
 #### **I WILL DO**  
-- 
+- finish HW2
 
 #### **BLOCKERS**  
-- 
+- None
 
 ## **Daniel Jensen:**  
 #### **I DID**  
