@@ -47,13 +47,13 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Finished HW2, Added Search Bar functionality 
 
 #### **I WILL DO**  
-- 
+- Connect API to search bar
 
 #### **BLOCKERS**  
-- 
+- None
 
 ## **Daniel Jensen:**  
 #### **I DID**  
