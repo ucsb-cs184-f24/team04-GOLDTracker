@@ -7,10 +7,12 @@
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.cs184.goldtracker"
+      "bundleIdentifier": "com.cs184.goldtracker",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "package": "com.cs184.goldtracker"
+      "package": "com.cs184.goldtracker",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {},
     "extra": {
@@ -19,6 +21,7 @@
       }
     },
     "scheme": "goldtracker",
-    "owner": "alize"
+    "owner": "alize",
+    "plugins": ["@react-native-google-signin/google-signin"]
   }
 }

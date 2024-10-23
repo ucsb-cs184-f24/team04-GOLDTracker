@@ -9,7 +9,7 @@ import {
   FIREBASE_APP_ID,
   FIREBASE_MEASUREMENT_ID,
 } from "@env";
-import { getAuth } from "firebase/auth";
+import {getAuth, initializeAuth} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: FIREBASE_API_KEY,
@@ -23,7 +23,7 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-export const auth = getAuth(app);
+export const auth = initializeAuth(app);
 
 // IOS Client ID: 756708191969-jjrj8ub9g7mo3u1tit0d5qf344s021of.apps.googleusercontent.com
 // Android Client ID: 756708191969-bsltueeartepbvkecps3doh0fjbn7kse.apps.googleusercontent.com
