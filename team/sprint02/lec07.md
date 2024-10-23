@@ -16,14 +16,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- Got information from RateMyProfessor
+- I am working on HW 2. 
 
 #### **I WILL DO**  
-- Finished the spider
-- implemented into the app
+- Finish HW 2
  
 #### **BLOCKERS**  
-- N/A
+- Implementing the google auth screen into the app. 
 
 ## **Xinyao Song:**  
 #### **I DID:**

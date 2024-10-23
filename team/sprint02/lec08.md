@@ -16,12 +16,11 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- Got information from RateMyProfessor
+- I finished HW 2. 
 
 #### **I WILL DO**  
-- Finished the spider
-- implemented into the app
- 
+- I will try to develop the backend api that fetches data from our server and show RMP data. 
+
 #### **BLOCKERS**  
 - N/A
 
