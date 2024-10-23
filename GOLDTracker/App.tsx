@@ -24,9 +24,7 @@ const App = () => {
         const {type, data} = await GoogleSignin.signIn();
         if (type === 'success') {
             let {idToken} = await GoogleSignin.getTokens();
-            console.log(idToken);
             const credential = GoogleAuthProvider.credential(idToken);
-            console.log("We get this far!")
             await signInWithCredential(auth, credential).catch(error => {console.error(error);});
         }
     }
