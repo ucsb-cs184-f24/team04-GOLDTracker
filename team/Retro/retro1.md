@@ -50,6 +50,7 @@ Stop: Finishing work at the last minute
 Continue: Working on different aspects of the app simultaneously
 
 ## Retro Assessment
-
+We created several issues firstly, and assigned to some members. We closely communicated in the Slack channel. Also, we learned a lot form hw2 and used it in our project. Then, we successfully on time finished our MVP video.
 
 ## Outcome of our RETRO 1
+We made a MVP video and Each member finished at least one issue that related to MYP.
