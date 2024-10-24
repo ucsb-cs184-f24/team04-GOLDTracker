@@ -1,0 +1,7 @@
+{
+  "dependencies": {
+    "@react-native-google-signin/google-signin": "^13.1.0",
+    "expo": "^51.0.38",
+    "expo-dev-client": "~4.0.28"
+  }
+}
