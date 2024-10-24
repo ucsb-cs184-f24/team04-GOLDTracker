@@ -27,6 +27,3 @@ const app = initializeApp(firebaseConfig);
 export const auth = initializeAuth(app, {
     persistence: getReactNativePersistence(ReactNativeAsyncStorage)
   });
-
-// IOS Client ID: 756708191969-jjrj8ub9g7mo3u1tit0d5qf344s021of.apps.googleusercontent.com
-// Android Client ID: 756708191969-bsltueeartepbvkecps3doh0fjbn7kse.apps.googleusercontent.com
