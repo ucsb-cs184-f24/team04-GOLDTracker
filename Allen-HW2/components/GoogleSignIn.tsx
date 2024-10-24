@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 
 // npx expo install @react-native-google-signin/google-signin
 // npx expo install expo-dev-client
+// Part of the following code is from the git repo: [expo-google-signin/app.js](https://github.com/chelseafarley/expo-google-signin/blob/main/App.js)
 
 export default function SignInScreen() {
   const [error, setError] = useState();
