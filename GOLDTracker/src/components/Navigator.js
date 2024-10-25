@@ -7,7 +7,7 @@ import { COLORS } from "../theme/theme";
 
 import HomeScreen from "../screen/HomeScreen";
 import NotificationScreen from "../screen/NotificationScreen";
-import Profile from "../screen/ProfileScreen";
+import MoreScreen from "../screen/MoreScreen";
 import CartScreen from "../screen/CartScreen";
 
 
@@ -73,12 +73,12 @@ const Navigator = () => {
       ></Tab.Screen>
 
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="More"
+        component={MoreScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Entypo
-              name="user"
+              name="dots-three-horizontal"
               size={25}
               color={focused ? COLORS.yellow : COLORS.darkBlue}
             />

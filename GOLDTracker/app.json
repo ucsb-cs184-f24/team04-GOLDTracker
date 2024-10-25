@@ -1,27 +1,27 @@
 {
   "expo": {
     "name": "GOLDTracker",
-    "slug": "GOLDTracker",
+    "slug": "goldtracker",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cs184.goldtracker",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "package": "com.cs184.goldtracker",
+      "googleServicesFile": "./google-services.json"
+    },
+    "web": {},
+    "extra": {
+      "eas": {
+        "projectId": "0d0fc843-10cf-4c76-9d06-fef671c05924"
       }
     },
-    "web": {
-      "favicon": "./assets/favicon.png"
-    }
+    "scheme": "goldtracker",
+    "owner": "alize",
+    "plugins": ["@react-native-google-signin/google-signin"]
   }
 }

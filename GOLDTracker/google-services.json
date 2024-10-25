@@ -1,0 +1,81 @@
+{
+  "project_info": {
+    "project_number": "756708191969",
+    "project_id": "goldtracker-beb96",
+    "storage_bucket": "goldtracker-beb96.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756708191969:android:cfdfa9b4a9a639494c91a0",
+        "android_client_info": {
+          "package_name": "com.cs184.goldtracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "756708191969-v5og986g79vmtgokluvefcefp9ckaij2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.cs184.goldtracker",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXbq1gdAaAz9ohWeGohKWkoxiNpTOQdCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756708191969-njdmui6ea8p3jfiibr1hj7rbb6qpkqvk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "756708191969-jjrj8ub9g7mo3u1tit0d5qf344s021of.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cs184.goldtracker"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:756708191969:android:843b4162bdbae8984c91a0",
+        "android_client_info": {
+          "package_name": "edu.ucsb.goldtracker"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDXbq1gdAaAz9ohWeGohKWkoxiNpTOQdCk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "756708191969-njdmui6ea8p3jfiibr1hj7rbb6qpkqvk.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "756708191969-jjrj8ub9g7mo3u1tit0d5qf344s021of.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.cs184.goldtracker"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
