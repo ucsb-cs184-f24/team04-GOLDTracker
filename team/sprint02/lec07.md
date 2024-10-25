@@ -56,7 +56,7 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- I started hw 2
 
 #### **I WILL DO**  
 - I will look into background tasks for react apps
