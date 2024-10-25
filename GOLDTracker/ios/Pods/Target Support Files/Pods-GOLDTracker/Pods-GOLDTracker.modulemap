@@ -1,0 +1,6 @@
+module Pods_GOLDTracker {
+  umbrella header "Pods-GOLDTracker-umbrella.h"
+
+  export *
+  module * { export * }
+}

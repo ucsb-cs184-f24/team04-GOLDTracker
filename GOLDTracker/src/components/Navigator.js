@@ -13,30 +13,16 @@ import CartScreen from "../screen/CartScreen";
 
 const Tab = createBottomTabNavigator();
 
-const CustomTabBarButton = ({ children, onPress }) => (
-  <TouchableOpacity
-    style={{
-      top: -30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      ...styles.shadow,
-    }}
-    onPress={onPress}
-    activeOpacity={0.9}
-  >
-  </TouchableOpacity>
-);
-
 const Navigator = () => {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
       <Tab.Screen
-        name="Home"
+        name="Courses"
         component={HomeScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Entypo
-              name="home"
+              name="list"
               size={25}
               color={focused ? COLORS.yellow : COLORS.darkBlue}
             />
@@ -45,12 +31,12 @@ const Navigator = () => {
       ></Tab.Screen>
 
       <Tab.Screen
-        name="Cart"
+        name="Followed"
         component={CartScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Entypo
-              name="shopping-cart"
+              name="heart"
               size={25}
               color={focused ? COLORS.yellow : COLORS.darkBlue}
             />
@@ -73,12 +59,12 @@ const Navigator = () => {
       ></Tab.Screen>
 
       <Tab.Screen
-        name="Profile"
+        name="Setting"
         component={Profile}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Entypo
-              name="user"
+              name="cog"
               size={25}
               color={focused ? COLORS.yellow : COLORS.darkBlue}
             />
@@ -92,9 +78,9 @@ const Navigator = () => {
 const styles = StyleSheet.create({
   shadow: {
     shadowColor: "#000",
-    shadowOffset: { width: 0, height: 10 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.5,
+    shadowOffset: { width: 100, height: 15 },
+    shadowOpacity: 10,
+    shadowRadius: 10,
     elevation: 5,
   },
 });
