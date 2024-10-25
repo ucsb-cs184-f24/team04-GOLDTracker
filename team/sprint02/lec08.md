@@ -26,10 +26,11 @@
 
 ## **Xinyao Song:**  
 #### **I DID:**
-- Had firebase project set up, and did a simple goole login page.
+- Finished HW2 with email authetication
+- Added a storage file in the firebase
 
 #### *I Will DO:*
-- Firebase andriod setup
+- create the UI for the application home scroll
 
 #### *Blockers:*
 - N/A
