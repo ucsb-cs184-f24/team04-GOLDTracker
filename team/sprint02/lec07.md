@@ -26,10 +26,10 @@
 
 ## **Xinyao Song:**  
 #### **I DID:**
-- Had firebase project set up, and did a simple goole login page.
+- Set up .env file for firebase api and google client IDs
 
 #### *I Will DO:*
-- Firebase andriod setup
+- Firebase authentication
 
 #### *Blockers:*
 - N/A
