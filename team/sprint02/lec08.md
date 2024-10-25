@@ -56,7 +56,7 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- I created a functioning oAuth template
 
 #### **I WILL DO**  
 - I will look into background tasks for react apps
