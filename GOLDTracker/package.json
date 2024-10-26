@@ -2,6 +2,7 @@
   "name": "goldtracker",
   "version": "1.0.0",
   "main": "expo/AppEntry.js",
+  "type": "module",
   "scripts": {
     "start": "expo start",
     "android": "expo run:android",
@@ -14,6 +15,7 @@
     "@react-navigation/bottom-tabs": "^6.6.1",
     "@react-navigation/native": "^6.1.18",
     "@react-navigation/native-stack": "^6.11.0",
+    "dotenv": "^16.4.5",
     "expo": "~51.0.28",
     "expo-application": "~5.9.1",
     "expo-auth-session": "~5.5.2",

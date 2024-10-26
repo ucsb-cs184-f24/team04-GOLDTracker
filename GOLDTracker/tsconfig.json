@@ -1,6 +1,9 @@
 {
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
-    "strict": true
+    "strict": true,
+    // "paths": { // tried to fix getReactNativePersistence error, failed
+    //   "@firebase/auth": ["./node_modules/@firebase/auth/dist/index.rn.d.ts"]  
+    // }
   }
 }
