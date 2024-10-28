@@ -1,26 +1,37 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-export async function registerClass(id){
+import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
+import {get, update,ref} from "firebase/database"
+import {database, auth} from "../../firebaseConfig";
+export async function registerClass(courseId, sectionId){
     let classList = await AsyncStorage.getItem("class-list");
     if(!classList){
-        let newClass = [id];
-        await AsyncStorage.setItem("class-list", JSON.stringify(newClass));
+        let newList = {};
+        newList[courseId].add(sectionId);
+        await AsyncStorage.setItem("class-list", JSON.stringify(newList));
+        await AsyncStorage.setItem("timestamp", Date.parse(new Date().toString()));
     }else{
         let parsedClassList = JSON.parse(classList);
-        parsedClassList.add(id);
+        parsedClassList[courseId].add(sectionId);
         await AsyncStorage.setItem("class-list", JSON.stringify(parsedClassList));
+        await AsyncStorage.setItem("timestamp", Date.parse(new Date().toString()));
     }
 }
 
-export async function deregisterClass(id){
+export async function deregisterClass(courseId, sectionId){
     let classList = await AsyncStorage.getItem("class-list");
     if(!classList){
         return false;
     }else{
         let parsedClassList = JSON.parse(classList);
-        if(parsedClassList.has(id)){
-            parsedClassList.remove(id);
+        if(parsedClassList.has(courseId).has(sectionId)){
+            if(parsedClassList[courseId].has(sectionId) && parsedClassList[courseId].length === 1){
+                parsedClassList.remove(courseId);
+            }else{
+                parsedClassList[courseId].remove(sectionId);
+            }
             await AsyncStorage.setItem("class-list", JSON.stringify(parsedClassList));
-            return false;
+            await AsyncStorage.setItem("timestamp", new Date.parse(new Date().toString()));
+            return false
         }else{
             return true;
         }
