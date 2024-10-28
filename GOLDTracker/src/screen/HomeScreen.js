@@ -1,23 +1,13 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import {
-    ScrollView,
     StatusBar,
     StyleSheet,
     Text,
-    TextInput,
-    TouchableOpacity,
-    Image,
     View,
+    FlatList,
 } from "react-native";
-
 import { SearchBar } from 'react-native-elements';
 import { API_KEY, API_URL } from '@env';
-
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"; //navigation
-import Entypo from "@expo/vector-icons/Entypo"; //icon
-import { Colors } from "react-native/Libraries/NewAppScreen"; //color
-import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from "../theme/theme"; //local color list
-
 
 const HomeScreen = ({ navigation }) => {
     const [search, setSearch] = useState('');
@@ -28,30 +18,36 @@ const HomeScreen = ({ navigation }) => {
         setSearch(searchText);
     };
 
- 
     const handleSearchSubmit = async () => {
         if (search.trim()) {
             try {
                 const quarter = '20244';
-                const response = await fetch(`${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(search)}&includeClassSections=true`, {
+                let apiUrl;
+
+                // Determine if the input is a course ID or department code
+                if (/^\s*\w+\s*\d+\s*$/.test(search.trim())) { 
+                    apiUrl = `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(search)}&includeClassSections=true`;
+                } else {
+                    apiUrl = `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(search)}&includeClassSections=true`;
+                }
+
+                const response = await fetch(apiUrl, {
                     method: 'GET',
                     headers: {
-                        'ucsb-api-key': `${API_KEY}`, 
-                        'Content-Type': 'application/json', 
+                        'ucsb-api-key': `${API_KEY}`,
+                        'Content-Type': 'application/json',
                     },
                 });
-                console.log("API send:", response);
+
                 const data = await response.json();
-
                 console.log("API Response:", JSON.stringify(data, null, 2));
-
 
                 if (data.classes && data.classes.length > 0) {
                     setResults(data.classes);
                     setErrorMessage('');
                 } else {
                     setResults([]);
-                    setErrorMessage('No classes found for the given course ID.'); 
+                    setErrorMessage('No classes found for the given search term.');
                 }
             } catch (error) {
                 console.error("Error fetching data:", error);
@@ -61,8 +57,28 @@ const HomeScreen = ({ navigation }) => {
         }
     };
 
+    const renderCourseItem = ({ item }) => {
+        return (
+            <View style={styles.infoBox}>
+                <Text style={styles.title}>{item.title}</Text>
+                <Text style={styles.detail}>Course ID: {item.courseId.trim()}</Text>
+                <Text style={styles.detail}>Department: {item.deptCode}</Text>
+                <Text style={styles.detail}>Units: {item.unitsFixed}</Text>
+                {item.classSections && item.classSections.length > 0 && (
+                    <View style={styles.sectionDetail}>
+                        <Text style={styles.detail}>Total Enrolled: {item.classSections[0].enrolledTotal}</Text>
+                        <Text style={styles.detail}>Max Enrolled: {item.classSections[0].maxEnroll}</Text>
+                    </View>
+                )}
+            </View>
+        );
+    };
+
     return (
         <View style={styles.container}>
+            {/* White bar behind the search bar */}
+            <View style={styles.searchBarBackground} />
+
             <SearchBar
                 placeholder="Search here, e.g. CMPSCI 8"
                 onChangeText={updateSearch}
@@ -74,23 +90,17 @@ const HomeScreen = ({ navigation }) => {
                 onSubmitEditing={handleSearchSubmit}
                 returnKeyType="search"
             />
-            {errorMessage ? ( // Display error message if there is one
+            {errorMessage ? (
                 <View style={styles.errorBox}>
                     <Text style={styles.errorMessage}>{errorMessage}</Text>
                 </View>
             ) : (
-                results.length > 0 && (
-                    <View style={styles.infoBox}>
-                        <Text style={styles.title}>{results[0].title}</Text>
-                        <Text style={styles.detail}>Course ID: {results[0].courseId.trim()}</Text>
-                        <Text style={styles.detail}>Department: {results[0].deptCode}</Text>
-                        <Text style={styles.detail}>Units: {results[0].unitsFixed}</Text>
-                        <View style={styles.sectionDetail}>
-                            <Text style={styles.detail}>Total Enrolled: {results[0].classSections[0].enrolledTotal}</Text>
-                            <Text style={styles.detail}>Max Enrolled: {results[0].classSections[0].maxEnroll}</Text>
-                        </View>
-                    </View>
-                )
+                <FlatList
+                    data={results}
+                    keyExtractor={(item) => item.courseId.trim()} // Use course ID as the key
+                    renderItem={renderCourseItem} // Render each course
+                    contentContainerStyle={{ paddingBottom: 20, paddingTop: 100 }} // Adjust padding to avoid overlap
+                />
             )}
             <StatusBar style="auto" />
         </View>
@@ -102,12 +112,22 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#fff',
     },
+    searchBarBackground: {
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        right: 0,
+        height: 60, // Height of the search bar background
+        backgroundColor: 'white', // Color of the background
+        elevation: 5, // Optional: for shadow effect on Android
+        zIndex: 0, // Position it below the search bar
+    },
     searchBarContainer: {
-        width: '100%', 
-        backgroundColor: 'transparent', 
-        borderBottomWidth: 0, 
-        position: 'absolute', 
-        top: 20, 
+        width: '100%',
+        backgroundColor: 'transparent',
+        borderBottomWidth: 0,
+        position: 'absolute',
+        top: 20, // Position the search bar
         zIndex: 1,
     },
     searchInputContainer: {
@@ -118,8 +138,8 @@ const styles = StyleSheet.create({
         padding: 15,
         borderRadius: 8,
         margin: 10,
-        marginTop: 90,
-        elevation: 2, 
+        marginTop: 10,
+        elevation: 2,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.3,
@@ -133,10 +153,12 @@ const styles = StyleSheet.create({
         fontSize: 14,
         marginVertical: 2,
     },
-    item: {
-        padding: 15,
-        borderBottomWidth: 1,
-        borderBottomColor: '#ddd',
+    sectionDetail: {
+        marginTop: 10,
+        padding: 10,
+        borderWidth: 1,
+        borderColor: '#ddd',
+        borderRadius: 5,
     },
     errorBox: {
         backgroundColor: '#ffe6e6', // Light red background
