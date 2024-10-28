@@ -1,39 +1,56 @@
-import React, { useState, useCallback } from "react";
-import {
-    ScrollView,
-    StatusBar,
-    StyleSheet,
-    Text,
-    TextInput,
-    TouchableOpacity,
-    FlatList,
-    Image,
-    View,
-    ToastAndroid,
-} from "react-native";
-
-import { useBottomTabBarHeight } from "@react-navigation/bottom-tabs"; //navigation
-import Entypo from "@expo/vector-icons/Entypo"; //icon
-import { Colors } from "react-native/Libraries/NewAppScreen"; //color
-import { COLORS, FONTFAMILY, FONTSIZE, SPACING } from "../theme/theme"; //local color list
-
+import React, { useState } from "react";
+import { View, ScrollView, SafeAreaView, StatusBar, StyleSheet } from "react-native";
+import { COLORS, SPACING } from "../theme/theme";
+import Class from "../components/Class";
+import coursesData from "../assets/courses"; // replace later with school API
 
 const HomeScreen = ({ navigation }) => {
-    return (
-        <View style={styles.container}>
-        <Text>HomeScreen</Text>
-        <StatusBar style="auto" />
-        </View>
+  const [courses, setCourses] = useState(coursesData);
+
+  // TODO: Toggle follow status of a section, following status will be passed to cart in later implimentation
+  const toggleFollow = (courseId, sectionId) => {
+    setCourses((prevCourses) =>
+      prevCourses.map((course) =>
+        course.id === courseId
+          ? {
+              ...course,
+              sections: course.sections.map((section) =>
+                section.id === sectionId
+                  ? { ...section, following: !section.following }
+                  : section
+              ),
+            }
+          : course
+      )
     );
+  };
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <View style={styles.container}>
+        <StatusBar style="auto" />
+        <ScrollView contentContainerStyle={styles.scrollContent}>
+          {courses.map((course) => (
+            <Class key={course.id} course={course} toggleFollow={toggleFollow} navigation={navigation}/>
+          ))}
+        </ScrollView>
+      </View>
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        alignItems: 'center',
-        justifyContent: 'center',
-      },
+  safeArea: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: COLORS.white,
+  },
+  scrollContent: {
+    padding: SPACING.space_8,
+  },
 });
 
 export default HomeScreen;
