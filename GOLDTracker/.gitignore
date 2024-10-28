@@ -26,7 +26,6 @@ yarn-error.*
 
 # macOS
 .DS_Store
-**/.DS_Store
 *.pem
 
 # local env files
@@ -35,7 +34,3 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
-
-# raw data
-rmp_prof_clean.json
-sorted_professors_flat.json
