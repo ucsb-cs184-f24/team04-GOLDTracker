@@ -1,19 +1,20 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import asyncStorage from "@react-native-async-storage/async-storage/src/AsyncStorage";
-import {get, update,ref} from "firebase/database"
-import {database, auth} from "../../firebaseConfig";
 export async function registerClass(courseId, sectionId){
     let classList = await AsyncStorage.getItem("class-list");
     if(!classList){
         let newList = {};
-        newList[courseId].add(sectionId);
+        newList[`${courseId}`] = [`${sectionId}`];
         await AsyncStorage.setItem("class-list", JSON.stringify(newList));
-        await AsyncStorage.setItem("timestamp", Date.parse(new Date().toString()));
+        await AsyncStorage.setItem("timestamp", `${Date.parse(new Date().toString())}`);
     }else{
         let parsedClassList = JSON.parse(classList);
-        parsedClassList[courseId].add(sectionId);
+        if(parsedClassList[`${courseId}`]&&!parsedClassList[`${courseId}`].includes(`${sectionId}`)){
+            parsedClassList[`${courseId}`].push(`${sectionId}`);
+        }else{
+            parsedClassList[`${courseId}`] = [`${sectionId}`]
+        }
         await AsyncStorage.setItem("class-list", JSON.stringify(parsedClassList));
-        await AsyncStorage.setItem("timestamp", Date.parse(new Date().toString()));
+        await AsyncStorage.setItem("timestamp", `${Date.parse(new Date().toString())}`);
     }
 }
 
@@ -23,17 +24,19 @@ export async function deregisterClass(courseId, sectionId){
         return false;
     }else{
         let parsedClassList = JSON.parse(classList);
-        if(parsedClassList.has(courseId).has(sectionId)){
-            if(parsedClassList[courseId].has(sectionId) && parsedClassList[courseId].length === 1){
-                parsedClassList.remove(courseId);
+        if(parsedClassList[`${courseId}`] && parsedClassList[`${courseId}`].includes(`${sectionId}`)){
+            if(parsedClassList[`${courseId}`].includes(`${sectionId}`) && parsedClassList[`${courseId}`].length === 1){
+                delete parsedClassList[`${courseId}`];
             }else{
-                parsedClassList[courseId].remove(sectionId);
+                let index = parsedClassList[`${courseId}`].indexOf(`${sectionId}`);
+                console.log(index)
+                parsedClassList[`${courseId}`].splice(index,1);
             }
             await AsyncStorage.setItem("class-list", JSON.stringify(parsedClassList));
-            await AsyncStorage.setItem("timestamp", new Date.parse(new Date().toString()));
-            return false
+            await AsyncStorage.setItem("timestamp", `${Date.parse(new Date().toString())}`);
+            return true
         }else{
-            return true;
+            return false;
         }
     }
 }
