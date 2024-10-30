@@ -41,6 +41,7 @@ const App = () => {
           console.log(JSON.stringify(user,null,2));
           setUserInfo(user);
           await AsyncStorage.setItem("@user",JSON.stringify(user));
+          console.log(await auth.currentUser?.getIdToken())
         }else{
           console.log("User is not logged in");
         }
