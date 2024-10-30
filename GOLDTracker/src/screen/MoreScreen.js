@@ -5,11 +5,13 @@ import {
     StyleSheet,
     Text,
     View,
-    Button
+    Button,
+    TouchableOpacity
 } from "react-native";
 import {auth} from "../../firebaseConfig"
 import { Avatar } from "react-native-paper";
 import { DevSettings } from 'react-native';
+import Entypo from "@expo/vector-icons/Entypo"; //icon
 
 export default function MoreScreen() {
   const [userInfo, setUserInfo] = useState(null);
@@ -28,6 +30,12 @@ export default function MoreScreen() {
       });
       return () => unsubscribe(); // Clean up the listener on unmount
   }, []);
+  const MenuButton = ({ icon, label, onPress }) => (
+    <TouchableOpacity style={styles.menuButton} onPress={onPress}>
+      <Entypo name={icon} size={24} color="#000" /> {/* Using Entypo icons */}
+      <Text style={styles.menuText}>{label}</Text>
+    </TouchableOpacity>
+  );
 
   return (
       <View style={styles.container}>
@@ -38,10 +46,18 @@ export default function MoreScreen() {
             size={100} // Adjust if needed
             marginBottom = {30}
           />
-          <Text>Welcome, {userInfo.displayName}!</Text>
-          <Text>Email: {userInfo.email}</Text>
+          <Text style ={styles.nameStyle}>{userInfo.displayName}</Text>
+          <Text style={styles.emailStyle}>{userInfo.email}</Text>
           </View>
       )}
+      <View style={styles.menu}>
+      <MenuButton icon="help" label="Help" onPress={() => navigation.navigate("HelpScreen")} />
+        <MenuButton icon="link" label="Link To GOLD" onPress={() => navigation.navigate("GoldLinkScreen")} />
+        <MenuButton icon="share" label="Share GoldTracker" onPress={() => navigation.navigate("ShareScreen")} />
+        <MenuButton icon="text-document" label="Term of Use" onPress={() => navigation.navigate("TermsScreen")} />
+        <MenuButton icon="info" label="About" onPress={() => navigation.navigate("AboutScreen")} />
+        <MenuButton icon="log-out" label="Log Out" onPress={() => {/* Sign out logic */}} />
+      </View>
       <Button title="Sign Out" onPress={async () => 
         {
           try {
@@ -62,16 +78,37 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#fff',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   userInfoContainer: {
     alignItems: "center",
     marginBottom: 20,
+    marginTop: 100, //wait for header bar
   },
   userImage: {
-    width: 100,
-    height: 100,
     borderRadius: 50,  
     marginBottom: 10,
+    
+  },
+  nameStyle:{
+    fontWeight:"bold",
+    fontSize:30,
+  },
+  emailStyle:{
+    
+  },
+  menu: {
+    marginTop: 20,
+  },
+  menuButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    borderBottomWidth: 1,
+    borderBottomColor: "#e0e0e0",
+  },
+  menuText: {
+    fontSize: 16,
+    marginLeft: 10,
   },
 });
