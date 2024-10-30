@@ -55,7 +55,7 @@ exports.poll = required.https.onRequest(async (request, response) => {
         return;
     }
 
-    let url = URL.parse(`https://api.ucsb.edu/academics/curriculums/v3/classes/${request.url}`);
+    let url = URL.parse(`https://api.ucsb.edu/academics/curriculums/v3/classes/search/${request.url.slice(5)}`);
     let headers = new Headers();
     headers.append("ucsb-api-key",process.env.UCSB_API_KEY);
     headers.append("accept", "application/json");

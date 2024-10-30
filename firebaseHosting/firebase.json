@@ -8,7 +8,7 @@
     ],
     "rewrites": [
       {
-        "source": "/search**",
+        "source": "/search",
         "function": {
           "functionId": "search"
         }
