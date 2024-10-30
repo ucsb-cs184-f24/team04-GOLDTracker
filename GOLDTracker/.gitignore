@@ -34,6 +34,7 @@ yarn-error.*
 
 # typescript
 *.tsbuildinfo
+%ProgramData%/
 
 # raw data
 rmp_prof_clean.json
