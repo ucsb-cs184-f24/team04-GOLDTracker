@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 import Navigator from "./src/components/Navigator";
 import LoginScreen from "./src/screen/LoginScreen";
+import Header from "./src/components/Header";
 
 import {auth} from "./firebaseConfig";
 import * as Google from "expo-auth-session/providers/google";
@@ -17,7 +18,7 @@ import {
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOS_CLIENT_ID, ANDROID_CLIENT_ID } from "@env";
 import {syncToFirebase} from "./src/components/ClassRegister";
-import {AppState} from "react-native"
+import {View, StyleSheet, AppState} from "react-native"
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -65,20 +66,30 @@ const App = () => {
     }, []);
     return (
         <NavigationContainer independent={true}>
-           {userInfo ?
-                (
-                  <Stack.Navigator screenOptions={{ headerShown: false }}>
-                      <Stack.Screen
-                          name="Tab"
-                          component={Navigator}
-                          options={{ animation: "slide_from_bottom" }}
-                      ></Stack.Screen>
-                  </Stack.Navigator>
-                )
-                  :  (<LoginScreen promptAsync={promptAsync} />)
-                }
+        	{userInfo ? (
+			<View style = {styles.container}>           
+				<Stack.Navigator screenOptions={{ headerShown: false }}>
+                    <Stack.Screen name="Main">
+						{() => (
+							<View style={{ flex: 1 }}>
+								<Header /> 
+								<Navigator /> 
+							</View>
+						)}
+					</Stack.Screen>
+				</Stack.Navigator>
+			</View>
+			)
+				:  (<LoginScreen promptAsync={promptAsync} />)
+			}
         </NavigationContainer>
     );
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+});
 
 export default App;
