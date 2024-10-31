@@ -17,7 +17,7 @@ require("dotenv").config();
 
 // line 19 taken from https://firebase.google.com/docs/hosting/serverless-overview
 exports.search = required.https.onRequest(async (request, response) => {
-  // lines 21-31 taken from
+  // lines 22-32 taken from
   // https://github.com/firebase/functions-samples/blob/main/Node-1st-gen/authorized-https-endpoint/functions/index.js
   if (!request.headers.authorization) {
     response.status(401).send("Unauthorized");
@@ -41,9 +41,9 @@ exports.search = required.https.onRequest(async (request, response) => {
   response.send(gotResponse);
 });
 
-// line 43 taken from https://firebase.google.com/docs/hosting/serverless-overview
+// line 45 taken from https://firebase.google.com/docs/hosting/serverless-overview
 exports.poll = required.https.onRequest(async (request, response) => {
-  // lines 45-56 taken from
+  // lines 48-58 taken from
   // https://github.com/firebase/functions-samples/blob/main/Node-1st-gen/authorized-https-endpoint/functions/index.js
   if (!request.headers.authorization) {
     response.status(401).send("Unauthorized");
