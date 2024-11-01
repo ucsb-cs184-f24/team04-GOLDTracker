@@ -44,7 +44,7 @@ export default function MoreScreen({ navigation }) {
                     <View style={styles.profileRow}>
                         <Avatar.Image
                             source={{ uri: userInfo.image }}
-                            size={60} // Adjust size if needed
+                            size={80} // Adjust size if needed
                             marginRight={10} // Spacing between image and text
                         />
                         <View style={styles.profileTextContainer}>
@@ -85,23 +85,23 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#fff',
-        alignItems: 'center',
     },
     userInfoContainer: {
-        alignItems: "center",
         marginBottom: 10,
         marginTop: 100, // wait for header bar
+        marginLeft:40,
     },
     profileRow: {
-        flexDirection: 'row', // Arrange items in a row
-        alignItems: 'center', // Center vertically
+        flexDirection: 'row',
     },
     profileTextContainer: {
-        flexDirection: 'column', // Stack name and email vertically
+        flexDirection: 'column',
+        marginLeft:50,
+        marginTop:20,
     },
     nameStyle: {
         fontWeight: "bold",
-        fontSize: 18,
+        fontSize: 25,
     },
     emailStyle: {
         fontSize: 14,
@@ -109,15 +109,14 @@ const styles = StyleSheet.create({
     },
     separator: {
         height: 1, // Height of the separator
-        width: '90%', // Adjust width if needed
+        width: '100%', // Adjust width if needed
         backgroundColor: '#e0e0e0', // Line color
         elevation: 4, // Android shadow effect
         shadowColor: '#000', // Shadow color
         shadowOffset: { width: 0, height: 2 }, // Shadow offset
         shadowOpacity: 0.3, // Shadow opacity
         shadowRadius: 2, // Shadow blur radius
-        marginVertical: 15, // Space above and below the line
-        alignSelf: 'center', // Center align the line
+        //marginVertical: 15, 
     },
     menu: {
         marginTop: 10,
