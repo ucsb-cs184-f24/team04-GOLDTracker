@@ -38,13 +38,13 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- 
+- implemented the stack
 
 #### **I WILL DO**  
-- 
+- adjust color, icon.
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Karsten Lansing:**  
 #### **I DID**  
