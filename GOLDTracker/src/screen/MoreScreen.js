@@ -14,6 +14,11 @@ import { DevSettings } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo"; //icon
 
 export default function MoreScreen({ navigation }) {
+    goToDetails = () => {
+        const { course, navigation } = this.props;
+        navigation.navigate("CourseDetailScreen", { course });
+      };
+      
     const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
@@ -70,10 +75,11 @@ export default function MoreScreen({ navigation }) {
             <View style={styles.menu}>
                 
                 <MenuButton icon="link" label="Link To GOLD" onPress={handlePress} />
-                <MenuButton icon="help" label="Help" onPress={() => navigation.navigate("HelpScreen")} />
                 {/*<MenuButton icon="share" label="Share GoldTracker" onPress={() => navigation.navigate("ShareScreen")} />*/}
+                <MenuButton icon="help" label="Help" onPress={() => navigation.navigate("HelpScreen")} />
                 <MenuButton icon="text-document" label="Term of Use" onPress={() => navigation.navigate("TermOfUseScreen")} />
                 <MenuButton icon="info" label="About" onPress={() => navigation.navigate("AboutScreen")} />
+
                 <MenuButton
                     icon="log-out"
                     label="Log Out"

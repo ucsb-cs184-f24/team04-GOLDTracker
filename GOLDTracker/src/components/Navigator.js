@@ -1,17 +1,55 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 
 import Entypo from "@expo/vector-icons/Entypo";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { COLORS } from "../theme/theme";
 
 import HomeScreen from "../screen/HomeScreen";
 import NotificationScreen from "../screen/NotificationScreen";
 import MoreScreen from "../screen/MoreScreen";
 import CartScreen from "../screen/CartScreen";
+import AboutScreen from "../screen/AboutScreen";
+import HelpScreen from "../screen/HelpScreen";
+import TermsOfUseScreen from "../screen/TermOfUseScreen";
 
 
 const Tab = createBottomTabNavigator();
+
+const MoreStack = createStackNavigator();
+
+const MoreStackScreen = () => (
+  <MoreStack.Navigator
+    screenOptions={({ navigation }) => ({
+      headerShown: true,
+      headerLeft: ({ tintColor }) => (
+        <TouchableOpacity
+          onPress={() => navigation.goBack()}
+          style={{ marginLeft: 15 }} // Adjust position here
+        >
+          <Entypo name="chevron-left" size={35} color={tintColor || "#91908d"} />
+        </TouchableOpacity>
+      ),
+      headerTitleStyle: {
+        fontSize: 24, // Increase the title size
+        //fontWeight: 'bold', // Optional: make the title bold
+        color:"#60605e",
+      },
+    })}
+  >
+    <MoreStack.Screen
+      name="More"
+      component={MoreScreen}
+      options={{ headerShown: false }}
+    />
+    <MoreStack.Screen name="AboutScreen" component={AboutScreen} options={{ title: "About" }} />
+    <MoreStack.Screen name="HelpScreen" component={HelpScreen} options={{ title: "Help" }} />
+    <MoreStack.Screen name="TermOfUseScreen" component={TermsOfUseScreen} options={{ title: "Terms of Use" }} />
+  </MoreStack.Navigator>
+);
+
+
 
 const CustomTabBarButton = ({ children, onPress }) => (
   <TouchableOpacity
@@ -74,7 +112,7 @@ const Navigator = () => {
 
       <Tab.Screen
         name="More"
-        component={MoreScreen}
+        component={MoreStackScreen}
         options={{
           tabBarIcon: ({ focused, color, size }) => (
             <Entypo

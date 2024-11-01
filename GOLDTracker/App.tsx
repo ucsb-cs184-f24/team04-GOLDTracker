@@ -5,9 +5,6 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 import Navigator from "./src/components/Navigator";
 import LoginScreen from "./src/screen/LoginScreen";
-import TermsOfUseScreen from "./src/screen/TermOfUseScreen";
-import HelpScreen from "./src/screen/HelpScreen";
-import AboutScreen from "./src/screen/AboutScreen";
 
 import {auth} from "./firebaseConfig";
 import * as Google from "expo-auth-session/providers/google";
@@ -62,9 +59,6 @@ const App = () => {
                           component={Navigator}
                           options={{ animation: "slide_from_bottom" }}
                       ></Stack.Screen>
-                      <Stack.Screen name="TermOfUseScreen" component={TermsOfUseScreen} options={{ title: 'Terms of Use' }} />
-                      <Stack.Screen name="HelpScreen" component={HelpScreen} options={{ title: 'Help' }} />
-                      <Stack.Screen name="AboutScreen" component={AboutScreen} options={{ title: 'About' }} />
                   </Stack.Navigator>
                 )
                   :  (<LoginScreen promptAsync={promptAsync} />)
