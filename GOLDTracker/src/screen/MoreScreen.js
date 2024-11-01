@@ -12,7 +12,7 @@ import { Avatar } from "react-native-paper";
 import { DevSettings } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo"; //icon
 
-export default function MoreScreen({ navigation }) { // Add navigation prop here
+export default function MoreScreen({ navigation }) {
     const [userInfo, setUserInfo] = useState(null);
 
     useEffect(() => {
@@ -41,15 +41,23 @@ export default function MoreScreen({ navigation }) { // Add navigation prop here
         <View style={styles.container}>
             {userInfo && (
                 <View style={styles.userInfoContainer}>
-                    <Avatar.Image
-                        source={{ uri: userInfo.image }}
-                        size={100} // Adjust if needed
-                        marginBottom={30}
-                    />
-                    <Text style={styles.nameStyle}>{userInfo.displayName}</Text>
-                    <Text style={styles.emailStyle}>{userInfo.email}</Text>
+                    <View style={styles.profileRow}>
+                        <Avatar.Image
+                            source={{ uri: userInfo.image }}
+                            size={60} // Adjust size if needed
+                            marginRight={10} // Spacing between image and text
+                        />
+                        <View style={styles.profileTextContainer}>
+                            <Text style={styles.nameStyle}>{userInfo.displayName}</Text>
+                            <Text style={styles.emailStyle}>{userInfo.email}</Text>
+                        </View>
+                    </View>
                 </View>
             )}
+            
+            {/* 添加阴影分隔线 */}
+            <View style={styles.separator} />
+
             <View style={styles.menu}>
                 <MenuButton icon="help" label="Help" onPress={() => navigation.navigate("HelpScreen")} />
                 <MenuButton icon="link" label="Link To GOLD" onPress={() => navigation.navigate("GoldLinkScreen")} />
@@ -61,7 +69,7 @@ export default function MoreScreen({ navigation }) { // Add navigation prop here
                     label="Log Out"
                     onPress={async () => {
                         try {
-                            await signOut(auth); // Sign out the user
+                            await signOut(auth);
                             DevSettings.reload(); // Reload the app after successful sign-out
                         } catch (error) {
                             console.error("Error signing out: ", error);
@@ -69,7 +77,6 @@ export default function MoreScreen({ navigation }) { // Add navigation prop here
                     }}
                 />
             </View>
-            <StatusBar style="auto" />
         </View>
     );
 }
@@ -82,20 +89,38 @@ const styles = StyleSheet.create({
     },
     userInfoContainer: {
         alignItems: "center",
-        marginBottom: 20,
+        marginBottom: 10,
         marginTop: 100, // wait for header bar
     },
-    userImage: {
-        borderRadius: 50,
-        marginBottom: 10,
+    profileRow: {
+        flexDirection: 'row', // Arrange items in a row
+        alignItems: 'center', // Center vertically
+    },
+    profileTextContainer: {
+        flexDirection: 'column', // Stack name and email vertically
     },
     nameStyle: {
         fontWeight: "bold",
-        fontSize: 30,
+        fontSize: 18,
     },
-    emailStyle: {},
+    emailStyle: {
+        fontSize: 14,
+        color: '#666', // Optional: Change email color for better readability
+    },
+    separator: {
+        height: 1, // Height of the separator
+        width: '90%', // Adjust width if needed
+        backgroundColor: '#e0e0e0', // Line color
+        elevation: 4, // Android shadow effect
+        shadowColor: '#000', // Shadow color
+        shadowOffset: { width: 0, height: 2 }, // Shadow offset
+        shadowOpacity: 0.3, // Shadow opacity
+        shadowRadius: 2, // Shadow blur radius
+        marginVertical: 15, // Space above and below the line
+        alignSelf: 'center', // Center align the line
+    },
     menu: {
-        marginTop: 20,
+        marginTop: 10,
     },
     menuButton: {
         flexDirection: "row",
