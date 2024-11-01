@@ -13,9 +13,10 @@ import CartScreen from "../screen/CartScreen";
 import AboutScreen from "../screen/AboutScreen";
 import HelpScreen from "../screen/HelpScreen";
 import TermsOfUseScreen from "../screen/TermOfUseScreen";
-
+import CourseDetailScreen from "../screen/CourseDetailScreen";
 
 const Tab = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
 
 const MoreStack = createStackNavigator();
 
@@ -63,16 +64,30 @@ const CustomTabBarButton = ({ children, onPress }) => (
     activeOpacity={0.9}
   >
   </TouchableOpacity>
+
+const HomeStackScreen = () => (
+  <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Screen name=" " component={HomeScreen} />
+    <HomeStack.Screen
+      name="CourseDetailScreen"
+      component={CourseDetailScreen}
+      options={{ headerShown: true, title: "Course Details" }}
+    />
+  </HomeStack.Navigator>
 );
 
 const Navigator = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStackScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="home"
               size={25}
@@ -80,13 +95,13 @@ const Navigator = () => {
             />
           ),
         }}
-      ></Tab.Screen>
+      />
 
       <Tab.Screen
         name="Cart"
         component={CartScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="shopping-cart"
               size={25}
@@ -94,13 +109,13 @@ const Navigator = () => {
             />
           ),
         }}
-      ></Tab.Screen>
+      />
 
       <Tab.Screen
         name="Notifications"
         component={NotificationScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="notification"
               size={25}
@@ -108,13 +123,13 @@ const Navigator = () => {
             />
           ),
         }}
-      ></Tab.Screen>
+      />
 
       <Tab.Screen
         name="More"
         component={MoreStackScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="dots-three-horizontal"
               size={25}
@@ -122,7 +137,7 @@ const Navigator = () => {
             />
           ),
         }}
-      ></Tab.Screen>
+      />
     </Tab.Navigator>
   );
 };

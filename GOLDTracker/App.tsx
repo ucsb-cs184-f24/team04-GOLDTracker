@@ -16,6 +16,8 @@ import {
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOS_CLIENT_ID, ANDROID_CLIENT_ID } from "@env";
+import {syncToFirebase} from "./src/components/ClassRegister";
+import {AppState} from "react-native"
 
 
 
@@ -28,7 +30,13 @@ const App = () => {
       iosClientId: IOS_CLIENT_ID,
       androidClientId: ANDROID_CLIENT_ID,
     });
-    
+
+    useEffect(() => {
+        if(userInfo){
+            syncToFirebase();
+        }
+    }, []);
+
     useEffect(()=>{
       if(response?.type == "success"){
           const {id_token} =response.params;
@@ -49,6 +57,14 @@ const App = () => {
       });
       return ()=> unsub();
     },[]);
+
+    useEffect(() => {
+        const makeSync = AppState.addEventListener('change', async (toState:any) => {
+            if(toState === 'background'){
+                await syncToFirebase();
+            }
+        })
+    }, []);
     return (
         <NavigationContainer independent={true}>
            {userInfo ?
