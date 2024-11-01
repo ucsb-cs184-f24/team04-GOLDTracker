@@ -5,8 +5,7 @@ import { API_KEY, API_URL } from "@env";
 import Class from "../components/Class";
 import { useNavigation } from "@react-navigation/native";
 
-const SearchComponent = () => {
-  const [search, setSearch] = useState("");
+const SearchComponent = ({ search, setSearch }) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation();
