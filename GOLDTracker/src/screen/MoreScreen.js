@@ -6,6 +6,7 @@ import {
     Text,
     View,
     TouchableOpacity,
+    Linking,
 } from "react-native";
 import { auth } from "../../firebaseConfig";
 import { Avatar } from "react-native-paper";
@@ -32,10 +33,18 @@ export default function MoreScreen({ navigation }) {
 
     const MenuButton = ({ icon, label, onPress }) => (
         <TouchableOpacity style={styles.menuButton} onPress={onPress}>
-            <Entypo name={icon} size={24} color="#000" />
+            <Entypo name={icon} size={24} style={styles.iconStyle} color="#000" />
             <Text style={styles.menuText}>{label}</Text>
         </TouchableOpacity>
     );
+
+    const handlePress = () => {
+        const url = 'https://my.sa.ucsb.edu/gold/';
+        Linking.openURL(url).catch((err) =>
+          console.error("Couldn't load page", err)
+        );
+      };
+    
 
     return (
         <View style={styles.container}>
@@ -59,10 +68,11 @@ export default function MoreScreen({ navigation }) {
             <View style={styles.separator} />
 
             <View style={styles.menu}>
+                
+                <MenuButton icon="link" label="Link To GOLD" onPress={handlePress} />
                 <MenuButton icon="help" label="Help" onPress={() => navigation.navigate("HelpScreen")} />
-                <MenuButton icon="link" label="Link To GOLD" onPress={() => navigation.navigate("GoldLinkScreen")} />
-                <MenuButton icon="share" label="Share GoldTracker" onPress={() => navigation.navigate("ShareScreen")} />
-                <MenuButton icon="text-document" label="Term of Use" onPress={() => navigation.navigate("TermsScreen")} />
+                {/*<MenuButton icon="share" label="Share GoldTracker" onPress={() => navigation.navigate("ShareScreen")} />*/}
+                <MenuButton icon="text-document" label="Term of Use" onPress={() => navigation.navigate("TermOfUseScreen")} />
                 <MenuButton icon="info" label="About" onPress={() => navigation.navigate("AboutScreen")} />
                 <MenuButton
                     icon="log-out"
@@ -131,16 +141,9 @@ const styles = StyleSheet.create({
     },
     menuText: {
         fontSize: 16,
-        marginLeft: 10,
+        marginLeft: 20,
     },
-    signOutButton: {
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: "#f44336", // Change to your desired color
-        borderRadius: 5,
-    },
-    signOutButtonText: {
-        color: "#fff",
-        fontSize: 16,
+    iconStyle:{
+        marginLeft:10,
     },
 });
