@@ -5,8 +5,8 @@ import Entypo from "@expo/vector-icons/Entypo";
 
 class Class extends React.Component {
   goToDetails = () => {
-    const { course } = this.props;
-    this.props.navigation.navigate("CourseDetailsScreen", { course });
+    const { course, navigation } = this.props;
+    navigation.navigate("CourseDetailScreen", { course });
   };
 
   render() {
@@ -43,7 +43,6 @@ class Class extends React.Component {
               <Text style={styles.courseProfessor}>{courseProfessor}</Text>
 
               {/* Navigate to CourseDetailsScreen */}
-              {/* TODO */}
               <TouchableOpacity
                 onPress={this.goToDetails}
                 style={styles.detailsButton}
