@@ -36,6 +36,9 @@ interface Color {
     ucsbBlue: string;
 
     tabSelected: string;
+    
+    black: string;
+    white: string;
 }
   
   
@@ -57,6 +60,12 @@ export const COLORS: Color = {
 
     //tab selected blue
     tabSelected:'0062CC',
+
+    //black
+    black: '#000000',
+    //white
+    white: '#ffffff',
+   
 };
   
 interface FontFamily {
