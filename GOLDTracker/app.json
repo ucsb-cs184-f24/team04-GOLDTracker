@@ -8,7 +8,16 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.cs184.goldtracker",
-      "googleServicesFile": "./GoogleService-Info.plist"
+      "googleServicesFile": "./GoogleService-Info.plist",
+      "infoPlist": {
+        "UIBackgroundModes": [
+          "fetch",
+          "processing"
+        ],
+        "BGTaskSchedulerPermittedIdentifiers": [
+          "com.transistorsoft.fetch"
+        ]
+      }
     },
     "android": {
       "package": "com.cs184.goldtracker",
@@ -22,6 +31,9 @@
     },
     "scheme": "goldtracker",
     "owner": "alize",
-    "plugins": ["@react-native-google-signin/google-signin"]
+    "plugins": [
+      "@react-native-google-signin/google-signin",
+      "react-native-background-fetch"
+    ]
   }
 }

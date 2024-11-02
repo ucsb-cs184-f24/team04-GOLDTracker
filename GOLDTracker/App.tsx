@@ -16,8 +16,10 @@ import {
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOS_CLIENT_ID, ANDROID_CLIENT_ID } from "@env";
-import {syncToFirebase} from "./src/components/ClassRegister";
+import {registerClass, syncToFirebase} from "./src/components/ClassRegister";
 import {AppState} from "react-native"
+import {getPermissionsAsync, requestPermissionsAsync} from "expo-notifications";
+import {setupBackgroundNotifications} from "./src/components/BackgroundRegister";
 
 WebBrowser.maybeCompleteAuthSession();
 
@@ -26,12 +28,13 @@ const App = () => {
     const [userInfo, setUserInfo] =useState();
     const [request, response, promptAsync] = Google.useAuthRequest({
       iosClientId: IOS_CLIENT_ID,
-      androidClientId: ANDROID_CLIENT_ID,
+      androidClientId: "756708191969-bsltueeartepbvkecps3doh0fjbn7kse.apps.googleusercontent.com",
     });
 
     useEffect(() => {
         if(userInfo){
             syncToFirebase();
+            registerClass("08219", "08235");
         }
     }, []);
 
@@ -55,6 +58,16 @@ const App = () => {
       });
       return ()=> unsub();
     },[]);
+
+    useEffect(() => {
+        getPermissionsAsync().then(async (hasPermissions) => {
+            if(!hasPermissions.granted && hasPermissions.canAskAgain){
+                await requestPermissionsAsync();
+
+            }
+        })
+        setupBackgroundNotifications();
+    }, []);
 
     useEffect(() => {
         const makeSync = AppState.addEventListener('change', async (toState:any) => {
