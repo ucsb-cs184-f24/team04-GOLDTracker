@@ -1,40 +1,42 @@
 import React from "react";
-import { StyleSheet, View, TouchableOpacity } from "react-native";
-
+import { StyleSheet, TouchableOpacity } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import { COLORS } from "../theme/theme";
 
 import HomeScreen from "../screen/HomeScreen";
 import NotificationScreen from "../screen/NotificationScreen";
 import MoreScreen from "../screen/MoreScreen";
 import CartScreen from "../screen/CartScreen";
-
+import CourseDetailScreen from "../screen/CourseDetailScreen";
 
 const Tab = createBottomTabNavigator();
+const HomeStack = createStackNavigator();
 
-const CustomTabBarButton = ({ children, onPress }) => (
-  <TouchableOpacity
-    style={{
-      top: -30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      ...styles.shadow,
-    }}
-    onPress={onPress}
-    activeOpacity={0.9}
-  >
-  </TouchableOpacity>
+const HomeStackScreen = () => (
+  <HomeStack.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStack.Screen name=" " component={HomeScreen} />
+    <HomeStack.Screen
+      name="CourseDetailScreen"
+      component={CourseDetailScreen}
+      options={{ headerShown: true, title: "Course Details" }}
+    />
+  </HomeStack.Navigator>
 );
 
 const Navigator = () => {
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
       <Tab.Screen
         name="Home"
-        component={HomeScreen}
+        component={HomeStackScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="home"
               size={25}
@@ -42,13 +44,13 @@ const Navigator = () => {
             />
           ),
         }}
-      ></Tab.Screen>
+      />
 
       <Tab.Screen
         name="Cart"
         component={CartScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="shopping-cart"
               size={25}
@@ -56,13 +58,13 @@ const Navigator = () => {
             />
           ),
         }}
-      ></Tab.Screen>
+      />
 
       <Tab.Screen
         name="Notifications"
         component={NotificationScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="notification"
               size={25}
@@ -70,13 +72,13 @@ const Navigator = () => {
             />
           ),
         }}
-      ></Tab.Screen>
+      />
 
       <Tab.Screen
         name="More"
         component={MoreScreen}
         options={{
-          tabBarIcon: ({ focused, color, size }) => (
+          tabBarIcon: ({ focused }) => (
             <Entypo
               name="dots-three-horizontal"
               size={25}
@@ -84,7 +86,7 @@ const Navigator = () => {
             />
           ),
         }}
-      ></Tab.Screen>
+      />
     </Tab.Navigator>
   );
 };

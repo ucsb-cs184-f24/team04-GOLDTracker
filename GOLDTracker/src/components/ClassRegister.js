@@ -1,5 +1,5 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {auth, database} from "../../firebaseConfig"
+import {auth, database} from "../../firebaseConfig";
 import {ref,get,set, child} from "firebase/database"
 export async function registerClass(courseId, sectionId){
     let classList = await AsyncStorage.getItem("class-list");
