@@ -1,7 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore, collection, addDoc, getDocs } from "firebase/firestore";
 // import { firebaseConfig } from "../firebaseConfig.js";  // Adjust path as needed
-import fs from "fs";  // Import the file system module to read the JSON file
 import path from "path";
 import * as dotenv from "dotenv";
 import { fileURLToPath } from 'url';
@@ -27,7 +26,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // read the data in firebase
-const querySnapshot = await getDocs(collection(db, "users"));
+const querySnapshot = await getDocs(collection(db, "professors/computer science/profList"));
 querySnapshot.forEach((doc) => {
   console.log(`${doc.id} => ${doc.data()}`);
 });
