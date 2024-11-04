@@ -19,6 +19,8 @@ import { IOS_CLIENT_ID, ANDROID_CLIENT_ID } from "@env";
 import {syncToFirebase} from "./src/components/ClassRegister";
 import {AppState} from "react-native"
 
+
+
 WebBrowser.maybeCompleteAuthSession();
 
 const Stack = createNativeStackNavigator();
