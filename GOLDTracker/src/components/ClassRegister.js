@@ -45,11 +45,10 @@ export async function deregisterClass(courseId, sectionId){
 
 export async function getClasses(){
     let classList = await AsyncStorage.getItem("class-list");
-    console.log(await AsyncStorage.getItem("timestamp"));
     if(!classList){
         return null;
     }else{
-        return classList;
+        return JSON.parse(classList);
     }
 
 }
