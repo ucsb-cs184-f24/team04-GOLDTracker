@@ -5,6 +5,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 import Navigator from "./src/components/Navigator";
 import LoginScreen from "./src/screen/LoginScreen";
+import Header from "./src/components/Header"
 
 import {auth} from "./firebaseConfig";
 import * as Google from "expo-auth-session/providers/google";
@@ -81,7 +82,7 @@ const App = () => {
         <NavigationContainer independent={true}>
             {userInfo ?
                 (
-                    <Stack.Navigator screenOptions={{headerShown: false}}>
+                    <Stack.Navigator screenOptions={{header: () => <Header />}}>
                         <Stack.Screen
                             name="Tab"
                             component={Navigator}
