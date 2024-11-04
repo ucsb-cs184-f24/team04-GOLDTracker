@@ -64,6 +64,7 @@ const CustomTabBarButton = ({ children, onPress }) => (
     activeOpacity={0.9}
   >
   </TouchableOpacity>
+);
 
 const HomeStackScreen = () => (
   <HomeStack.Navigator screenOptions={{ headerShown: false }}>
