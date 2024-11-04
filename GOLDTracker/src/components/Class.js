@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS, SPACING } from "../theme/theme";
 import Entypo from "@expo/vector-icons/Entypo";
+import {deregisterClass, registerClass} from "./ClassRegister";
 
 class Class extends React.Component {
   goToDetails = () => {
@@ -90,8 +91,14 @@ class Class extends React.Component {
                         ? styles.following
                         : styles.notFollowing,
                     ]}
-                    onPress={() =>
+                    onPress={() => {
                       toggleFollow(course.courseId.trim(), section.section)
+                      if (section.following) {
+                        deregisterClass(`${course.classSections[0].enrollCode}`, `${section.enrollCode}`);
+                      }else {
+                        registerClass(`${course.classSections[0].enrollCode}`, `${section.enrollCode}`)
+                      }
+                    }
                     }
                   >
                     <Text style={styles.followText}>

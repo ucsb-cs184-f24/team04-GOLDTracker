@@ -4,6 +4,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import {auth} from "../../firebaseConfig";
 import {getPresentedNotificationsAsync, scheduleNotificationAsync, setNotificationHandler} from "expo-notifications";
 import * as ClassRegister from "./ClassRegister";
+import {getClasses} from "./ClassRegister";
 
 export function setupBackgroundNotifications() {
     let status = BackgroundFetch.configure({}, checkAvailability, timedOut)
@@ -13,7 +14,8 @@ export function setupBackgroundNotifications() {
 }
 
 async function checkAvailability(id) {
-    if (AppState.currentState !== "active" && auth.currentUser) {
+    console.log(await AsyncStorage.getItem("class-list"))
+    if (auth.currentUser) {
         let idToken = await auth.currentUser.getIdToken();
         let classList = await ClassRegister.getClasses();
         let classes = Object.keys(classList);
