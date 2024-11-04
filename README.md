@@ -24,3 +24,9 @@ We are planning to use React Native with Expo Go
   3. They could search courses in different subjects and could use filters to see the rank based on professors' scores.
   4. They could save courses in their cart, and when the course has spare space, they will receive notifications.
   5. They could use Join button to copy the course number and quickly added course in the GOLD.
+
+### Installation/Test Instructions 
+1. Clone our repo
+2. "cd GoldTracker"
+3. use "npm install"
+4. Unfortunately, You have to set up your own firebase and create the client ID inside .env file.
