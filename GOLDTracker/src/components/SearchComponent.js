@@ -38,11 +38,11 @@ const SearchComponent = ({ search, setSearch }) => {
         let apiUrl;
 
         if (/^\s*\w+\s*\d+\s*$/.test(search.trim())) {
-          apiUrl = `${ API_URL }?quarter=${quarter}&courseId=${encodeURIComponent(
+          apiUrl = `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
             search
           )}&includeClassSections=true`;
         } else {
-          apiUrl = `${ API_URL }?quarter=${quarter}&deptCode=${encodeURIComponent(
+          apiUrl = `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
             search
           )}&includeClassSections=true`;
         }
