@@ -48,10 +48,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- Finished most/all wishlist page functionality 
+- Completed most of the wishlist page functionality 
 
 #### **I WILL DO**  
-- Will make a proper pull request
+- Will finish wishlist page
 
 #### **BLOCKERS**  
 - N/A
