@@ -48,13 +48,13 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Finished wishlist page
 
 #### **I WILL DO**  
-- 
+- Will make a proper pull request
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Daniel Jensen:**  
 #### **I DID**  
