@@ -16,7 +16,7 @@ import {
     signInWithCredential,
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {IOS_CLIENT_ID, ANDROID_CLIENT_ID} from "@env";
+import { IOS_CLIENT_ID , ANDROID_CLIENT_ID } from "@env";
 import {syncToFirebase} from "./src/components/ClassRegister";
 import {AppState} from "react-native"
 import {getPermissionsAsync, requestPermissionsAsync} from "expo-notifications";
@@ -28,6 +28,7 @@ WebBrowser.maybeCompleteAuthSession();
 
 const Stack = createNativeStackNavigator();
 const App = () => {
+
     const [userInfo, setUserInfo] = useState();
     const [request, response, promptAsync] = Google.useAuthRequest({
         iosClientId: IOS_CLIENT_ID,
