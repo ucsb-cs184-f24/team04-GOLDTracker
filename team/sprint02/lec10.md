@@ -50,13 +50,13 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Finished displaying wishlisted/followed courses 
 
 #### **I WILL DO**  
-- 
+- Fix unfollow button 
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Daniel Jensen:**  
 #### **I DID**  
