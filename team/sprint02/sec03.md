@@ -48,13 +48,13 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Completed most of the wishlist page functionality 
 
 #### **I WILL DO**  
-- 
+- Will finish wishlist page
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Daniel Jensen:**  
 #### **I DID**  
