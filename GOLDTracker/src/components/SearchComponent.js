@@ -98,7 +98,6 @@ const SearchComponent = ({ search, setSearch }) => {
         placeholder="Search here, e.g. CMPSC 8 or CMPSC"
         onChangeText={updateSearch}
         value={search}
-        lightTheme
         round
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchInputContainer}
@@ -138,17 +137,21 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     elevation: 5,
     zIndex: 0,
+    borderTopWidth: 0,
+    borderBottomWidth: 0,
+    backgroundColor: "transparent",
   },
   searchBarContainer: {
     width: "100%",
+    shadowOpacity: 0, 
     backgroundColor: "transparent",
     borderBottomWidth: 0,
     position: "absolute",
-    top: 20,
     zIndex: 1,
   },
   searchInputContainer: {
     backgroundColor: "#e0e0e0",
+    borderBottomWidth: 0, // Remove the bottom border from the input container
   },
   errorBox: {
     backgroundColor: "#ffe6e6",
@@ -165,5 +168,6 @@ const styles = StyleSheet.create({
     marginTop: 80,
   },
 });
+
 
 export default SearchComponent;
