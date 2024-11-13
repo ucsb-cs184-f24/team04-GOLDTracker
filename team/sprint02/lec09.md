@@ -50,13 +50,13 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Began working on Cart/Wishlist page
 
 #### **I WILL DO**  
-- 
+- Finish the Cart/Wishlist page
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Daniel Jensen:**  
 #### **I DID**  
