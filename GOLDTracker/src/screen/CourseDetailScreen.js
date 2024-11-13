@@ -2,11 +2,14 @@ import React from "react";
 import { View, Text, StyleSheet, ScrollView } from "react-native";
 
 const CourseDetailScreen = ({ route }) => {
-  const { course } = route.params;
+  const { course } = route.params; // course is the "classes" component of the json return by UCSB search API 
 
   const courseCode = course.courseId ? course.courseId.trim() : "N/A";
   const courseTitle = course.title || "No Title";
   const courseDescription = course.description || "No Description";
+  const courseInstructor = course.classSections[0].instructors[0].instructor
+  const courseDepartment = course.deptCode
+  console.log(courseDepartment)
 
   return (
     <ScrollView style={styles.container}>
