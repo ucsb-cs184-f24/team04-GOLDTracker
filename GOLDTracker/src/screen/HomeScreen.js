@@ -34,15 +34,12 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
   },
   container: {
-    flex: 1,
     backgroundColor: COLORS.white,
   },
   searchComponentContainer: {
-    flex: 1,
-    paddingTop: SPACING.space_8,
+    paddingTop: 0,
   },
   centeredTextContainer: {
-    flex: 10,
     justifyContent: "center",
     alignItems: "center",
     paddingHorizontal: SPACING.space_8,
