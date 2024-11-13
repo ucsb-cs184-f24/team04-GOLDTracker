@@ -46,6 +46,7 @@ Stop: not documenting meeting and progress.
 Start: distribute the work more specificly
 
 ## Retro Assessment (11.4)
-Has 4 merged PRs, and each member has 1 issue to do in different structures. Seems like we failed 
+Has 4 merged PRs, and each member has 1 issue to do in different structures. 
 
 ## Outcome of our RETRO 2
+We failed the experiment, but we do think that is a good start. It failed due to some external reasons, but we do implemented some new fundemental features.
