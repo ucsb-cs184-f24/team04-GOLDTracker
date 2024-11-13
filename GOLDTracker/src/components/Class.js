@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS, SPACING } from "../theme/theme";
 import Entypo from "@expo/vector-icons/Entypo";
-import {deregisterClass, registerClass} from "./ClassRegister";
+import { deregisterClass, registerClass } from "./ClassRegister";
 
 class Class extends React.Component {
   goToDetails = () => {
@@ -14,14 +14,24 @@ class Class extends React.Component {
     const { course, toggleFollow } = this.props;
 
     const courseCode = course.courseId ? course.courseId.trim() : "N/A";
-    const courseTitle = course.title || "No Title";
     const firstSection = course.classSections && course.classSections[0];
 
-    const courseTime =
+    const timeLocation =
       firstSection &&
       firstSection.timeLocations &&
-      firstSection.timeLocations[0]
-        ? `${firstSection.timeLocations[0].beginTime} - ${firstSection.timeLocations[0].endTime}`
+      firstSection.timeLocations[0];
+
+    const days =
+      timeLocation && timeLocation.days
+        ? timeLocation.days.replace(/\s/g, "")
+        : "N/A";
+
+    const beginTime = timeLocation && timeLocation.beginTime;
+    const endTime = timeLocation && timeLocation.endTime;
+
+    const courseTime =
+      days && beginTime && endTime
+        ? `${days} ${beginTime} - ${endTime}`
         : "N/A";
 
     const courseProfessor =
@@ -31,42 +41,51 @@ class Class extends React.Component {
 
     return (
       <View style={styles.wrapper}>
-        {/* Course Code */}
-        <Text style={styles.courseCode}>{courseCode}</Text>
-
         <View style={styles.courseContainer}>
-          {/* Course Title */}
-          <Text style={styles.courseTitle}>{courseTitle}</Text>
+          <View style={styles.courseHeader}>
+            {/* Course Code */}
+            <Text style={styles.courseCode}>{courseCode}</Text>
+            <TouchableOpacity
+              onPress={this.goToDetails}
+              style={styles.detailsButton}
+            >
+              <Entypo name="chevron-right" size={24} color={COLORS.black} />
+            </TouchableOpacity>
+          </View>
 
           <View style={styles.courseDetailsContainer}>
             <Text style={styles.courseTime}>{courseTime}</Text>
             <View style={styles.professorContainer}>
               <Text style={styles.courseProfessor}>{courseProfessor}</Text>
-
-              {/* Navigate to CourseDetailsScreen */}
-              <TouchableOpacity
-                onPress={this.goToDetails}
-                style={styles.detailsButton}
-              >
-                <Entypo name="chevron-right" size={16} color={COLORS.black} />
-              </TouchableOpacity>
             </View>
           </View>
 
           {course.classSections &&
             course.classSections.map((section, index) => {
-              // Section Time
-              const sectionTime =
-                section.timeLocations && section.timeLocations[0]
-                  ? `${section.timeLocations[0].beginTime} - ${section.timeLocations[0].endTime}`
+              // Skip the first section entirely
+              if (index === 0) return null;
+
+              // Extract time and days for the section
+              const timeLocation =
+                section.timeLocations && section.timeLocations[0];
+
+              const days =
+                timeLocation && timeLocation.days
+                  ? timeLocation.days.replace(/\s/g, "")
                   : "N/A";
 
-              // Section Space
+              const beginTime = timeLocation && timeLocation.beginTime;
+              const endTime = timeLocation && timeLocation.endTime;
+
+              const sectionTime =
+                days && beginTime && endTime
+                  ? `${days} ${beginTime} - ${endTime}`
+                  : "N/A";
+
               const sectionSpace = `${section.enrolledTotal || 0}/${
                 section.maxEnroll || 0
               }`;
 
-              // Ensure 'following' property exists
               if (section.following === undefined) {
                 section.following = false;
               }
@@ -92,14 +111,19 @@ class Class extends React.Component {
                         : styles.notFollowing,
                     ]}
                     onPress={() => {
-                      toggleFollow(course.courseId.trim(), section.section)
+                      toggleFollow(course.courseId.trim(), section.section);
                       if (section.following) {
-                        deregisterClass(`${course.classSections[0].enrollCode}`, `${section.enrollCode}`);
-                      }else {
-                        registerClass(`${course.classSections[0].enrollCode}`, `${section.enrollCode}`)
+                        deregisterClass(
+                          `${course.classSections[0].enrollCode}`,
+                          `${section.enrollCode}`
+                        );
+                      } else {
+                        registerClass(
+                          `${course.classSections[0].enrollCode}`,
+                          `${section.enrollCode}`
+                        );
                       }
-                    }
-                    }
+                    }}
                   >
                     <Text style={styles.followText}>
                       {section.following ? "Following" : "Follow"}
@@ -116,37 +140,24 @@ class Class extends React.Component {
 
 const styles = StyleSheet.create({
   wrapper: {
-    marginBottom: SPACING.space_8,
+   // marginBottom: SPACING.space_8,
     paddingTop: SPACING.space_10,
-    paddingHorizontal: SPACING.space_8,
-    paddingLeft: SPACING.space_12,
-    margin: SPACING.space_8,
+    paddingHorizontal: SPACING.space_16,
+    
   },
   courseContainer: {
-    backgroundColor: COLORS.darkGrey,
-    padding: SPACING.space_8,
-    borderRadius: 8,
+    backgroundColor: COLORS.lightGrey,
+    paddingTop: SPACING.space_8,
+    paddingHorizontal: 0,
+    borderRadius: 16,
     marginTop: SPACING.space_18,
   },
   courseCode: {
     fontSize: 18,
     fontWeight: "bold",
     color: COLORS.ucsbBlue,
-    position: "absolute",
-    top: SPACING.space_4,
-    left: SPACING.space_2,
-    backgroundColor: COLORS.lightYellow,
     paddingVertical: SPACING.space_4,
-    paddingHorizontal: SPACING.space_4,
-    borderRadius: 8,
-    overflow: "hidden",
-    zIndex: 1,
-  },
-  courseTitle: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: COLORS.black,
-    marginBottom: SPACING.space_4,
+    marginLeft: SPACING.space_8,
   },
   courseDetailsContainer: {
     flexDirection: "row",
@@ -162,6 +173,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.black,
     flex: 1,
+    marginLeft: SPACING.space_8,
   },
   courseProfessor: {
     fontSize: 14,
@@ -169,20 +181,22 @@ const styles = StyleSheet.create({
     marginRight: SPACING.space_6,
   },
   detailsButton: {
-    padding: SPACING.space_,
+    padding: 0,
   },
   sectionContainer: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: SPACING.space_4,
-    borderRadius: 8,
+    borderRadius: 16,
     marginTop: SPACING.space_4,
+    paddingHorizontal: 0,
+    paddingBottom: 0,
   },
   sectionTime: {
-    width: 120,
+    width: 150,
     fontSize: 14,
     color: COLORS.black,
+    marginLeft: SPACING.space_8,
   },
   sectionSpace: {
     width: 100,
@@ -192,9 +206,10 @@ const styles = StyleSheet.create({
   },
   followButton: {
     width: 80,
-    paddingVertical: SPACING.space_2,
-    borderRadius: 8,
+    paddingVertical: SPACING.space_8,
+    borderRadius: 16,
     alignItems: "center",
+
   },
   following: {
     backgroundColor: COLORS.lightBlue,
@@ -204,6 +219,12 @@ const styles = StyleSheet.create({
   },
   followText: {
     color: COLORS.white,
+  },
+  courseHeader: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    marginBottom: SPACING.space_4,
   },
 });
 
