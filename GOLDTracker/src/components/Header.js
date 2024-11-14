@@ -29,7 +29,7 @@ const styles = StyleSheet.create({
       elevation: 5, // Android shadow
   },
   image: {
-    width: 60, // Adjust icon size if needed
+    width: 70, // Adjust icon size if needed
     height: 60,
     marginRight: 10,
     marginTop:5,

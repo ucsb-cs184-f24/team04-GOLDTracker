@@ -28,6 +28,7 @@ import { DevSettings } from "react-native";
 WebBrowser.maybeCompleteAuthSession();
 
 const Stack = createNativeStackNavigator();
+
 const App = () => {
     const [userInfo, setUserInfo] = useState();
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -96,7 +97,7 @@ const App = () => {
         <NavigationContainer independent={true}>
             {userInfo ?
                 (
-                    <Stack.Navigator screenOptions={{header: () => <Header />}}>
+                    <Stack.Navigator screenOptions={{ headerShown: false }}>
                         <Stack.Screen
                             name="Tab"
                             component={Navigator}
