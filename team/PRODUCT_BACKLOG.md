@@ -81,3 +81,20 @@
 ### Alternative Notification Methods
 - *As a user, I want to receive class availability alerts via email or text message so that I'm informed even when I'm not actively using the app.*
 
+
+
+Draft
+------------
+UI
+- Change Colors and Added more UI components to make it look clear and not looks like GOLD.
+
+Notifications
+- We will implement a notification preferences page, so users could choose how often they receive the notification, or what types of noticiations, or notification methods.
+- We will consider notify users with spare spaces through their email.
+- We will notify users with a more specific content.
+  
+Features
+- We will consider to implement the schedule page. it could help students to decide whether or not follow a course.
+- Course Description space(A bug from API access, wait to solve).
+- We will warn users in the cart screen if their following courses have time conflicts. 
+- We will create a button in the course description page, to let users follow all of sections of the course.
