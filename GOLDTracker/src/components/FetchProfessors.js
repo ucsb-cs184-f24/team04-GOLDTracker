@@ -15,13 +15,6 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 
 // Initialize Firebase
 const firebaseConfig = {
-  apiKey: "AIzaSyCLIQJtYBYpxGTVMt_W_Hw_0yoKghXxAmw",
-  authDomain: "goldtracker-beb96.firebaseapp.com",
-  projectId: "goldtracker-beb96",
-  storageBucket: "goldtracker-beb96.appspot.com",
-  messagingSenderId: "756708191969",
-  appId: "1:756708191969:web:347221cec45ce7054c91a0",
-  measurementId: "G-XGXC2HCFZ2",
 };
 console.log(firebaseConfig);
 const app = initializeApp(firebaseConfig);
