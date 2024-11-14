@@ -7,6 +7,7 @@ import {
     View,
     TouchableOpacity,
     Linking,
+    Alert,
 } from "react-native";
 import { auth } from "../../firebaseConfig";
 import { Avatar } from "react-native-paper";
@@ -84,12 +85,27 @@ export default function MoreScreen({ navigation }) {
                     icon="log-out"
                     label="Log Out"
                     onPress={async () => {
-                        try {
-                            await signOut(auth);
-                            DevSettings.reload(); // Reload the app after successful sign-out
-                        } catch (error) {
-                            console.error("Error signing out: ", error);
-                        }
+                        Alert.alert(
+                            "Confirm Log Out",
+                            "Are you sure you want to log out?",
+                            [
+                                {
+                                    text: "Cancel",
+                                    style: "cancel",
+                                },
+                                {
+                                    text: "Log Out",
+                                    onPress: async () => {
+                                        try {
+                                            await signOut(auth);
+                                            DevSettings.reload(); // Reload the app after successful sign-out
+                                        } catch (error) {
+                                            console.error("Error signing out: ", error);
+                                        }
+                                    },
+                                },
+                            ]
+                        );
                     }}
                 />
             </View>
