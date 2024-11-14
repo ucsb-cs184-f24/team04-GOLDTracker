@@ -4,11 +4,17 @@ As you can see at this image, and at the current commit (https://github.com/ucsb
 
 I will build testing infrastructure for the following files:
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/BackgroundRegister.js
+
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/CartFetch.js
+
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/Class.js
+
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/ClassRegister.js
+
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/Header.js
+
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/Navigator.js
+
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/SearchComponent.js
 
 It will provide full line coverage for each file.
