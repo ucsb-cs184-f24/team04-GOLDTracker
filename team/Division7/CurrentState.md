@@ -3,6 +3,7 @@
 As you can see at this image, and at the current commit (https://github.com/ucsb-cs184-f24/team04-GOLDTracker/tree/7204bf34dc3a1b0eeae881b4019cf03c6c4dc364/GOLDTracker), we have no testing infrastructure of any sort.
 
 I will build testing infrastructure for the following files:
+
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/BackgroundRegister.js
 
 https://github.com/ucsb-cs184-f24/team04-GOLDTracker/blob/main/GOLDTracker/src/components/CartFetch.js
