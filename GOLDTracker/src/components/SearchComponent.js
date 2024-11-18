@@ -126,7 +126,6 @@ const SearchComponent = ({ search, setSearch }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     backgroundColor: "#fff",
   },
   searchBarBackground: {
@@ -140,12 +139,14 @@ const styles = StyleSheet.create({
     zIndex: 0,
   },
   searchBarContainer: {
-    width: "100%",
+    width: "95%",
     backgroundColor: "transparent",
     borderBottomWidth: 0,
+    borderTopWidth: 0,
     position: "absolute",
     top: 20,
     zIndex: 1,
+    alignSelf: "center",
   },
   searchInputContainer: {
     backgroundColor: "#e0e0e0",

@@ -2,7 +2,7 @@
 
 **Mentor:** Self-Mentored
 
-**Meeting Time:** 
+**Meeting Time:** 06 Nov, 2024
 
 **Type of Meeting:** Daily Scrum
 
@@ -38,23 +38,24 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- implemented the stack
+- adjusted More page UI after merged header bar
 
 #### **I WILL DO**  
-- adjust color, icon.
+- adjusted header bar UI
+- login only with ucsb email
 
 #### **BLOCKERS**  
-- N/A
+- 
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- Completed most of the wishlist page functionality 
+- 
 
 #### **I WILL DO**  
-- Will finish wishlist page
+- 
 
 #### **BLOCKERS**  
-- N/A
+- 
 
 ## **Daniel Jensen:**  
 #### **I DID**  

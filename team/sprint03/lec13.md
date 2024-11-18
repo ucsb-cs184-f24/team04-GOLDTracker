@@ -2,7 +2,7 @@
 
 **Mentor:** Self-Mentored
 
-**Meeting Time:** 
+**Meeting Time:** 13 Nov, 2024
 
 **Type of Meeting:** Daily Scrum
 
@@ -38,23 +38,23 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- implemented the stack
+- header bar only shown in navigation four screens.
 
 #### **I WILL DO**  
-- adjust color, icon.
+- customized page
 
 #### **BLOCKERS**  
 - N/A
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- Completed most of the wishlist page functionality 
+- 
 
 #### **I WILL DO**  
-- Will finish wishlist page
+- 
 
 #### **BLOCKERS**  
-- N/A
+- 
 
 ## **Daniel Jensen:**  
 #### **I DID**  
