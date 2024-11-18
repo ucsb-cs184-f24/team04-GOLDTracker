@@ -73,7 +73,8 @@ export default function MoreScreen({ navigation }) {
             <View style={styles.separator} />
 
             <View style={styles.menu}>
-                
+
+                <MenuButton icon="cog" label="Preferences" onPress={() => navigation.navigate("customizedPage")} />
                 <MenuButton icon="link" label="Link To GOLD" onPress={handlePress} />
                 {/*<MenuButton icon="share" label="Share GoldTracker" onPress={() => navigation.navigate("ShareScreen")} />*/}
                 <MenuButton icon="help" label="Help" onPress={() => navigation.navigate("HelpScreen")} />
