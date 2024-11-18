@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { StatusBar, StyleSheet, Text, View, FlatList } from "react-native";
 import { SearchBar } from "react-native-elements";
-import { API_KEY, API_URL } from "@env";
 import Class from "../components/Class";
 import { useNavigation } from "@react-navigation/native";
+import {auth} from "../../firebaseConfig";
 
 const SearchComponent = ({ search, setSearch }) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const navigation = useNavigation();
+  const API_URL = "https://us-central1-goldtracker-beb96.cloudfunctions.net/search"
 
   const updateSearch = (searchText) => {
     setSearch(searchText);
@@ -46,14 +47,10 @@ const SearchComponent = ({ search, setSearch }) => {
             search
           )}&includeClassSections=true`;
         }
-
-        const response = await fetch(apiUrl, {
-          method: "GET",
-          headers: {
-            "ucsb-api-key": `${API_KEY}`,
-            "Content-Type": "application/json",
-          },
-        });
+        console.log(apiUrl);
+        const headers = new Headers();
+        headers.append("authorization", await auth.currentUser.getIdToken());
+        const response = await fetch(apiUrl, {headers:headers});
 
         const data = await response.json();
         console.log("API Response:", JSON.stringify(data, null, 2));
