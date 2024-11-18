@@ -14,6 +14,7 @@ import {
     GoogleAuthProvider,
     onAuthStateChanged,
     signInWithCredential,
+    signOut,
 } from "firebase/auth";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOS_CLIENT_ID , ANDROID_CLIENT_ID } from "@env";
@@ -21,12 +22,13 @@ import {syncToFirebase} from "./src/components/ClassRegister";
 import {AppState} from "react-native"
 import {getPermissionsAsync, requestPermissionsAsync} from "expo-notifications";
 import {setupBackgroundNotifications} from "./src/components/BackgroundRegister";
-
+import { DevSettings } from "react-native";
 
 
 WebBrowser.maybeCompleteAuthSession();
 
 const Stack = createNativeStackNavigator();
+
 const App = () => {
 
     const [userInfo, setUserInfo] = useState();
@@ -45,9 +47,22 @@ const App = () => {
         if (response?.type == "success") {
             const {id_token} = response.params;
             const credential = GoogleAuthProvider.credential(id_token);
-            signInWithCredential(auth, credential);
+            signInWithCredential(auth, credential).then((result) => {
+                const user = result.user;
+                if (!user.email || !user.email.endsWith("@ucsb.edu")) {
+                    alert("Only UCSB emails are allowed."); // Display the alert
+                    signOut(auth).then(() => {
+                    setTimeout(() => {
+                        DevSettings.reload(); // Reload after a longer delay
+                    }, 1000); // Extend the delay
+                });             
+                }
+                
+            }).catch((error) => {
+                console.error("Error signing in with Google credential: ", error);
+            });
         }
-    }, [response])
+    }, [response]);
 
     useEffect(() => {
         const unsub = onAuthStateChanged(auth, async (user) => {
@@ -83,7 +98,7 @@ const App = () => {
         <NavigationContainer independent={true}>
             {userInfo ?
                 (
-                    <Stack.Navigator screenOptions={{header: () => <Header />}}>
+                    <Stack.Navigator screenOptions={{ headerShown: false }}>
                         <Stack.Screen
                             name="Tab"
                             component={Navigator}
