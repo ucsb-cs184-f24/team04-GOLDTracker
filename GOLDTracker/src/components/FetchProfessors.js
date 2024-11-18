@@ -1,44 +1,48 @@
-import { initializeApp } from "firebase/app";
-import { getFirestore, collection, addDoc, getDocs, query } from "firebase/firestore";
-// import { firebaseConfig } from "../firebaseConfig.js";  // Adjust path as needed
-import fs from "fs";  // Import the file system module to read the JSON file
-import path from "path";
-import * as dotenv from "dotenv";
-import { fileURLToPath } from 'url';
-import departmentMapping from "../assets/departmentMapping.json" assert { type: "json" }; 
+import { getDocs, collection, doc, query } from "firebase/firestore";
+import { firestore } from "../../firebaseConfig.js";  
+import departmentMapping from "../assets/departmentMapping.json" with { type: "json" }; 
 
-// Recreate __dirname in ES module context
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
-
-// Initialize Firebase
-const firebaseConfig = {
-};
-console.log(firebaseConfig);
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const db = firestore
 
 // read the data in firebase
-export async function fetchProfessorsByDepartment(departmentCode) {
+export async function FetchProfessorsByDepartment(departmentCode, courseInstructor) {
   const professors = [];
 
   // Get possible department names for the given code from the imported JSON
   const departmentNames = departmentMapping[departmentCode] || [];
 
   try {
-      // Query Firestore for each department name
-      for (const name of departmentNames) {
-        console.log("department name: ", name)
-          const q = query(collection(db, `professors/${name}/profList`));
-          const querySnapshot = await getDocs(q);
-          querySnapshot.forEach((doc) => {
-              professors.push({ id: doc.id, ...doc.data() });
-          });
-      }
+    for (const deptName of departmentNames) {
+      console.log("department name: ", deptName);
+      const q = query(collection(db, `professors/${deptName}/profList`));
+      const querySnapshot = await getDocs(q);
+      querySnapshot.forEach((doc) => {
+        const data = doc.data();
+        professors.push({
+          id: doc.id,
+          firstName: data.firstName,
+          lastName: data.lastName,
+          avgRating: data.avgRating,
+          avgDifficulty: data.avgDifficulty,
+          numRatings: data.numRatings,
+          wouldTakeAgainPercent: data.wouldTakeAgainPercent,
+        });
+      });
+    }
+
+    // Match the course professor 
+    const matchedProfessor = professors.find((prof) => {
+      const [lastName, firstInitialWithDot] = courseInstructor.split(" ");
+      const firstInitial = firstInitialWithDot.replace(".", ""); // Remove period
+      return (
+        prof.lastName.toLowerCase() === lastName.toLowerCase() &&
+        prof.firstName[0].toLowerCase() === firstInitial.toLowerCase()
+      );
+    });
+
+    return matchedProfessor ? [matchedProfessor] : [];
   } catch (error) {
-      console.error("Error fetching professors:", error);
+    console.error("Error fetching professors:", error);
+    return [];
   }
-  return professors;
 }
