@@ -13,15 +13,22 @@ const CourseDetailScreen = ({ route }) => {
   const courseDescription = course.description || "No Description";
   const courseInstructor = course.classSections[0].instructors[0].instructor
   const courseDepartment = course.deptCode
-  // console.log(courseDepartment)
+
+  // In case there is a space after the department code returned by GOLD 💀
+  const removeLeadingAndTrailingSpaces = (str) => str.trim();
+  const cleanedDepartmentCode = removeLeadingAndTrailingSpaces(courseDepartment);
+
+  console.log("course department from GOLD: ", cleanedDepartmentCode)
+  console.log("course instructor from GOLD: ", courseInstructor)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const matchedProfessor = await FetchProfessorsByDepartment(
-          courseDepartment,
+          cleanedDepartmentCode,
           courseInstructor
         );
+        console.log("matchedProfessor: ", matchedProfessor)
         if (matchedProfessor.length > 0) {
           setProfessor(matchedProfessor[0]); // We only need the first match
         }

@@ -7,13 +7,12 @@ const db = firestore
 // read the data in firebase
 export async function FetchProfessorsByDepartment(departmentCode, courseInstructor) {
   const professors = [];
-
+  console.log("start to find professor's rmp")
   // Get possible department names for the given code from the imported JSON
   const departmentNames = departmentMapping[departmentCode] || [];
-
+  console.log('departmentName mapped: ', departmentNames[0])
   try {
     for (const deptName of departmentNames) {
-      console.log("department name: ", deptName);
       const q = query(collection(db, `professors/${deptName}/profList`));
       const querySnapshot = await getDocs(q);
       querySnapshot.forEach((doc) => {
@@ -32,8 +31,17 @@ export async function FetchProfessorsByDepartment(departmentCode, courseInstruct
 
     // Match the course professor 
     const matchedProfessor = professors.find((prof) => {
-      const [lastName, firstInitialWithDot] = courseInstructor.split(" ");
+      const parts = courseInstructor.split(" ");
+      
+      // Ensure parts have the expected structure
+      if (parts.length < 2) {
+        console.warn("courseInstructor is missing required parts:", courseInstructor);
+        return false; 
+      }
+      
+      const [lastName, firstInitialWithDot] = parts;
       const firstInitial = firstInitialWithDot.replace(".", ""); // Remove period
+    
       return (
         prof.lastName.toLowerCase() === lastName.toLowerCase() &&
         prof.firstName[0].toLowerCase() === firstInitial.toLowerCase()
