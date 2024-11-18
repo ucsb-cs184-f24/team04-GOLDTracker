@@ -14,6 +14,7 @@ import AboutScreen from "../screen/AboutScreen";
 import HelpScreen from "../screen/HelpScreen";
 import TermsOfUseScreen from "../screen/TermOfUseScreen";
 import CourseDetailScreen from "../screen/CourseDetailScreen";
+import Header from "../components/Header"; // Adjust import path as needed
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
@@ -21,54 +22,17 @@ const HomeStack = createStackNavigator();
 const MoreStack = createStackNavigator();
 
 const MoreStackScreen = () => (
-  <MoreStack.Navigator
-    screenOptions={({ navigation }) => ({
-      headerShown: true,
-      headerLeft: ({ tintColor }) => (
-        <TouchableOpacity
-          onPress={() => navigation.goBack()}
-          style={{ marginLeft: 15 }} // Adjust position here
-        >
-          <Entypo name="chevron-left" size={35} color={tintColor || "#91908d"} />
-        </TouchableOpacity>
-      ),
-      headerTitleStyle: {
-        fontSize: 24, // Increase the title size
-        //fontWeight: 'bold', // Optional: make the title bold
-        color:"#60605e",
-      },
-    })}
-  >
-    <MoreStack.Screen
-      name="More"
-      component={MoreScreen}
-      options={{ headerShown: false }}
-    />
+  <MoreStack.Navigator>
+    <MoreStack.Screen name="More" component={MoreScreen} options={{ header: () => <Header />,}}/>
     <MoreStack.Screen name="AboutScreen" component={AboutScreen} options={{ title: "About" }} />
     <MoreStack.Screen name="HelpScreen" component={HelpScreen} options={{ title: "Help" }} />
     <MoreStack.Screen name="TermOfUseScreen" component={TermsOfUseScreen} options={{ title: "Terms of Use" }} />
   </MoreStack.Navigator>
 );
-
-
-
-const CustomTabBarButton = ({ children, onPress }) => (
-  <TouchableOpacity
-    style={{
-      top: -30,
-      justifyContent: 'center',
-      alignItems: 'center',
-      ...styles.shadow,
-    }}
-    onPress={onPress}
-    activeOpacity={0.9}
-  >
-  </TouchableOpacity>
-);
-
+        
 const HomeStackScreen = () => (
-  <HomeStack.Navigator screenOptions={{ headerShown: false }}>
-    <HomeStack.Screen name=" " component={HomeScreen} />
+  <HomeStack.Navigator>
+    <HomeStack.Screen name="Home" component={HomeScreen} options={{ header: () => <Header />,}}/>
     <HomeStack.Screen
       name="CourseDetailScreen"
       component={CourseDetailScreen}
@@ -79,11 +43,8 @@ const HomeStackScreen = () => (
 
 const Navigator = () => {
   return (
-    <Tab.Navigator
-      screenOptions={{
-        headerShown: false,
-      }}
-    >
+      <Tab.Navigator>
+
       <Tab.Screen
         name="Home"
         component={HomeStackScreen}
@@ -93,8 +54,9 @@ const Navigator = () => {
               name="home"
               size={25}
               color={focused ? COLORS.yellow : COLORS.darkBlue}
-            />
+            /> 
           ),
+          headerShown: false,
         }}
       />
 
@@ -109,6 +71,7 @@ const Navigator = () => {
               color={focused ? COLORS.yellow : COLORS.darkBlue}
             />
           ),
+          header: () => <Header />,
         }}
       />
 
@@ -123,6 +86,7 @@ const Navigator = () => {
               color={focused ? COLORS.yellow : COLORS.darkBlue}
             />
           ),
+          header: () => <Header />,
         }}
       />
 
@@ -137,6 +101,7 @@ const Navigator = () => {
               color={focused ? COLORS.yellow : COLORS.darkBlue}
             />
           ),
+          headerShown: false,
         }}
       />
     </Tab.Navigator>
