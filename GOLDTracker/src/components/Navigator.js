@@ -18,21 +18,40 @@ import Header from "../components/Header"; // Adjust import path as needed
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
-
 const MoreStack = createStackNavigator();
 
 const MoreStackScreen = () => (
   <MoreStack.Navigator>
-    <MoreStack.Screen name="More" component={MoreScreen} options={{ header: () => <Header />,}}/>
-    <MoreStack.Screen name="AboutScreen" component={AboutScreen} options={{ title: "About" }} />
-    <MoreStack.Screen name="HelpScreen" component={HelpScreen} options={{ title: "Help" }} />
-    <MoreStack.Screen name="TermOfUseScreen" component={TermsOfUseScreen} options={{ title: "Terms of Use" }} />
+    <MoreStack.Screen
+      name="MoreScreen" // Changed from "More" to "MoreScreen"
+      component={MoreScreen}
+      options={{ header: () => <Header /> }}
+    />
+    <MoreStack.Screen
+      name="AboutScreen"
+      component={AboutScreen}
+      options={{ title: "About" }}
+    />
+    <MoreStack.Screen
+      name="HelpScreen"
+      component={HelpScreen}
+      options={{ title: "Help" }}
+    />
+    <MoreStack.Screen
+      name="TermsOfUseScreen" // Ensured consistent naming
+      component={TermsOfUseScreen}
+      options={{ title: "Terms of Use" }}
+    />
   </MoreStack.Navigator>
 );
-        
+
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
-    <HomeStack.Screen name="Home" component={HomeScreen} options={{ header: () => <Header />,}}/>
+    <HomeStack.Screen
+      name="HomeScreen" // Changed from "Home" to "HomeScreen"
+      component={HomeScreen}
+      options={{ header: () => <Header /> }}
+    />
     <HomeStack.Screen
       name="CourseDetailScreen"
       component={CourseDetailScreen}
@@ -43,8 +62,7 @@ const HomeStackScreen = () => (
 
 const Navigator = () => {
   return (
-      <Tab.Navigator>
-
+    <Tab.Navigator>
       <Tab.Screen
         name="Home"
         component={HomeStackScreen}
@@ -54,7 +72,7 @@ const Navigator = () => {
               name="home"
               size={25}
               color={focused ? COLORS.yellow : COLORS.darkBlue}
-            /> 
+            />
           ),
           headerShown: false,
         }}
