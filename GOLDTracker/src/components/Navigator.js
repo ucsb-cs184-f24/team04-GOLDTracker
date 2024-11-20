@@ -14,7 +14,7 @@ import AboutScreen from "../screen/AboutScreen";
 import HelpScreen from "../screen/HelpScreen";
 import TermsOfUseScreen from "../screen/TermOfUseScreen";
 import CourseDetailScreen from "../screen/CourseDetailScreen";
-import Header from "../components/Header"; // Adjust import path as needed
+import Header from "../components/Header"; 
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
