@@ -39,3 +39,6 @@ yarn-error.*
 # raw data
 rmp_prof_clean.json
 sorted_professors_flat.json
+GOLDTracker/package-lock.json
+package-lock.json
+yarn.lock

@@ -1,10 +1,1 @@
-const mockAsyncStorage = {
-    setItem: jest.fn(() => Promise.resolve()),
-    getItem: jest.fn(() => Promise.resolve(null)),
-    removeItem: jest.fn(() => Promise.resolve()),
-    clear: jest.fn(() => Promise.resolve()),
-    getAllKeys: jest.fn(() => Promise.resolve([])),
-  };
-  
-  export default mockAsyncStorage;
-  
+export * from '@react-native-async-storage/async-storage/jest/async-storage-mock';

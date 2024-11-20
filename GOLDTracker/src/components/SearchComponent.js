@@ -56,7 +56,7 @@ const SearchComponent = ({ search, setSearch }) => {
         });
 
         const data = await response.json();
-        console.log("API Response:", JSON.stringify(data, null, 2));
+        // console.log("API Response:", JSON.stringify(data, null, 2));
 
         if (data.classes && data.classes.length > 0) {
           const coursesWithFollowing = data.classes.map((course) => ({
