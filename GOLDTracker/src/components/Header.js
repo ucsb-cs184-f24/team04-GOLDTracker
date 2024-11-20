@@ -4,6 +4,7 @@ import { Avatar } from "react-native-paper";
 import { View, Text, Image, StyleSheet } from 'react-native';
 
 const Header = () => {
+
 	const [userInfo, setUserInfo] = useState(null);
 
 	useEffect(() => {
