@@ -23,7 +23,7 @@ const MoreStack = createStackNavigator();
 const MoreStackScreen = () => (
   <MoreStack.Navigator>
     <MoreStack.Screen
-      name="MoreScreen" // Changed from "More" to "MoreScreen"
+      name="MoreScreen" 
       component={MoreScreen}
       options={{ header: () => <Header /> }}
     />
@@ -38,7 +38,7 @@ const MoreStackScreen = () => (
       options={{ title: "Help" }}
     />
     <MoreStack.Screen
-      name="TermsOfUseScreen" // Ensured consistent naming
+      name="TermsOfUseScreen" 
       component={TermsOfUseScreen}
       options={{ title: "Terms of Use" }}
     />
@@ -48,7 +48,7 @@ const MoreStackScreen = () => (
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
     <HomeStack.Screen
-      name="HomeScreen" // Changed from "Home" to "HomeScreen"
+      name="HomeScreen" 
       component={HomeScreen}
       options={{ header: () => <Header /> }}
     />
