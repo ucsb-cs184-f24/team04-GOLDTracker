@@ -152,7 +152,7 @@ const styles = StyleSheet.create({
     marginBottom: 4,
   },
   numRatings: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#555",
   },
 });
