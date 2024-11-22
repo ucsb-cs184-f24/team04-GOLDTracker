@@ -3,11 +3,9 @@ import { render, fireEvent, waitFor, act } from '@testing-library/react-native';
 import Navigator from '../../components/Navigator';
 import { NavigationContainer } from '@react-navigation/native';
 
-// Mock external modules
 jest.mock('@expo/vector-icons/Entypo', () => 'Icon');
 jest.mock('../../components/Header', () => 'Header');
 
-// Mock screens with in-scope imports
 jest.mock('../../screen/HomeScreen', () => {
   const React = require('react');
   const { Text } = require('react-native');
@@ -38,15 +36,17 @@ jest.mock('../../screen/CourseDetailScreen', () => {
   return () => <Text>Course Details Screen</Text>;
 });
 
+// Mock Animated components to avoid unnecessary state updates
+jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+
 describe('Navigator Component', () => {
-  it('renders bottom navigation tabs correctly', () => {
+  it('renders bottom navigation tabs correctly', async () => {
     const { getByText } = render(
       <NavigationContainer>
         <Navigator />
       </NavigationContainer>
     );
 
-    // Check if all bottom navigation tabs are rendered
     expect(getByText('Home')).toBeTruthy();
     expect(getByText('Cart')).toBeTruthy();
     expect(getByText('Notifications')).toBeTruthy();
@@ -60,9 +60,8 @@ describe('Navigator Component', () => {
       </NavigationContainer>
     );
 
-    const homeTab = getByText('Home');
     await act(async () => {
-      fireEvent.press(homeTab);
+      fireEvent.press(getByText('Home'));
     });
 
     await waitFor(() => {
@@ -77,9 +76,8 @@ describe('Navigator Component', () => {
       </NavigationContainer>
     );
 
-    const cartTab = getByText('Cart');
     await act(async () => {
-      fireEvent.press(cartTab);
+      fireEvent.press(getByText('Cart'));
     });
 
     await waitFor(() => {
@@ -94,9 +92,8 @@ describe('Navigator Component', () => {
       </NavigationContainer>
     );
 
-    const notificationsTab = getByText('Notifications');
     await act(async () => {
-      fireEvent.press(notificationsTab);
+      fireEvent.press(getByText('Notifications'));
     });
 
     await waitFor(() => {
@@ -111,9 +108,8 @@ describe('Navigator Component', () => {
       </NavigationContainer>
     );
 
-    const moreTab = getByText('More');
     await act(async () => {
-      fireEvent.press(moreTab);
+      fireEvent.press(getByText('More'));
     });
 
     await waitFor(() => {
