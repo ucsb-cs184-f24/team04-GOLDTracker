@@ -54,4 +54,5 @@ describe('Class Component', () => {
     // Check if the space availability is rendered
     expect(getByText('Space: 30/36')).toBeTruthy();
   });
+
 });
