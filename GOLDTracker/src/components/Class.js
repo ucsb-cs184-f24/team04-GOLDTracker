@@ -104,6 +104,7 @@ class Class extends React.Component {
                   <Text style={styles.sectionTime}>{sectionTime}</Text>
                   <Text style={styles.sectionSpace}>Space: {sectionSpace}</Text>
                   <TouchableOpacity
+                    testID={`follow-button-${section.section}`}
                     style={[
                       styles.followButton,
                       section.following

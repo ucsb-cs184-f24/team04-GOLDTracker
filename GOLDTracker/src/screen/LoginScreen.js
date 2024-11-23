@@ -10,10 +10,11 @@ export default function LoginScreen({ promptAsync }) {
         <Image
           source={require('../assets/ucsbLOGO.png')}
           style={styles.logo}
+          testID="logo-image"
         />
       </View>
       <Text style={styles.subtitle}>GoldTracker</Text>
-      <TouchableOpacity style={styles.loginButton} onPress={() => promptAsync()}>
+      <TouchableOpacity style={styles.loginButton} onPress={() => promptAsync()}  testID="login-button">
         <Text style={styles.loginButtonText}>Log in With Your UCSB Account</Text>
       </TouchableOpacity>
     </SafeAreaView>
