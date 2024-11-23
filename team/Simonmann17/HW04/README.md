@@ -1,5 +1,5 @@
-Feature: Personalized Greeting in App Header
-Description
+### Feature: Personalized Greeting in App Header
+## Description
 This feature enhances the app’s user interface by displaying a personalized greeting in the header that includes the user's name and profile photo. This improves the user experience by making the interface more engaging and user-focused.
 
 Key Functionalities
