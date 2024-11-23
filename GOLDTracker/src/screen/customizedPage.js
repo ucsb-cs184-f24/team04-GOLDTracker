@@ -10,6 +10,8 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import categories from '../assets/categories';
+import { ref, set } from "firebase/database";
+import {auth, database} from "../../firebaseConfig"
 
 const CustomizedPage = () => {
   const [major, setMajor] = useState(''); // Selected major
@@ -20,17 +22,7 @@ const CustomizedPage = () => {
   }); // Selected dates and times
   const [showTimePicker, setShowTimePicker] = useState(false); 
   const [isEditable, setIsEditable] = useState(false); // Edit mode state
-
-  //TO DO: need to edit,make better UX
-  const handleTimeChange = (event, selectedDate) => {
-    if (selectedDate) {
-      setClassTimes((prev) => ({
-        ...prev,
-        [showTimePicker.key]: selectedDate, // Update specific pass
-      }));
-    }
-    setShowTimePicker({ show: false, key: null }); // Close picker
-  };
+  
 
   const handleEdit = () => {
     setIsEditable(true); // Enable editing
@@ -44,6 +36,32 @@ const CustomizedPage = () => {
     setIsEditable(false); // Lock editing for the major only
     Alert.alert('Saved!', 'Your major and class times have been updated.');
   };
+  const user = auth.currentUser; // Get the currently logged-in user
+  if (!user) {
+    Alert.alert("Error", "No user is logged in.");
+    return;
+  }
+
+  const userId = user.uid;
+
+  const userData = {
+    major,
+    "pass time": {
+      pass1: classTimes.pass1.toISOString(),
+      pass2: classTimes.pass2.toISOString(),
+      pass3: classTimes.pass3.toISOString(),
+    },
+  };
+
+  // Save to Firebase
+  set(ref(database, `users/${userId}`), userData)
+    .then(() => {
+      Alert.alert("Saved!", "Your major and class times have been updated.");
+      setIsEditable(false); // Lock editing after submission
+    })
+    .catch((error) => {
+      Alert.alert("Error", `Failed to save data: ${error.message}`);
+    });
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
