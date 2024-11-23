@@ -57,15 +57,19 @@ The implementation relies on the following libraries and tools:
 
 ---
 
-## **Folder Structure**
-The code for my contributions is located in the following folder:
-- [GitHub Folder URL](https://github.com/ucsb-cs184-f24/team04-GOLDTracker/tree/main/team/zhenbi93)
+## **Files Changed**
+1. GOLDTracker/src/screen/CustomizedPage.js
+2. GOLDTracker/src/screen/HomeScreen.js
+3. GOLDTracker/src/screen/MoreScreen.js
+4. GOLDTracker/src/assets/categories.js
+5. GOLDTracker/src/components/Navigator.js
+6. GOLDTracker/App.tsx
+7. GOLDTracker/firebaseConfig.js
 
-This folder includes:
-1. **Source Files:** The implementation of the features described above.
-2. **README.md:** Explanation of the structure and contribution details.
-3. **HW04 Folder:** Starting point for evaluating my work, located under `team/<your_github_handle>/`.
-
+---
+## **PR**
+https://github.com/ucsb-cs184-f24/team04-GOLDTracker/pull/82
+https://github.com/ucsb-cs184-f24/team04-GOLDTracker/pull/62
 --- 
 
 Thank you for reviewing my contribution! Please feel free to reach out with any questions.
