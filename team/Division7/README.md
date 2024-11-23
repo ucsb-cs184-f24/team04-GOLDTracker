@@ -5,3 +5,7 @@ As you can see, they run and pass:
 
 
 Previous to this, we had no tests at all and no indicators of when something changes, possibly having knock-on effects.
+
+
+The individual tests can be seen in this directory:
+https://github.com/ucsb-cs184-f24/team04-GOLDTracker/tree/b7dbf8a24fbc8bd1ea5979157a4a9eda4504b23c/GOLDTracker/src/__tests__/components
