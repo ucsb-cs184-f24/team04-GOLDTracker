@@ -2,6 +2,8 @@
 
 Both my teammate Daniel and I are using the same Jest setup, and our modifications are made on the same branch called `jest`. Please consider the following files as part of my contributions:
 
+For specific changes refer to: https://github.com/ucsb-cs184-f24/team04-GOLDTracker/pull/80
+
 ## Test Files
 1. **`GOLDTracker/src/__tests__/components/Class.test.js`**  
    Ensures that the `Class` component correctly renders course information, including details like course code, time, professor name, sections, and space availability.
