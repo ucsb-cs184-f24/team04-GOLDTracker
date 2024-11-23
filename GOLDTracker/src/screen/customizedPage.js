@@ -72,7 +72,7 @@ const CustomizedPage = ({navigation}) => {
         },
         { merge: true } // Merges with existing document or creates a new one
       );
-      navigation.navigate(" ", { updated: true });
+      navigation.navigate("HomeScreen", { updated: true });
     } catch (error) {
       Alert.alert("Error", `Failed to save data: ${error.message}`);
     }

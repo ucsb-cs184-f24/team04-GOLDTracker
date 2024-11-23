@@ -90,7 +90,7 @@ const HomeScreen = ({ navigation,route }) => {
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
-          "ucsb-api-key": API_KEY,
+          "ucsb-api-key":API_KEY,
           "Content-Type": "application/json",
         },
       });

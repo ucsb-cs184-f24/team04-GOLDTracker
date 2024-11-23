@@ -26,7 +26,7 @@ const firebaseConfig = {
     databaseURL: FIREBASE_DATABASE_URL
 };
 
-const app = initializeApp(firebaseConfig);
+const app = initializeApp( firebaseConfig);
 export const database = getDatabase(app);
 
 export const auth = initializeAuth(app, {

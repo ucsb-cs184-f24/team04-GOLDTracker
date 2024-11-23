@@ -35,7 +35,7 @@ const App = () => {
 
     const [userInfo, setUserInfo] = useState();
     const [request, response, promptAsync] = Google.useAuthRequest({
-        iosClientId: IOS_CLIENT_ID,
+        iosClientId:IOS_CLIENT_ID,
         androidClientId: ANDROID_CLIENT_ID,
     });
 
