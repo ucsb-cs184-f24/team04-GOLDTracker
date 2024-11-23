@@ -7,7 +7,9 @@ import Navigator from "./src/components/Navigator";
 import LoginScreen from "./src/screen/LoginScreen";
 import Header from "./src/components/Header"
 
-import {auth} from "./firebaseConfig";
+import {auth, firestore} from "./firebaseConfig";
+import { doc, setDoc, getDoc } from "firebase/firestore";
+
 import * as Google from "expo-auth-session/providers/google";
 import * as WebBrowser from "expo-web-browser";
 import {
@@ -27,6 +29,7 @@ import {setupBackgroundNotifications} from "./src/components/BackgroundRegister"
 WebBrowser.maybeCompleteAuthSession();
 
 const Stack = createNativeStackNavigator();
+
 const App = () => {
 
     const [userInfo, setUserInfo] = useState();
@@ -35,11 +38,37 @@ const App = () => {
         androidClientId: ANDROID_CLIENT_ID,
     });
 
+    const saveUserOnLogin = async (user) => {
+        try {
+          const userDocRef = doc(firestore, "users", user.uid); // User doc ID = auth UID
+          const userDoc = await getDoc(userDocRef);
+      
+          if (!userDoc.exists()) {
+            // Save user info only if the document doesn't exist
+            await setDoc(userDocRef, {
+              email: user.email,
+              name: user.displayName || "Anonymous",
+              major: "",
+              "pass time": {
+                pass1: "",
+                pass2: "",
+                pass3: ""
+              }
+            });
+            console.log("User saved successfully");
+          } else {
+            console.log("User already exists in Firestore");
+          }
+        } catch (error) {
+          console.error("Error saving user to Firestore:", error);
+        }
+      };
+
     useEffect(() => {
         if (userInfo) {
             syncToFirebase();
         }
-    }, []);
+    }, [userInfo]);
 
     useEffect(() => {
         if (response?.type == "success") {
@@ -55,8 +84,11 @@ const App = () => {
                 console.log(JSON.stringify(user, null, 2));
                 setUserInfo(user);
                 await AsyncStorage.setItem("@user", JSON.stringify(user));
+                await saveUserToFirestore(user);
             } else {
                 console.log("User is not logged in");
+                setUserInfo(null);
+                await AsyncStorage.removeItem("@user");
             }
         });
         return () => unsub();
@@ -73,12 +105,24 @@ const App = () => {
     }, []);
 
     useEffect(() => {
-        const makeSync = AppState.addEventListener('change', async (toState: any) => {
-            if (toState === 'background') {
+        getPermissionsAsync().then(async (hasPermissions) => {
+            if (!hasPermissions.granted && hasPermissions.canAskAgain) {
+                await requestPermissionsAsync();
+            }
+        });
+        setupBackgroundNotifications();
+    }, []);
+
+
+    useEffect(() => {
+        const makeSync = AppState.addEventListener("change", async (toState) => {
+            if (toState === "background") {
                 await syncToFirebase();
             }
-        })
+        });
+        return () => makeSync.remove(); // Clean up the event listener
     }, []);
+    
     return (
         <NavigationContainer independent={true}>
             {userInfo ?
@@ -92,6 +136,7 @@ const App = () => {
                     </Stack.Navigator>
                 )
                 : (<LoginScreen promptAsync={promptAsync}/>)
+                
             }
         </NavigationContainer>
     );

@@ -1,6 +1,6 @@
 import {initializeApp} from "firebase/app";
 import {getDatabase} from "firebase/database";
-
+import { getFirestore} from "firebase/firestore";
 import {
     FIREBASE_API_KEY,
     FIREBASE_AUTH_DOMAIN,
@@ -32,3 +32,5 @@ export const database = getDatabase(app);
 export const auth = initializeAuth(app, {
     persistence: getReactNativePersistence(ReactNativeAsyncStorage)
 });
+
+export const firestore = getFirestore(app);

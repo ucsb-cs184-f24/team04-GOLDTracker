@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect} from 'react';
 import {
   View,
   Text,
@@ -10,10 +10,10 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import categories from '../assets/categories';
-import { ref, set } from "firebase/database";
-import {auth, database} from "../../firebaseConfig"
+import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { auth, firestore } from "../../firebaseConfig";
 
-const CustomizedPage = () => {
+const CustomizedPage = ({navigation}) => {
   const [major, setMajor] = useState(''); // Selected major
   const [classTimes, setClassTimes] = useState({
     pass1: new Date(),
@@ -22,8 +22,63 @@ const CustomizedPage = () => {
   }); // Selected dates and times
   const [showTimePicker, setShowTimePicker] = useState(false); 
   const [isEditable, setIsEditable] = useState(false); // Edit mode state
-  
+ 
+  // Fetch user data from Firestore
+  const fetchUserData = async () => {
+    const user = auth.currentUser;
+    if (!user) {
+      Alert.alert("Error", "No user is logged in.");
+      return;
+    }
 
+    try {
+      const userDocRef = doc(firestore, "users", user.uid);
+      const userDoc = await getDoc(userDocRef);
+
+      if (userDoc.exists()) {
+        const userData = userDoc.data();
+        setMajor(userData.major || '');
+        setClassTimes({
+          pass1: userData["pass time"]?.pass1 ? new Date(userData["pass time"].pass1) : new Date(),
+          pass2: userData["pass time"]?.pass2 ? new Date(userData["pass time"].pass2) : new Date(),
+          pass3: userData["pass time"]?.pass3 ? new Date(userData["pass time"].pass3) : new Date(),
+        });
+        console.log("User data fetched:", userData);
+      } else {
+        console.log("No user data found. New user.");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
+
+  const saveUserData = async (major, classTimes) => {
+    const user = auth.currentUser;
+    if (!user) {
+      Alert.alert("Error", "No user is logged in.");
+      return;
+    }
+  
+    try {
+      const userDocRef = doc(firestore, "users", user.uid);
+      await updateDoc(userDocRef, {
+        major,
+        "pass time": {
+          pass1: classTimes.pass1.toISOString(),
+          pass2: classTimes.pass2.toISOString(),
+          pass3: classTimes.pass3.toISOString()
+        }
+      });
+    } catch (error) {
+      Alert.alert("Error", `Failed to save data: ${error.message}`);
+    }
+  };
+
+  // Fetch user data when the component mounts
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  
   const handleEdit = () => {
     setIsEditable(true); // Enable editing
   };
@@ -33,35 +88,26 @@ const CustomizedPage = () => {
       Alert.alert('Error', 'Please select a major before submitting.');
       return;
     }
-    setIsEditable(false); // Lock editing for the major only
-    Alert.alert('Saved!', 'Your major and class times have been updated.');
+    // Confirmation alert before saving data
+    Alert.alert(
+      'Confirm Submission',
+      'Are you sure you want to save these changes?',
+      [
+        {
+          text: 'Cancel',
+          style: 'cancel',
+        },
+        {
+          text: 'Yes',
+          onPress: () => {
+            saveUserData(major, classTimes);
+            navigation.goBack(); // Navigate back to the previous screen
+          },
+        },
+      ],
+      { cancelable: true }
+    );
   };
-  const user = auth.currentUser; // Get the currently logged-in user
-  if (!user) {
-    Alert.alert("Error", "No user is logged in.");
-    return;
-  }
-
-  const userId = user.uid;
-
-  const userData = {
-    major,
-    "pass time": {
-      pass1: classTimes.pass1.toISOString(),
-      pass2: classTimes.pass2.toISOString(),
-      pass3: classTimes.pass3.toISOString(),
-    },
-  };
-
-  // Save to Firebase
-  set(ref(database, `users/${userId}`), userData)
-    .then(() => {
-      Alert.alert("Saved!", "Your major and class times have been updated.");
-      setIsEditable(false); // Lock editing after submission
-    })
-    .catch((error) => {
-      Alert.alert("Error", `Failed to save data: ${error.message}`);
-    });
 
   return (
     <ScrollView contentContainerStyle={styles.scrollContainer}>
@@ -137,7 +183,7 @@ const CustomizedPage = () => {
             </TouchableOpacity>
           ) : (
             <TouchableOpacity style={styles.submitButton} onPress={handleSubmit}>
-              <Text style={styles.buttonText}>Submit</Text>
+              <Text style={styles.buttonText}>Save</Text>
             </TouchableOpacity>
           )}
         </View>

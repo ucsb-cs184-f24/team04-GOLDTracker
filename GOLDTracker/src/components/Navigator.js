@@ -16,6 +16,7 @@ import TermsOfUseScreen from "../screen/TermOfUseScreen";
 import CourseDetailScreen from "../screen/CourseDetailScreen";
 import customizedPage from "../screen/customizedPage";
 
+
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 
