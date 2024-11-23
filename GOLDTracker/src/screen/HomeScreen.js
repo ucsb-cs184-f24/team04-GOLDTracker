@@ -122,7 +122,7 @@ const HomeScreen = ({ navigation,route }) => {
   );
 
   return (
-    <SafeAreaView style={styles.safeArea}>
+    <SafeAreaView style={styles.safeArea} testID="safe-area-view">
       <View style={styles.container}>
         <StatusBar style="auto" />
 

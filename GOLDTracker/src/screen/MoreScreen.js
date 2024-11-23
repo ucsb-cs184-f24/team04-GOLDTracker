@@ -7,6 +7,7 @@ import {
     View,
     TouchableOpacity,
     Linking,
+    Alert,
 } from "react-native";
 import { auth } from "../../firebaseConfig";
 import { Avatar } from "react-native-paper";
@@ -85,12 +86,27 @@ export default function MoreScreen({ navigation }) {
                     icon="log-out"
                     label="Log Out"
                     onPress={async () => {
-                        try {
-                            await signOut(auth);
-                            DevSettings.reload(); // Reload the app after successful sign-out
-                        } catch (error) {
-                            console.error("Error signing out: ", error);
-                        }
+                        Alert.alert(
+                            "Confirm Log Out",
+                            "Are you sure you want to log out?",
+                            [
+                                {
+                                    text: "Cancel",
+                                    style: "cancel",
+                                },
+                                {
+                                    text: "Log Out",
+                                    onPress: async () => {
+                                        try {
+                                            await signOut(auth);
+                                            DevSettings.reload(); // Reload the app after successful sign-out
+                                        } catch (error) {
+                                            console.error("Error signing out: ", error);
+                                        }
+                                    },
+                                },
+                            ]
+                        );
                     }}
                 />
             </View>
@@ -105,7 +121,7 @@ const styles = StyleSheet.create({
     },
     userInfoContainer: {
         marginBottom: 10,
-        marginTop: 100, // wait for header bar
+        marginTop: 10, // wait for header bar
         marginLeft:40,
     },
     profileRow: {
@@ -129,11 +145,6 @@ const styles = StyleSheet.create({
         width: '100%', // Adjust width if needed
         backgroundColor: '#e0e0e0', // Line color
         elevation: 4, // Android shadow effect
-        shadowColor: '#000', // Shadow color
-        shadowOffset: { width: 0, height: 2 }, // Shadow offset
-        shadowOpacity: 0.3, // Shadow opacity
-        shadowRadius: 2, // Shadow blur radius
-        //marginVertical: 15, 
     },
     menu: {
         marginTop: 10,

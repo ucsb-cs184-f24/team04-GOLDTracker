@@ -17,7 +17,7 @@ This is a class availability notification app. <br />
 ### Which tech stack(s) your group plans to evaluate/use? 
 We are planning to use React Native with Expo Go
 
-### Uer Roles
+### User Roles
 - UCSB students
   1. They could check information of courses they are interested in.
   2. They could login with their UCSB account to save their information.
