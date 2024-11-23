@@ -18,28 +18,18 @@ const CustomizedPage = () => {
     pass2: new Date(),
     pass3: new Date(),
   }); // Selected dates and times
-  const [activePicker, setActivePicker] = useState({ pass: null, mode: 'date' }); // Tracks active pass and picker mode
+  const [showTimePicker, setShowTimePicker] = useState(false); 
   const [isEditable, setIsEditable] = useState(false); // Edit mode state
 
   //TO DO: need to edit,make better UX
   const handleTimeChange = (event, selectedDate) => {
     if (selectedDate) {
-      setClassTimes((prevTimes) => ({
-        ...prevTimes,
-        [activePicker.pass]: selectedDate,
+      setClassTimes((prev) => ({
+        ...prev,
+        [showTimePicker.key]: selectedDate, // Update specific pass
       }));
-
-      if (activePicker.mode === 'date') {
-        // Switch to time picker
-        setActivePicker({ ...activePicker, mode: 'time' });
-      } else {
-        // Close the picker after time selection
-        setActivePicker({ pass: null, mode: 'date' });
-      }
-    } else {
-      // If user cancels the picker
-      setActivePicker({ pass: null, mode: 'date' });
     }
+    setShowTimePicker({ show: false, key: null }); // Close picker
   };
 
   const handleEdit = () => {
@@ -78,29 +68,48 @@ const CustomizedPage = () => {
 
         {/* Class Time Section */}
         {['pass1', 'pass2', 'pass3'].map((pass, index) => (
-          <View key={index} style={styles.passContainer}>
-            <Text style={styles.label}>{`Pass ${index + 1}`}</Text>
-            <TouchableOpacity
-              style={styles.timeButton}
-              onPress={() =>
-                setActivePicker({ pass, mode: 'date' }) // Open date picker for the specific pass
-              }
-            >
+        <View key={index} style={styles.passContainer}>
+          <Text style={styles.label}>{`Pass ${index + 1}`}</Text>
+          {!isEditable ? (
+            // Show the selected time when not in edit mode
+            <TouchableOpacity style={styles.timeButton}>
               <Text style={styles.timeText}>
                 {classTimes[pass].toLocaleDateString()} {classTimes[pass].toLocaleTimeString()}
               </Text>
             </TouchableOpacity>
-            {/* Render DateTimePicker directly under the row */}
-            {activePicker.pass === pass && (
-              <DateTimePicker
-                value={classTimes[pass]}
-                mode={activePicker.mode} // Either 'date' or 'time'
-                display="default"
-                onChange={handleTimeChange}
-              />
-            )}
-          </View>
-        ))}
+          ) : (
+            // Show the DateTimePicker in edit mode
+            <>
+            <TouchableOpacity
+              style={[styles.timeButton, !isEditable && styles.disabledButton]}
+              onPress={() => setShowTimePicker({ show: true, key: pass })}
+            >
+          <Text style={styles.timeText}>
+            {classTimes[pass].toLocaleDateString()} {classTimes[pass].toLocaleTimeString()}
+          </Text>
+        </TouchableOpacity>
+        {/* Render DateTimePicker only for the selected pass */}
+        {showTimePicker.show && showTimePicker.key === pass && (
+          <DateTimePicker
+            value={classTimes[pass]}
+            mode="datetime"
+            display="default"
+            onChange={(event, selectedDate) => {
+              if (selectedDate) {
+                setClassTimes((prev) => ({
+                  ...prev,
+                  [pass]: selectedDate,
+                }));
+              }
+              setShowTimePicker({ show: false, key: null });
+            }}
+          />
+        )}
+      </>
+    )}
+  </View>
+))}
+
 
         {/* Edit and Submit Buttons */}
         <View style={styles.buttonContainer}>
