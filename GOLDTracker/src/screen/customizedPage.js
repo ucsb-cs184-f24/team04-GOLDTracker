@@ -10,7 +10,7 @@ import {
 import { Picker } from '@react-native-picker/picker';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import categories from '../assets/categories';
-import { doc, getDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 import { auth, firestore } from "../../firebaseConfig";
 
 const CustomizedPage = ({navigation}) => {
@@ -51,7 +51,34 @@ const CustomizedPage = ({navigation}) => {
       console.error("Error fetching user data:", error);
     }
   };
+  const saveUserData = async (major, classTimes) => {
+    const user = auth.currentUser;
+    if (!user) {
+      Alert.alert("Error", "No user is logged in.");
+      return;
+    }
+  
+    try {
+      const userDocRef = doc(firestore, "users", user.uid);
+      await setDoc(
+        userDocRef,
+        {
+          major,
+          "pass time": {
+            pass1: classTimes.pass1.toISOString(),
+            pass2: classTimes.pass2.toISOString(),
+            pass3: classTimes.pass3.toISOString(),
+          },
+        },
+        { merge: true } // Merges with existing document or creates a new one
+      );
+      navigation.navigate(" ", { updated: true });
+    } catch (error) {
+      Alert.alert("Error", `Failed to save data: ${error.message}`);
+    }
+  };
 
+  {/*
   const saveUserData = async (major, classTimes) => {
     const user = auth.currentUser;
     if (!user) {
@@ -73,7 +100,7 @@ const CustomizedPage = ({navigation}) => {
       Alert.alert("Error", `Failed to save data: ${error.message}`);
     }
   };
-
+*/}
   // Fetch user data when the component mounts
   useEffect(() => {
     fetchUserData();
@@ -258,3 +285,6 @@ const styles = StyleSheet.create({
 });
 
 export default CustomizedPage;
+
+
+
