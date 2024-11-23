@@ -27,8 +27,8 @@
   - [ ] Notify only once.
   - [ ] Show more detailed notification messages (e.g., class name, section, availability).
 
----
 
+# Additional Questions to COnsider
 ## 4. Need for a Schedule Page
 - Would you find a dedicated schedule page useful for organizing your classes?  
   - [ ] Yes  
