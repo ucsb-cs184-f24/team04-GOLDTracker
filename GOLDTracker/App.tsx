@@ -98,7 +98,7 @@ const App = () => {
                 console.log(JSON.stringify(user, null, 2));
                 setUserInfo(user);
                 await AsyncStorage.setItem("@user", JSON.stringify(user));
-                await saveUserToFirestore(user);
+                await saveUserOnLogin(user);
             } else {
                 console.log("User is not logged in");
                 setUserInfo(null);

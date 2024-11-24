@@ -101,7 +101,15 @@ const SearchComponent = ({ search, setSearch }) => {
         inputContainerStyle={styles.searchInputContainer}
         onSubmitEditing={handleSearchSubmit}
         returnKeyType="search"
+        onClear={() => {
+          setSearch(""); // Clear the search text
+          navigation.reset({
+            index: 0,
+            routes: [{ name: navigation.getState().routes[navigation.getState().index].name }],
+          });
+        }}
       />
+
 
       {errorMessage ? (
         <View style={styles.errorBox}>

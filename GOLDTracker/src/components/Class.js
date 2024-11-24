@@ -3,6 +3,7 @@ import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS, SPACING } from "../theme/theme";
 import Entypo from "@expo/vector-icons/Entypo";
 import { deregisterClass, registerClass } from "./ClassRegister";
+import { BlurView } from "expo-blur";
 
 class Class extends React.Component {
   goToDetails = () => {
@@ -126,7 +127,7 @@ class Class extends React.Component {
                       }
                     }}
                   >
-                    <Text style={styles.followText}>
+                    <Text style={[styles.followText, styles.textShadow]}>
                       {section.following ? "Following" : "Follow"}
                     </Text>
                   </TouchableOpacity>
@@ -204,6 +205,11 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: COLORS.black,
     textAlign: "left",
+  },
+  textShadow: {
+    textShadowColor: "rgba(0, 0, 0, 0.5)", // Shadow color
+    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+    textShadowRadius: 3, // Shadow blur radius
   },
   followButton: {
     width: 80,

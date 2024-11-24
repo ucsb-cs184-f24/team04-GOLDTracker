@@ -5,6 +5,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { COLORS } from "../theme/theme";
+import { BlurView } from "expo-blur";
 
 import HomeScreen from "../screen/HomeScreen";
 import NotificationScreen from "../screen/NotificationScreen";
@@ -66,7 +67,21 @@ const HomeStackScreen = () => (
 
 const Navigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+    screenOptions={{
+      tabBarBackground: () => (
+        <BlurView
+          intensity={50}
+          tint="light"
+          style={StyleSheet.absoluteFill}
+        />
+      ),
+      tabBarStyle: [
+        styles.tabBar,
+        styles.shadow,
+      ],
+    }}
+  >
       <Tab.Screen
         name="Home"
         component={HomeStackScreen}
@@ -137,6 +152,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
     elevation: 5,
+  },
+  tabBar: {
+    position: "absolute",
+    borderTopWidth: 0,
+    backgroundColor: "transparent", // Set to transparent for the blur effect
   },
 });
 

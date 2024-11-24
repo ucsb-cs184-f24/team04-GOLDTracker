@@ -16,7 +16,7 @@ import Class from "../components/Class";
 import { API_KEY, API_URL } from "@env";
 import { useFocusEffect } from "@react-navigation/native";
 
-const HomeScreen = ({ navigation,route }) => {
+const HomeScreen = ({ navigation, route }) => {
   const [search, setSearch] = useState("");
   const [major, setMajor] = useState("");
   const [courses, setCourses] = useState([]);
@@ -48,62 +48,69 @@ const HomeScreen = ({ navigation,route }) => {
 
     fetchUserMajor();
   }, []);
-    // Refetch user major and courses on screen focus
-    useFocusEffect(
-      React.useCallback(() => {
-        const fetchUserMajor = async () => {
-          const user = auth.currentUser;
-          if (!user) {
-            console.error("No user is logged in.");
-            return;
-          }
-  
-          try {
-            const userDocRef = doc(firestore, "users", user.uid);
-            const userDoc = await getDoc(userDocRef);
-  
-            if (userDoc.exists()) {
-              const userData = userDoc.data();
-              setMajor(userData.major || "");
-              if (userData.major) {
-                fetchCoursesForMajor(userData.major);
-              }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchUserMajor = async () => {
+        const user = auth.currentUser;
+        if (!user) {
+          console.error("No user is logged in.");
+          return;
+        }
+
+        try {
+          const userDocRef = doc(firestore, "users", user.uid);
+          const userDoc = await getDoc(userDocRef);
+
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setMajor(userData.major || "");
+            if (userData.major) {
+              fetchCoursesForMajor(userData.major);
             }
-          } catch (error) {
-            console.error("Error fetching user data:", error);
           }
-        };
-  
-        fetchUserMajor();
-      }, [route.params?.updated]) // Refetch when `updated` parameter changes
-    );
-  
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+
+      fetchUserMajor();
+    }, [route.params?.updated])
+  );
+
   const fetchCoursesForMajor = async (major) => {
     const quarter = "20244";
     const apiUrl = `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
       major
     )}&includeClassSections=true`;
-  
-    console.log("API URL:", apiUrl); // Debugging log
-  
+
+    console.log("API URL:", apiUrl);
+
     try {
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
-          "ucsb-api-key":API_KEY,
+          "ucsb-api-key": API_KEY,
           "Content-Type": "application/json",
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-      console.log("API Response:", data); // Debugging log
-  
+      console.log("API Response:", data);
+
       if (data.classes && data.classes.length > 0) {
-        setCourses(data.classes);
+        const coursesWithFollowing = data.classes.map((course) => ({
+          ...course,
+          classSections: course.classSections.map((section) => ({
+            ...section,
+            following: false,
+          })),
+        }));
+        setCourses(coursesWithFollowing);
         setErrorMessage("");
       } else {
         setCourses([]);
@@ -115,10 +122,30 @@ const HomeScreen = ({ navigation,route }) => {
       setErrorMessage("An error occurred while fetching courses.");
     }
   };
-  
+
+  const toggleFollow = (courseId, sectionId) => {
+    setCourses((prevCourses) =>
+      prevCourses.map((course) =>
+        course.courseId.trim() === courseId
+          ? {
+              ...course,
+              classSections: course.classSections.map((section) =>
+                section.section === sectionId
+                  ? { ...section, following: !section.following }
+                  : section
+              ),
+            }
+          : course
+      )
+    );
+  };
 
   const renderCourseItem = ({ item }) => (
-    <Class course={item} toggleFollow={() => {}} navigation={navigation} />
+    <Class
+      course={item}
+      toggleFollow={toggleFollow}
+      navigation={navigation}
+    />
   );
 
   return (
@@ -131,7 +158,6 @@ const HomeScreen = ({ navigation,route }) => {
         </View>
 
         {major === "" ? (
-          // Show prompt to add major if not set
           <View style={styles.centeredTextContainer}>
             <TouchableOpacity
               onPress={() => navigation.navigate("CustomizedPage")}
@@ -142,7 +168,6 @@ const HomeScreen = ({ navigation,route }) => {
             </TouchableOpacity>
           </View>
         ) : (
-          // Display courses related to the user's major
           <View style={styles.courseListContainer}>
             {errorMessage ? (
               <Text style={styles.errorMessage}>{errorMessage}</Text>
