@@ -61,11 +61,9 @@ class Class extends React.Component {
           </View>
 
           {course.classSections &&
-            course.classSections.map((section, index) => {
-              // Skip the first section entirely
+            course.classSections.filter((section) => section.courseCancelled !== "C         ").map((section, index) => {
               if (index === 0) return null;
 
-              // Extract time and days for the section
               const timeLocation =
                 section.timeLocations && section.timeLocations[0];
 
@@ -141,7 +139,6 @@ class Class extends React.Component {
 
 const styles = StyleSheet.create({
   wrapper: {
-   // marginBottom: SPACING.space_8,
     paddingTop: SPACING.space_10,
     paddingHorizontal: SPACING.space_16,
     

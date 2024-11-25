@@ -1,15 +1,31 @@
 import React, { useState } from "react";
-import { StatusBar, StyleSheet, Text, View, FlatList } from "react-native";
+import { StatusBar, StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
 import { SearchBar } from "react-native-elements";
 import Class from "../components/Class";
 import { useNavigation } from "@react-navigation/native";
 import {auth} from "../../firebaseConfig";
+import departmentMapping from "../assets/departmentMapping.json";
+import RNPickerSelect from "react-native-picker-select";
+import { COLORS } from "../theme/theme";
 
 const SearchComponent = ({ search, setSearch }) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [selectedDept, setSelectedDept] = useState(null);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+  const data = departmentMapping;
+
+
   const navigation = useNavigation();
   const API_URL = "https://us-central1-goldtracker-beb96.cloudfunctions.net/search"
+  
+
+  const deptOptions = Object.keys(departmentMapping).map((dept) => ({
+    label: dept,
+    value: dept,
+  }));
+
 
   const updateSearch = (searchText) => {
     setSearch(searchText);
@@ -33,19 +49,24 @@ const SearchComponent = ({ search, setSearch }) => {
   };
 
   const handleSearchSubmit = async () => {
-    if (search.trim()) {
+    if (search.trim() || selectedDept) {
       try {
         const quarter = "20244";
         let apiUrl;
+        console.log("Search:", search);
 
-        if (/^\s*\w+\s*\d+\s*$/.test(search.trim())) {
+        if (/^[A-Z]{2,}\s[\dA-Z]+$/.test(search.trim())) {
           apiUrl = `${ API_URL }?quarter=${quarter}&courseId=${encodeURIComponent(
             search
           )}&includeClassSections=true`;
+        } else if (selectedDept) {
+          apiUrl = `${API_URL}?quarter=20244&deptCode=${encodeURIComponent(
+            selectedDept
+        )}&includeClassSections=true&pageNumber=1&pageSize=30`;
         } else {
           apiUrl = `${ API_URL }?quarter=${quarter}&deptCode=${encodeURIComponent(
             search
-          )}&includeClassSections=true`;
+          )}&includeClassSections=true&pageNumber=1&pageSize=30`;
         }
         console.log(apiUrl);
         const headers = new Headers();
@@ -89,19 +110,48 @@ const SearchComponent = ({ search, setSearch }) => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchBarBackground} />
+      <StatusBar style="auto" />
 
-      <SearchBar
-        placeholder="Search here, e.g. CMPSC 8 or CMPSC"
-        onChangeText={updateSearch}
-        value={search}
-        lightTheme
-        round
-        containerStyle={styles.searchBarContainer}
-        inputContainerStyle={styles.searchInputContainer}
-        onSubmitEditing={handleSearchSubmit}
-        returnKeyType="search"
-      />
+      <TouchableOpacity
+        style={styles.toggleButton}
+        onPress={() => setIsDropdownVisible((prev) => !prev)}
+      >
+        <Text style={styles.toggleButtonText}>
+          {isDropdownVisible ? "Back to Search" : "Search by Department"}
+        </Text>
+      </TouchableOpacity>
+
+      {isDropdownVisible ? (
+        <View style={styles.dropdownContainer}>
+          <RNPickerSelect
+            onValueChange={(value) => setSearch(value)} 
+            items={deptOptions}
+            placeholder={{
+              label: "Select a department",
+              value: null,
+            }}
+            style={{
+              ...pickerSelectStyles,
+            }}
+          />
+
+          <TouchableOpacity style={styles.dropdownButton} onPress={handleSearchSubmit}>
+            <Text style={styles.buttonText}>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      ) : (
+        <SearchBar
+          placeholder="Search by course or department"
+          onChangeText={updateSearch}
+          value={search}
+          lightTheme
+          round
+          containerStyle={styles.searchBarContainer}
+          inputContainerStyle={styles.searchInputContainer}
+          onSubmitEditing={handleSearchSubmit}
+          returnKeyType="search"
+        />
+      )}
 
       {errorMessage ? (
         <View style={styles.errorBox}>
@@ -116,7 +166,6 @@ const SearchComponent = ({ search, setSearch }) => {
           style={styles.flatList}
         />
       )}
-      <StatusBar style="auto" />
     </View>
   );
 };
@@ -130,7 +179,7 @@ const styles = StyleSheet.create({
     top: 0,
     left: 0,
     right: 0,
-    height: 60,
+    height: 80,
     backgroundColor: "white",
     elevation: 5,
     zIndex: 0,
@@ -142,6 +191,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     position: "absolute",
     top: 20,
+    paddingTop: 15,
     zIndex: 1,
     alignSelf: "center",
   },
@@ -161,6 +211,61 @@ const styles = StyleSheet.create({
   },
   flatList: {
     marginTop: 80,
+    zIndex: 0
+  },
+  toggleButton: {
+    marginTop: 5,
+    alignSelf: "center",
+    backgroundColor: COLORS.darkBlue,
+    borderRadius: 8,
+    paddingLeft: 20,
+    paddingTop: 1,
+    paddingBottom: 1,
+    paddingRight: 20,
+  },
+  toggleButtonText: {
+    color: "white",
+    fontSize: 16,
+  },
+  dropdownContainer: {
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      width: "95%",
+      zIndex: 1,
+      position: "absolute",
+      top: 30, 
+  },
+  dropdownButton: {
+    alignSelf: "center",
+    backgroundColor: COLORS.darkBlue,
+    borderRadius: 8,
+    paddingLeft: 9,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingRight: 9,
+    marginTop: 5,
+    marginLeft: 10,
+  },
+  buttonText: {
+    color: "white",
+    fontSize: 16,
+  },
+});
+
+const pickerSelectStyles = StyleSheet.create({
+  inputIOS: {
+    fontSize: 16,
+    paddingVertical: 12,
+    paddingHorizontal: 60,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 4,
+    backgroundColor: "#e0e0e0",
+    alignSelf: "center",
+    height: 45,
+    width: 250, 
+    marginTop: 5,
   },
 });
 
