@@ -191,6 +191,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0,
     position: "absolute",
     top: 20,
+    paddingTop: 15,
     zIndex: 1,
     alignSelf: "center",
   },
