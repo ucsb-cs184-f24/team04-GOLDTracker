@@ -14,6 +14,8 @@ import AboutScreen from "../screen/AboutScreen";
 import HelpScreen from "../screen/HelpScreen";
 import TermsOfUseScreen from "../screen/TermOfUseScreen";
 import CourseDetailScreen from "../screen/CourseDetailScreen";
+import CustomizedPage from "../screen/CustomizedPage";
+
 import Header from "../components/Header"; 
 
 const Tab = createBottomTabNavigator();
@@ -27,6 +29,7 @@ const MoreStackScreen = () => (
       component={MoreScreen}
       options={{ header: () => <Header /> }}
     />
+    <MoreStack.Screen name="CustomizedPage" component={CustomizedPage} options={{ title: "Preferences" }} />
     <MoreStack.Screen
       name="AboutScreen"
       component={AboutScreen}
@@ -57,6 +60,7 @@ const HomeStackScreen = () => (
       component={CourseDetailScreen}
       options={{ headerShown: true, title: "Course Details" }}
     />
+    <HomeStack.Screen name="CustomizedPage" component={CustomizedPage} />
   </HomeStack.Navigator>
 );
 
