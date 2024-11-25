@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList, Alert, Text } from "react-native"; 
+import { StyleSheet, View, FlatList, Alert, Text, TouchableOpacity } from "react-native"; 
 import { getClasses, deregisterClass } from '../components/ClassRegister'; 
 import { auth } from "../../firebaseConfig"; 
+import { COLORS, SPACING } from "../theme/theme";
 
 const CartFetch = ({ setClasses, setErrorMessage }) => {
     const [fullCourseDetails, setFullCourseDetails] = useState([]);
@@ -10,6 +11,7 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
 
     const fetchCartClasses = async () => {
         const classList = await getClasses();
+        console.log("Class List: ", classList);
         if (classList) {
             const courseIds = Object.keys(classList);
             const courseDetails = await Promise.all(courseIds.map(async (courseId) => {
@@ -81,38 +83,55 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
                                 <Text style={styles.sectionSpace}>
                                     Space: {section.enrolledTotal || 0}/{section.maxEnroll || 0}
                                 </Text>
+                                <TouchableOpacity
+                                    style={styles.unfollowButton}
+                                    onPress={() => handleUnfollow(item.classEnrollCode, sectionEnrollCode)}
+                                >
+                                    <Text style={{ color: '#fff' }}>Unfollow</Text>
+                                </TouchableOpacity>
                             </View>
                         );
                     })
                 ) : (
-                    <Text style={styles.noSectionsText}>No sections available for this course.</Text>
+                    <Text style={styles.noSectionsText}>No sections available for this course. 
+                        <TouchableOpacity
+                            style={styles.unfollowButton2}
+                            onPress={() => handleUnfollow(item.classEnrollCode, item.sectionEnrollCode)}
+                        >
+                            <Text style={{ color: '#fff' }}>Unfollow</Text>
+                        </TouchableOpacity>
+                    </Text>
                 )}
-
-                <Text
-                    style={styles.unfollowButton}
-                    onPress={() => handleUnfollow(item.classEnrollCode, item.sectionEnrollCode)}
-                >
-                    Unfollow
-                </Text>
             </View>
         );
     };
 
     return (
-        <FlatList
-            data={fullCourseDetails}
-            keyExtractor={(item) => item.courseId}
-            renderItem={renderClassItem}
-            refreshing={refreshing} 
-            onRefresh={onRefresh}
-            contentContainerStyle={styles.flatListContainer}
-        />
+        <View style={styles.container}>
+                <Text style={styles.pullToRefreshText}>Pull to refresh</Text>
+                <FlatList
+                    data={fullCourseDetails}
+                    keyExtractor={(item) => item.courseId}
+                    renderItem={renderClassItem}
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    contentContainerStyle={styles.flatListContainer}
+                /> 
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        display: 'flex'
+    },
     flatListContainer: {
         paddingBottom: 20,
+    },
+    pullToRefreshText: {
+        textAlign: 'center',
+        color: 'grey'
     },
     classBox: {
         backgroundColor: '#f9fafb',
@@ -124,6 +143,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.5,
         elevation: 5,
+        marginLeft: 10,
+        marginRight: 10,
     },
     courseId: {
         fontSize: 18,
@@ -147,11 +168,28 @@ const styles = StyleSheet.create({
         color: '#555',
     },
     unfollowButton: {
-        color: '#007bff', // Button color
-        fontWeight: 'bold',
-        textDecorationLine: 'underline',
-        marginTop: 10,
+        color : 'white',
+        paddingVertical: SPACING.space_8,
+        borderRadius: 16,
+        alignItems: "center",
         textAlign: 'center',
+        marginLeft: 120,
+        marginRight: 120,
+        backgroundColor: COLORS.darkBlue,
+
+    },
+    unfollowButton2: {
+        color: 'white',
+        paddingVertical: SPACING.space_8,
+        borderRadius: 16,
+        alignItems: "center",
+        textAlign: 'center',
+        marginLeft: 120,
+        marginRight: 120,
+        paddingLeft: 20,
+        paddingRight: 20,
+        backgroundColor: COLORS.darkBlue,
+
     },
     noSectionsText: {
         color: 'gray',
