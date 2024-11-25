@@ -6,6 +6,7 @@ import { useNavigation } from "@react-navigation/native";
 import {auth} from "../../firebaseConfig";
 import departmentMapping from "../assets/departmentMapping.json";
 import RNPickerSelect from "react-native-picker-select";
+import { COLORS } from "../theme/theme";
 
 const SearchComponent = ({ search, setSearch }) => {
   const [results, setResults] = useState([]);
@@ -214,7 +215,7 @@ const styles = StyleSheet.create({
   toggleButton: {
     marginTop: 5,
     alignSelf: "center",
-    backgroundColor: "#007bff",
+    backgroundColor: COLORS.darkBlue,
     borderRadius: 8,
     paddingLeft: 20,
     paddingTop: 1,
@@ -232,11 +233,11 @@ const styles = StyleSheet.create({
       width: "95%",
       zIndex: 1,
       position: "absolute",
-      top: 30, // Adjust this value to avoid overlap
+      top: 30, 
   },
   dropdownButton: {
     alignSelf: "center",
-    backgroundColor: "#007bff",
+    backgroundColor: COLORS.darkBlue,
     borderRadius: 8,
     paddingLeft: 9,
     paddingTop: 10,
@@ -261,8 +262,8 @@ const pickerSelectStyles = StyleSheet.create({
     borderRadius: 4,
     backgroundColor: "#e0e0e0",
     alignSelf: "center",
-    height: 45, // Consistent height
-    width: 250, // Fixed width for dropdown
+    height: 45,
+    width: 250, 
     marginTop: 5,
   },
 });

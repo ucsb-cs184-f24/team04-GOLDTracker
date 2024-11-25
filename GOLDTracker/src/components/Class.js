@@ -62,10 +62,8 @@ class Class extends React.Component {
 
           {course.classSections &&
             course.classSections.filter((section) => section.courseCancelled !== "C         ").map((section, index) => {
-              // Skip the first section entirely
               if (index === 0) return null;
 
-              // Extract time and days for the section
               const timeLocation =
                 section.timeLocations && section.timeLocations[0];
 
