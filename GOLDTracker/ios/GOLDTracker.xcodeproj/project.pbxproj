@@ -11,12 +11,17 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */; };
+		46549C9ABBBB4F62A0964CA1 /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E9F23039DC96456384E97C22 /* Nunito-Bold.ttf */; };
 		494F8555924B797536D7A9B3 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = AB8995D8AFDB60333B69A59E /* PrivacyInfo.xcprivacy */; };
+		7AF9DA5753CC42218AFF955B /* Rowdies-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A5D2271085974B3492763E2E /* Rowdies-Light.ttf */; };
+		832CA1F3593F4435871C559D /* Ubuntu-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CD5EE769566A4180B743B954 /* Ubuntu-Regular.ttf */; };
 		8F448C872A70409DB80B8491 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6A2A1162D9B54B27AA0ECF8F /* GoogleService-Info.plist */; };
 		96905EF65AED1B983A6B3ABC /* libPods-GOLDTracker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 58EEBF8E8E6FB1BC6CAF49B5 /* libPods-GOLDTracker.a */; };
 		9DC0247A5D884276A2A9E5A5 /* noop-file.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D381AD3DC2145E5822E5805 /* noop-file.swift */; };
 		B18059E884C0ABDD17F3DC3D /* ExpoModulesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */; };
 		BB2F792D24A3F905000567C9 /* Expo.plist in Resources */ = {isa = PBXBuildFile; fileRef = BB2F792C24A3F905000567C9 /* Expo.plist */; };
+		C3CFE266E0864EB1B6149E85 /* Rowdies-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E06DA39C7892414C90B52AD5 /* Rowdies-Regular.ttf */; };
+		C7210ADB8B4241259F60663E /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D0C6705DD7714F14ABFB5709 /* Nunito-Regular.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,9 +37,14 @@
 		6A2A1162D9B54B27AA0ECF8F /* GoogleService-Info.plist */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 4; includeInIndex = 0; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "GOLDTracker/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		6C2E3173556A471DD304B334 /* Pods-GOLDTracker.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOLDTracker.debug.xcconfig"; path = "Target Support Files/Pods-GOLDTracker/Pods-GOLDTracker.debug.xcconfig"; sourceTree = "<group>"; };
 		7A4D352CD337FB3A3BF06240 /* Pods-GOLDTracker.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-GOLDTracker.release.xcconfig"; path = "Target Support Files/Pods-GOLDTracker/Pods-GOLDTracker.release.xcconfig"; sourceTree = "<group>"; };
+		A5D2271085974B3492763E2E /* Rowdies-Light.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Rowdies-Light.ttf"; path = "../src/assets/fonts/Rowdies-Light.ttf"; sourceTree = "<group>"; };
 		AA286B85B6C04FC6940260E9 /* SplashScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = SplashScreen.storyboard; path = GOLDTracker/SplashScreen.storyboard; sourceTree = "<group>"; };
 		AB8995D8AFDB60333B69A59E /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; includeInIndex = 1; name = PrivacyInfo.xcprivacy; path = GOLDTracker/PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		BB2F792C24A3F905000567C9 /* Expo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Expo.plist; sourceTree = "<group>"; };
+		CD5EE769566A4180B743B954 /* Ubuntu-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Ubuntu-Regular.ttf"; path = "../src/assets/fonts/Ubuntu-Regular.ttf"; sourceTree = "<group>"; };
+		D0C6705DD7714F14ABFB5709 /* Nunito-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Regular.ttf"; path = "../src/assets/fonts/Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		E06DA39C7892414C90B52AD5 /* Rowdies-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Rowdies-Regular.ttf"; path = "../src/assets/fonts/Rowdies-Regular.ttf"; sourceTree = "<group>"; };
+		E9F23039DC96456384E97C22 /* Nunito-Bold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = undefined; includeInIndex = 0; lastKnownFileType = unknown; name = "Nunito-Bold.ttf"; path = "../src/assets/fonts/Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
 		FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ExpoModulesProvider.swift; path = "Pods/Target Support Files/Pods-GOLDTracker/ExpoModulesProvider.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -94,6 +104,7 @@
 				2D16E6871FA4F8E400B85C8A /* Frameworks */,
 				D65327D7A22EEC0BE12398D9 /* Pods */,
 				D7E4C46ADA2E9064B798F356 /* ExpoModulesProviders */,
+				B77D65BBD586457DA58A716B /* Resources */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -114,6 +125,19 @@
 				FAC715A2D49A985799AEE119 /* ExpoModulesProvider.swift */,
 			);
 			name = GOLDTracker;
+			sourceTree = "<group>";
+		};
+		B77D65BBD586457DA58A716B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CD5EE769566A4180B743B954 /* Ubuntu-Regular.ttf */,
+				E9F23039DC96456384E97C22 /* Nunito-Bold.ttf */,
+				D0C6705DD7714F14ABFB5709 /* Nunito-Regular.ttf */,
+				A5D2271085974B3492763E2E /* Rowdies-Light.ttf */,
+				E06DA39C7892414C90B52AD5 /* Rowdies-Regular.ttf */,
+			);
+			name = Resources;
+			path = "";
 			sourceTree = "<group>";
 		};
 		BB2F792B24A3F905000567C9 /* Supporting */ = {
@@ -208,6 +232,11 @@
 				3E461D99554A48A4959DE609 /* SplashScreen.storyboard in Resources */,
 				8F448C872A70409DB80B8491 /* GoogleService-Info.plist in Resources */,
 				494F8555924B797536D7A9B3 /* PrivacyInfo.xcprivacy in Resources */,
+				832CA1F3593F4435871C559D /* Ubuntu-Regular.ttf in Resources */,
+				46549C9ABBBB4F62A0964CA1 /* Nunito-Bold.ttf in Resources */,
+				C7210ADB8B4241259F60663E /* Nunito-Regular.ttf in Resources */,
+				7AF9DA5753CC42218AFF955B /* Rowdies-Light.ttf in Resources */,
+				C3CFE266E0864EB1B6149E85 /* Rowdies-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

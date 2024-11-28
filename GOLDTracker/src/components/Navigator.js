@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity, Image, Text } from "react-native";
 
 import Entypo from "@expo/vector-icons/Entypo";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
@@ -16,114 +16,275 @@ import TermsOfUseScreen from "../screen/TermOfUseScreen";
 import CourseDetailScreen from "../screen/CourseDetailScreen";
 import CustomizedPage from "../screen/CustomizedPage";
 
-import Header from "../components/Header"; 
+import Header from "../components/Header";
 
 const Tab = createBottomTabNavigator();
 const HomeStack = createStackNavigator();
 const MoreStack = createStackNavigator();
-
-const MoreStackScreen = () => (
-  <MoreStack.Navigator>
-    <MoreStack.Screen
-      name="MoreScreen" 
-      component={MoreScreen}
-      options={{ header: () => <Header /> }}
-    />
-    <MoreStack.Screen name="CustomizedPage" component={CustomizedPage} options={{ title: "Preferences" }} />
-    <MoreStack.Screen
-      name="AboutScreen"
-      component={AboutScreen}
-      options={{ title: "About" }}
-    />
-    <MoreStack.Screen
-      name="HelpScreen"
-      component={HelpScreen}
-      options={{ title: "Help" }}
-    />
-    <MoreStack.Screen
-      name="TermsOfUseScreen" 
-      component={TermsOfUseScreen}
-      options={{ title: "Terms of Use" }}
-    />
-  </MoreStack.Navigator>
-);
+const CartStack = createStackNavigator();
+const NotificationStack = createStackNavigator();
 
 const HomeStackScreen = () => (
   <HomeStack.Navigator>
     <HomeStack.Screen
-      name="HomeScreen" 
+      name="HomeScreen"
       component={HomeScreen}
-      options={{ header: () => <Header /> }}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="GOLD TRACKER"
+            showImage={true}
+            showUser={true}
+            showBackButton={false} 
+            navigation={navigation}
+          />
+        ),
+      })}
     />
     <HomeStack.Screen
       name="CourseDetailScreen"
       component={CourseDetailScreen}
-      options={{ headerShown: true, title: "Course Details" }}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="Course Details"
+            showImage={false}
+            showUser={false}
+            showBackButton={true} 
+            navigation={navigation}
+          />
+        ),
+      })}
     />
-    <HomeStack.Screen name="CustomizedPage" component={CustomizedPage} />
+    <HomeStack.Screen
+      name="CustomizedPage"
+      component={CustomizedPage}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="Preferences"
+            showImage={false}
+            showUser={false}
+            showBackButton={true} 
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
   </HomeStack.Navigator>
+);
+
+const MoreStackScreen = () => (
+  <MoreStack.Navigator>
+    <MoreStack.Screen
+      name="MoreScreen"
+      component={MoreScreen}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="PROFILE"
+            showImage={false}
+            showUser={false}
+            showBackButton={false} 
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
+    <MoreStack.Screen
+      name="CustomizedPage"
+      component={CustomizedPage}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="Preferences"
+            showImage={false}
+            showUser={false}
+            showBackButton={true}
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
+    <MoreStack.Screen
+      name="AboutScreen"
+      component={AboutScreen}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="About"
+            showImage={false}
+            showUser={false}
+            showBackButton={true} 
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
+    <MoreStack.Screen
+      name="HelpScreen"
+      component={HelpScreen}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="Help"
+            showImage={false}
+            showUser={false}
+            showBackButton={true}
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
+    <MoreStack.Screen
+      name="TermsOfUseScreen"
+      component={TermsOfUseScreen}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="Terms of Use"
+            showImage={false}
+            showUser={false}
+            showBackButton={true} 
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
+  </MoreStack.Navigator>
+);
+
+const CartStackScreen = () => (
+  <CartStack.Navigator>
+    <CartStack.Screen
+      name="CartScreen"
+      component={CartScreen}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="CART"
+            showImage={false}
+            showUser={false}
+            showBackButton={false} 
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
+  </CartStack.Navigator>
+);
+
+const NotificationStackScreen = () => (
+  <NotificationStack.Navigator>
+    <NotificationStack.Screen
+      name="NotificationScreen"
+      component={NotificationScreen}
+      options={({ navigation }) => ({
+        header: (props) => (
+          <Header
+            {...props}
+            title="NOTIFICATIONS"
+            showImage={false}
+            showUser={false}
+            showBackButton={false} 
+            navigation={navigation}
+          />
+        ),
+      })}
+    />
+  </NotificationStack.Navigator>
 );
 
 const Navigator = () => {
   return (
-    <Tab.Navigator>
+    <Tab.Navigator
+      screenOptions={{
+        tabBarActiveTintColor: '#e3dd98',
+        tabBarInactiveTintColor: COLORS.white,
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontFamily: 'Nunito-Bold',
+        },
+        tabBarStyle: {
+          backgroundColor: '#e77757',
+        },
+        headerShown: false, 
+      }}
+    >
       <Tab.Screen
-        name="Home"
+        name="HOME"
         component={HomeStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="home"
-              size={25}
-              color={focused ? COLORS.yellow : COLORS.darkBlue}
+            <Image
+              source={
+                focused
+                  ? require('../assets/wow.png')
+                  : require('../assets/schedule.png')
+              }
+              style={styles.navIcon}
             />
           ),
-          headerShown: false,
         }}
       />
 
       <Tab.Screen
-        name="Cart"
-        component={CartScreen}
+        name="CART"
+        component={CartStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="shopping-cart"
-              size={25}
-              color={focused ? COLORS.yellow : COLORS.darkBlue}
+            <Image
+              source={
+                focused
+                  ? require('../assets/wow.png')
+                  : require('../assets/cart.png')
+              }
+              style={styles.navIcon}
             />
           ),
-          header: () => <Header />,
         }}
       />
 
       <Tab.Screen
-        name="Notifications"
-        component={NotificationScreen}
+        name="NOTIFICATION"
+        component={NotificationStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="notification"
-              size={25}
-              color={focused ? COLORS.yellow : COLORS.darkBlue}
+            <Image
+              source={
+                focused
+                  ? require('../assets/wow.png')
+                  : require('../assets/allert.png')
+              }
+              style={styles.navIcon}
             />
           ),
-          header: () => <Header />,
         }}
       />
 
       <Tab.Screen
-        name="More"
+        name="PROFILE"
         component={MoreStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
-            <Entypo
-              name="dots-three-horizontal"
-              size={25}
-              color={focused ? COLORS.yellow : COLORS.darkBlue}
+            <Image
+              source={
+                focused
+                  ? require('../assets/wow.png')
+                  : require('../assets/normal.png')
+              }
+              style={styles.navIcon}
             />
           ),
-          headerShown: false,
         }}
       />
     </Tab.Navigator>
@@ -137,6 +298,11 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.5,
     elevation: 5,
+  },
+  navIcon: {
+    width: 60,
+    height: 60,
+    marginBottom: 20,
   },
 });
 

@@ -1,49 +1,78 @@
+import React from "react";
 import { Image, View, StyleSheet, StatusBar, SafeAreaView, Text, TouchableOpacity } from "react-native";
-
+import LinearGradient from "react-native-linear-gradient"; // Import LinearGradient
+import { COLORS } from "../theme/theme";
 
 export default function LoginScreen({ promptAsync }) {
-  
   return (
-    <SafeAreaView style={styles.container}>
-      <StatusBar barStyle="dark-content" />
-      <View style={styles.logoContainer}>
-        <Image
-          source={require('../assets/ucsbLOGO.png')}
-          style={styles.logo}
-          testID="logo-image"
-        />
-      </View>
-      <Text style={styles.subtitle}>GoldTracker</Text>
-      <TouchableOpacity style={styles.loginButton} onPress={() => promptAsync()}  testID="login-button">
-        <Text style={styles.loginButtonText}>Log in With Your UCSB Account</Text>
-      </TouchableOpacity>
-    </SafeAreaView>
+    <LinearGradient
+      colors={['#9ad5e6', '#b4d5de', '#cdeef7']} 
+      style={styles.container}
+    >
+      <SafeAreaView style={styles.safeArea}>
+        <StatusBar barStyle="dark-content" />
+        <View style={styles.logoContainer}>
+          <Image
+            source={require('../assets/login.png')}
+            style={styles.logo}
+            testID="logo-image"
+          />
+        </View>
+        <View style={styles.subtitleContainer}>
+          <Text style={styles.blueText}>Welcome to </Text>
+          <Text style={styles.yellowText}>GOLD </Text>
+          <Text style={styles.blueText}>Tracker</Text>
+        </View>
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => promptAsync()}
+          testID="login-button"
+        >
+          <Text style={styles.loginButtonText}>Sign in With Your UCSB Account</Text>
+        </TouchableOpacity>
+      </SafeAreaView>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  safeArea: {
+    flex: 1,
     alignItems: 'center',
-    backgroundColor: '#f9f9f9',
   },
   logoContainer: {
     marginTop: 130,
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 0,
   },
   logo: {
-    width: 180,
-    height: 180,
+    width: 330,
+    height: 330,
     resizeMode: 'contain',
   },
-  subtitle: {
+  subtitleContainer: {
+    flexDirection: 'row', 
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 50,
+  },
+  blueText: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 180,
+    fontFamily: 'Rowdies-Light',
+    color: COLORS.ucsbBlue,
+  },
+  yellowText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    fontFamily: 'Rowdies-Light',
+    color: '#ebb609',
   },
   loginButton: {
-    backgroundColor: '#1a3a67',
+    backgroundColor: COLORS.orange,
     paddingVertical: 20,
     paddingHorizontal: 30,
     borderRadius: 30,
@@ -52,5 +81,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 16,
     fontWeight: 'bold',
+    fontFamily: 'Rowdies-Light',
   },
 });
