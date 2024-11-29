@@ -228,8 +228,8 @@ const Navigator = () => {
             <Image
               source={
                 focused
-                  ? require('../assets/wow.png')
-                  : require('../assets/schedule.png')
+                  ? require('../assets/images/wow.png')
+                  : require('../assets/images/schedule.png')
               }
               style={styles.navIcon}
             />
@@ -245,8 +245,8 @@ const Navigator = () => {
             <Image
               source={
                 focused
-                  ? require('../assets/wow.png')
-                  : require('../assets/cart.png')
+                  ? require('../assets/images/wow.png')
+                  : require('../assets/images/cart.png')
               }
               style={styles.navIcon}
             />
@@ -262,8 +262,8 @@ const Navigator = () => {
             <Image
               source={
                 focused
-                  ? require('../assets/wow.png')
-                  : require('../assets/allert.png')
+                  ? require('../assets/images/wow.png')
+                  : require('../assets/images/allert.png')
               }
               style={styles.navIcon}
             />
@@ -279,8 +279,8 @@ const Navigator = () => {
             <Image
               source={
                 focused
-                  ? require('../assets/wow.png')
-                  : require('../assets/normal.png')
+                  ? require('../assets/images/wow.png')
+                  : require('../assets/images/normal.png')
               }
               style={styles.navIcon}
             />

@@ -139,7 +139,6 @@ class Class extends React.Component {
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingTop: SPACING.space_10,
     paddingHorizontal: SPACING.space_16,
     
   },

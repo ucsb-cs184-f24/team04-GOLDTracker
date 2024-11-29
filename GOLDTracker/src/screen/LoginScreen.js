@@ -13,7 +13,7 @@ export default function LoginScreen({ promptAsync }) {
         <StatusBar barStyle="dark-content" />
         <View style={styles.logoContainer}>
           <Image
-            source={require('../assets/login.png')}
+            source={require('../assets/images/login.png')}
             style={styles.logo}
             testID="logo-image"
           />

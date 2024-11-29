@@ -55,7 +55,7 @@ const Header = ({
           )}
           {showImage && (
             <Image
-              source={require('../assets/gold.png')}
+              source={require('../assets/images/gold.png')}
               style={styles.imageLogo}
               resizeMode="contain"
             />

@@ -7,6 +7,7 @@ import {
   Text,
   TouchableOpacity,
   FlatList,
+  Image,
 } from "react-native";
 import { COLORS, SPACING } from "../theme/theme";
 import SearchComponent from "../components/SearchComponent";
@@ -16,7 +17,7 @@ import Class from "../components/Class";
 import { API_KEY, API_URL } from "@env";
 import { useFocusEffect } from "@react-navigation/native";
 
-const HomeScreen = ({ navigation,route }) => {
+const HomeScreen = ({ navigation, route }) => {
   const [search, setSearch] = useState("");
   const [major, setMajor] = useState("");
   const [courses, setCourses] = useState([]);
@@ -48,60 +49,57 @@ const HomeScreen = ({ navigation,route }) => {
 
     fetchUserMajor();
   }, []);
-    // Refetch user major and courses on screen focus
-    useFocusEffect(
-      React.useCallback(() => {
-        const fetchUserMajor = async () => {
-          const user = auth.currentUser;
-          if (!user) {
-            console.error("No user is logged in.");
-            return;
-          }
-  
-          try {
-            const userDocRef = doc(firestore, "users", user.uid);
-            const userDoc = await getDoc(userDocRef);
-  
-            if (userDoc.exists()) {
-              const userData = userDoc.data();
-              setMajor(userData.major || "");
-              if (userData.major) {
-                fetchCoursesForMajor(userData.major);
-              }
+
+  useFocusEffect(
+    React.useCallback(() => {
+      const fetchUserMajor = async () => {
+        const user = auth.currentUser;
+        if (!user) {
+          console.error("No user is logged in.");
+          return;
+        }
+
+        try {
+          const userDocRef = doc(firestore, "users", user.uid);
+          const userDoc = await getDoc(userDocRef);
+
+          if (userDoc.exists()) {
+            const userData = userDoc.data();
+            setMajor(userData.major || "");
+            if (userData.major) {
+              fetchCoursesForMajor(userData.major);
             }
-          } catch (error) {
-            console.error("Error fetching user data:", error);
           }
-        };
-  
-        fetchUserMajor();
-      }, [route.params?.updated]) // Refetch when `updated` parameter changes
-    );
-  
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      };
+
+      fetchUserMajor();
+    }, [route.params?.updated])
+  );
+
   const fetchCoursesForMajor = async (major) => {
     const quarter = "20244";
     const apiUrl = `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
       major
     )}&includeClassSections=true`;
-  
-    console.log("API URL:", apiUrl); // Debugging log
-  
+
     try {
       const response = await fetch(apiUrl, {
         method: "GET",
         headers: {
-          "ucsb-api-key":API_KEY,
+          "ucsb-api-key": API_KEY,
           "Content-Type": "application/json",
         },
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
+
       const data = await response.json();
-      console.log("API Response:", data); // Debugging log
-  
+
       if (data.classes && data.classes.length > 0) {
         setCourses(data.classes);
         setErrorMessage("");
@@ -115,7 +113,6 @@ const HomeScreen = ({ navigation,route }) => {
       setErrorMessage("An error occurred while fetching courses.");
     }
   };
-  
 
   const renderCourseItem = ({ item }) => (
     <Class course={item} toggleFollow={() => {}} navigation={navigation} />
@@ -131,18 +128,23 @@ const HomeScreen = ({ navigation,route }) => {
         </View>
 
         {major === "" ? (
-          // Show prompt to add major if not set
           <View style={styles.centeredTextContainer}>
+            <Image
+              source={require("../assets/images/sad.png")}
+              style={styles.cryImage}
+            />
+            <Text style={styles.descriptionText}>
+              You did not set your major or pass time!{"\n"}
+              Search for a course above or {"\n"} view courses by editing your major.
+            </Text>
             <TouchableOpacity
+              style={styles.editMajorButton}
               onPress={() => navigation.navigate("CustomizedPage")}
             >
-              <Text style={styles.addMajorText}>
-                Add Your Major to See Your Courses
-              </Text>
+              <Text style={styles.editMajorButtonText}>Edit Major</Text>
             </TouchableOpacity>
           </View>
         ) : (
-          // Display courses related to the user's major
           <View style={styles.courseListContainer}>
             {errorMessage ? (
               <Text style={styles.errorMessage}>{errorMessage}</Text>
@@ -174,18 +176,33 @@ const styles = StyleSheet.create({
     paddingTop: 0,
   },
   centeredTextContainer: {
-    justifyContent: "center",
     alignItems: "center",
+    paddingTop: 20,
     flex: 1,
+    borderWidth: 1,
+    borderColor: "red", // use to visualize the container
   },
-  addMajorText: {
-    fontSize: 18,
-    fontWeight: "bold",
+  cryImage: {
+    width: 250,
+    height: 250,
+  },
+  descriptionText: {
+    fontSize: 16,
+    color: COLORS.darkBlue,
     textAlign: "center",
-    color: COLORS.lightYellow,
+    marginBottom: 20,
+    fontFamily: "Nunito-Bold",
+  },
+  editMajorButton: {
     backgroundColor: COLORS.darkBlue,
-    padding: 10,
     borderRadius: 8,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+  },
+  editMajorButtonText: {
+    color: COLORS.lightYellow,
+    fontSize: 16,
+    fontWeight: "bold",
   },
   courseListContainer: {
     flex: 1,
