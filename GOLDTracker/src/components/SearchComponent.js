@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { StatusBar, StyleSheet, View, FlatList, Text } from "react-native";
 import { SearchBar } from "react-native-elements";
 import Class from "../components/Class";
@@ -7,12 +7,13 @@ import { auth } from "../../firebaseConfig";
 import { COLORS } from "../theme/theme";
 import CategorySearch from "../components/CategorySearch";
 
-const SearchComponent = ({ search, setSearch }) => {
+const SearchComponent = ({ search, setSearch, setIsSearching }) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
-  const [selectedDept, setSelectedDept] = useState(null); 
-  const [selectedQuarter, setSelectedQuarter] = useState("20244"); 
+  const [selectedDept, setSelectedDept] = useState(null);
+  const [selectedQuarter, setSelectedQuarter] = useState("20244");
 
+  const categorySearchRef = useRef(null);
   const navigation = useNavigation();
   const API_URL =
     "https://us-central1-goldtracker-beb96.cloudfunctions.net/search";
@@ -82,15 +83,13 @@ const SearchComponent = ({ search, setSearch }) => {
     }
   };
 
-  const renderCourseItem = ({ item }) => {
-    return (
-      <Class
-        course={item}
-        toggleFollow={toggleFollow}
-        navigation={navigation}
-      />
-    );
-  };
+  const renderCourseItem = ({ item }) => (
+    <Class
+      course={item}
+      toggleFollow={toggleFollow}
+      navigation={navigation}
+    />
+  );
 
   return (
     <View style={styles.container}>
@@ -105,35 +104,53 @@ const SearchComponent = ({ search, setSearch }) => {
         round
         containerStyle={styles.searchBarContainer}
         inputContainerStyle={styles.searchInputContainer}
-        onSubmitEditing={() => handleSearchSubmit()} 
+        onSubmitEditing={() => handleSearchSubmit()}
         returnKeyType="search"
+        onFocus={() => setIsSearching(true)} // Set isSearching to true when focused
+        onBlur={() => {
+          if (search.trim() === "") {
+            setIsSearching(false);
+          }
+        }} 
+        leftIconContainerStyle={styles.leftIconContainer}
       />
 
       {/* Category Search Dropdown */}
       <CategorySearch
-        onDepartmentSelect={setSelectedDept} 
-        onQuarterSelect={setSelectedQuarter} 
+        ref={categorySearchRef}
+        onDepartmentSelect={setSelectedDept}
+        onQuarterSelect={setSelectedQuarter}
         selectedDept={selectedDept}
         onSearch={handleSearchSubmit}
         selectedQuarter={selectedQuarter}
+        setIsSearching={setIsSearching} // Pass the setter function
       />
 
+      {/* Error Message or Results */}
       {errorMessage ? (
         <View style={styles.errorBox}>
           <Text style={styles.errorMessage}>{errorMessage}</Text>
         </View>
-      ) : (
-        <FlatList
-          data={results}
-          keyExtractor={(item) => item.courseId.trim()}
-          renderItem={renderCourseItem}
-          contentContainerStyle={{ paddingBottom: 20 }}
-          style={styles.flatList}
-        />
-      )}
+      ) : results.length > 0 ? (
+        <View style={styles.listContainer}>
+          <FlatList
+            data={results}
+            keyExtractor={(item) => item.courseId.trim()}
+            renderItem={renderCourseItem}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            onScroll={() => {
+              if (categorySearchRef.current) {
+                categorySearchRef.current.closeDropdowns();
+              }
+            }}
+            style={styles.flatList}
+          />
+        </View>
+      ) : null}
     </View>
   );
 };
+
 
 const styles = StyleSheet.create({
   container: {
@@ -164,6 +181,10 @@ const styles = StyleSheet.create({
   flatList: {
     marginTop: 20, // Space between search bar and first course
   },
+  leftIconContainer: {
+    marginLeft: 15, // Adjust the value to move the icon further to the right
+  },
+  
 });
 
 export default SearchComponent;

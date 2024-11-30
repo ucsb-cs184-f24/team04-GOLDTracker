@@ -29,7 +29,7 @@ const HomeStackScreen = () => (
     <HomeStack.Screen
       name="HomeScreen"
       component={HomeScreen}
-      options={({ navigation }) => ({
+      options={({ navigation, route }) => ({
         header: (props) => (
           <Header
             {...props}
@@ -38,6 +38,7 @@ const HomeStackScreen = () => (
             showUser={true}
             showBackButton={false} 
             navigation={navigation}
+            onLogoPress={route.params?.resetState}
           />
         ),
       })}

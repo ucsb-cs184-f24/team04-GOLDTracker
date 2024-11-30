@@ -16,7 +16,8 @@ import {
 } from "react-native";
 import { COLORS } from "../theme/theme";
 import departmentMapping from "../assets/departmentMapping.json";
-import AntDesign from "react-native-vector-icons/AntDesign"; // Added for caret icons
+import AntDesign from "react-native-vector-icons/AntDesign";
+import LinearGradient from "react-native-linear-gradient";
 
 const CategorySearch = forwardRef(
   (
@@ -26,6 +27,7 @@ const CategorySearch = forwardRef(
       onSearch,
       selectedDept,
       selectedQuarter,
+      setIsSearching,
     },
     ref
   ) => {
@@ -48,6 +50,11 @@ const CategorySearch = forwardRef(
     ];
 
     const toggleDeptDropdown = () => {
+      if (!isDeptDropdownVisible) {
+        setIsSearching(true);
+      } else if (!isQuarterDropdownVisible) {
+        setIsSearching(false);
+      }
       setIsDeptDropdownVisible((prev) => !prev);
       if (!isDeptDropdownVisible) {
         setIsQuarterDropdownVisible(false);
@@ -66,6 +73,11 @@ const CategorySearch = forwardRef(
     };
 
     const toggleQuarterDropdown = () => {
+      if (!isQuarterDropdownVisible) {
+        setIsSearching(true);
+      } else if (!isDeptDropdownVisible) {
+        setIsSearching(false);
+      }
       setIsQuarterDropdownVisible((prev) => !prev);
       if (!isQuarterDropdownVisible) {
         setIsDeptDropdownVisible(false);
@@ -95,6 +107,9 @@ const CategorySearch = forwardRef(
     };
 
     const closeDropdowns = () => {
+      if (isDeptDropdownVisible || isQuarterDropdownVisible) {
+        setIsSearching(false);
+      }
       if (isDeptDropdownVisible) {
         setIsDeptDropdownVisible(false);
         Animated.timing(animatedDeptHeight, {
@@ -119,16 +134,13 @@ const CategorySearch = forwardRef(
 
     return (
       <View style={styles.container}>
-        {/* Buttons for Dropdowns */}
         <View style={styles.buttonRow}>
           <TouchableOpacity
-            style={styles.toggleButton}
+            style={[styles.toggleButton, styles.centeredButton]}
             onPress={toggleDeptDropdown}
           >
             <Text style={styles.toggleButtonText}>
-              {selectedDept
-                ? `Department: ${selectedDept}`
-                : "Select Department"}
+              {selectedDept || "Department"}
             </Text>
             <AntDesign
               name={isDeptDropdownVisible ? "caretup" : "caretdown"}
@@ -138,12 +150,14 @@ const CategorySearch = forwardRef(
           </TouchableOpacity>
 
           <TouchableOpacity
-            style={styles.toggleButton}
+            style={[styles.toggleButton, styles.centeredButton]}
             onPress={toggleQuarterDropdown}
           >
             <Text style={styles.toggleButtonText}>
               {selectedQuarter
-                ? `Quarter: ${selectedQuarter}`
+                ? `${selectedQuarter.slice(0, 4)} ${
+                    quarterOptions.find((q) => q.code === selectedQuarter)?.label[0]
+                  }`
                 : "Select Quarter"}
             </Text>
             <AntDesign
@@ -154,7 +168,6 @@ const CategorySearch = forwardRef(
           </TouchableOpacity>
         </View>
 
-        {/* Dropdowns */}
         {(isDeptDropdownVisible || isQuarterDropdownVisible) && (
           <TouchableWithoutFeedback onPress={closeDropdowns}>
             <View style={styles.dropdownOverlay}>
@@ -206,8 +219,7 @@ const CategorySearch = forwardRef(
                         <Text
                           style={[
                             styles.dropdownOptionText,
-                            selectedQuarter === item.code &&
-                              styles.selectedText,
+                            selectedQuarter === item.code && styles.selectedText,
                           ]}
                         >
                           {item.label}
@@ -239,32 +251,45 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.darkBlue,
     paddingVertical: 8,
     paddingHorizontal: 10,
-    borderRadius: 8,
-    flex: 1,
+    borderRadius: 12,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
     marginHorizontal: 18,
+    width: "40%",
+  },
+  centeredButton: {
+    justifyContent: "center",
   },
   toggleButtonText: {
     color: "#fff",
     fontSize: 14,
     fontWeight: "bold",
+    textAlign: "center",
+    paddingRight: 5,
+    fontFamily: "Nunito-Regular", 
   },
   dropdownOverlay: {
     position: "absolute",
-    top: 40,
+    top: 50,
     left: 0,
     right: 0,
     bottom: 0,
     zIndex: 2,
   },
   dropdownContainer: {
-    backgroundColor: "#f9f9f9",
+    backgroundColor: "#fff",
     overflow: "hidden",
-    borderRadius: 8,
+    borderRadius: 5, // Outer curve for the border
     marginHorizontal: 5,
     marginTop: 5,
+    borderBottomWidth: 8, 
+    borderBottomColor: COLORS.orange, 
+    shadowColor: "#000", 
+    shadowOffset: { width: 0, height: 4 }, 
+    shadowOpacity: 0.2, 
+    shadowRadius: 6, 
+    elevation: 5,
   },
   dropdownOption: {
     paddingVertical: 10,
@@ -275,10 +300,12 @@ const styles = StyleSheet.create({
   dropdownOptionText: {
     fontSize: 16,
     color: "#333",
+    fontFamily: "Nunito-Regular", 
   },
   selectedText: {
     fontWeight: "bold",
     color: COLORS.orange,
+    fontFamily: "Nunito-Regular", 
   },
 });
 

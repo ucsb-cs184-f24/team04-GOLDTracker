@@ -1,6 +1,6 @@
 import React from "react";
 import { Image, View, StyleSheet, StatusBar, SafeAreaView, Text, TouchableOpacity } from "react-native";
-import LinearGradient from "react-native-linear-gradient"; // Import LinearGradient
+import LinearGradient from "react-native-linear-gradient"; 
 import { COLORS } from "../theme/theme";
 
 export default function LoginScreen({ promptAsync }) {
