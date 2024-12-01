@@ -28,6 +28,7 @@ const CategorySearch = forwardRef(
       selectedDept,
       selectedQuarter,
       setIsSearching,
+      major,
     },
     ref
   ) => {
@@ -37,10 +38,17 @@ const CategorySearch = forwardRef(
     const animatedDeptHeight = useRef(new Animated.Value(0)).current;
     const animatedQuarterHeight = useRef(new Animated.Value(0)).current;
 
-    const departmentOptions = Object.keys(departmentMapping).map((code) => ({
-      code,
-      label: departmentMapping[code][0],
-    }));
+    // const departmentOptions = Object.keys(departmentMapping).map((code) => ({
+    //   code,
+    //   label: departmentMapping[code][0],
+    // }));
+    const departmentOptions = [
+      { code: "Major", label: "My Major" }, // Add "My Major" option
+      ...Object.keys(departmentMapping).map((code) => ({
+        code,
+        label: departmentMapping[code][0],
+      })),
+    ];
 
     const quarterOptions = [
       { code: "20244", label: "Fall 2024" },
@@ -97,8 +105,13 @@ const CategorySearch = forwardRef(
 
     const handleSelect = (type, item) => {
       if (type === "department") {
-        onDepartmentSelect(item.code);
-        onSearch(item.code);
+        if (item.code === "myMajor") {
+          onDepartmentSelect(major); // Set to the user's major
+          onSearch(major); // Trigger search with major
+        } else {
+          onDepartmentSelect(item.code);
+          onSearch(item.code);
+        }
         toggleDeptDropdown();
       } else if (type === "quarter") {
         onQuarterSelect(item.code);

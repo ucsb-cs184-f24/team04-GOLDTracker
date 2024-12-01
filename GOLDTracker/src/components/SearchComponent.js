@@ -107,6 +107,17 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     }
   }, [major]);
 
+  const handleClearSearch = () => {
+    setSearch(""); // Clear the search input
+    setResults([]); // Reset the search results
+    setErrorMessage(""); // Reset the error message
+    setIsSearching(false); // Stop the searching state
+
+    if (major && major !== "") {
+      handleSearchSubmit(major);
+    }
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
@@ -129,6 +140,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           }
         }} 
         leftIconContainerStyle={styles.leftIconContainer}
+        onClear={handleClearSearch}
       />
 
       {/* Category Search Dropdown */}
@@ -140,10 +152,11 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         onSearch={handleSearchSubmit}
         selectedQuarter={selectedQuarter}
         setIsSearching={setIsSearching} // Pass the setter function
+        major = {major}
       />
 
     {isLoading ? (
-      <ActivityIndicator size="medium" color="#0000ff" />
+      <ActivityIndicator size={25} color="#0000ff" />
     ) : null}
 
       {/* Error Message or Results */}
