@@ -275,7 +275,7 @@ const Navigator = () => {
       />
 
       <Tab.Screen
-        name="PROFILE"
+        name="SETTING"
         component={MoreStackScreen}
         options={{
           tabBarIcon: ({ focused }) => (
