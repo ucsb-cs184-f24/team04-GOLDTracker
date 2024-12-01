@@ -141,23 +141,11 @@ const HomeScreen = ({ navigation }) => {
           search={search}
           setSearch={setSearch}
           setIsSearching={setIsSearching}
+          major={major}
         />
 
         {!isSearching && major === "" ? (
           <EmptyState navigation={navigation} />
-        ) : major !== "" ? (
-          <View style={styles.courseListContainer}>
-            {errorMessage ? (
-              <Text style={styles.errorMessage}>{errorMessage}</Text>
-            ) : (
-              <FlatList
-                data={courses}
-                keyExtractor={(item) => item.courseId.trim()}
-                renderItem={renderCourseItem}
-                contentContainerStyle={{ paddingBottom: 20 }}
-              />
-            )}
-          </View>
         ) : null}
       </View>
     </SafeAreaView>

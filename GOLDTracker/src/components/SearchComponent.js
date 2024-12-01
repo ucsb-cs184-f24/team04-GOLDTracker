@@ -1,17 +1,17 @@
-import React, { useState, useRef } from "react";
-import { StatusBar, StyleSheet, View, FlatList, Text } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { StatusBar, StyleSheet, View, FlatList, Text,ActivityIndicator } from "react-native";
 import { SearchBar } from "react-native-elements";
 import Class from "../components/Class";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebaseConfig";
-import { COLORS } from "../theme/theme";
 import CategorySearch from "../components/CategorySearch";
 
-const SearchComponent = ({ search, setSearch, setIsSearching }) => {
+const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedDept, setSelectedDept] = useState(null);
   const [selectedQuarter, setSelectedQuarter] = useState("20244");
+  const [isLoading, setIsLoading] = useState(false);
 
   const categorySearchRef = useRef(null);
   const navigation = useNavigation();
@@ -40,9 +40,17 @@ const SearchComponent = ({ search, setSearch, setIsSearching }) => {
   };
 
   const handleSearchSubmit = async (deptCode = null) => {
+    if (major && major !== "") {
+      searchTerm = major;
+      setIsLoading(true);
+    }  
+      
     try {
       const quarter = selectedQuarter; 
       const searchTerm = deptCode || search.trim(); // Prioritize deptCode; fallback to text input
+      // If major is not an empty string, use the major as deptCode
+
+
       if (!searchTerm) {
         setErrorMessage("Please enter a search term or select a department.");
         return;
@@ -80,6 +88,8 @@ const SearchComponent = ({ search, setSearch, setIsSearching }) => {
       console.error("Error fetching data:", error);
       setResults([]);
       setErrorMessage("An error occurred while fetching data.");
+    }finally {
+      setIsLoading(false);
     }
   };
 
@@ -90,6 +100,12 @@ const SearchComponent = ({ search, setSearch, setIsSearching }) => {
       navigation={navigation}
     />
   );
+
+  useEffect(() => {
+    if (major && major !== "") {
+      handleSearchSubmit(major); // Fetch courses for the major if it's not empty
+    }
+  }, [major]);
 
   return (
     <View style={styles.container}>
@@ -125,6 +141,10 @@ const SearchComponent = ({ search, setSearch, setIsSearching }) => {
         selectedQuarter={selectedQuarter}
         setIsSearching={setIsSearching} // Pass the setter function
       />
+
+    {isLoading ? (
+      <ActivityIndicator size="medium" color="#0000ff" />
+    ) : null}
 
       {/* Error Message or Results */}
       {errorMessage ? (

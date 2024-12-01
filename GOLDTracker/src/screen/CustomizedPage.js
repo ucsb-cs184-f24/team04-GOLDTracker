@@ -226,6 +226,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 16,
+    marginBottom:80,
     backgroundColor: '#fff',
   },
   label: {
