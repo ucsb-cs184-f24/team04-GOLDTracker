@@ -38,10 +38,6 @@ const CategorySearch = forwardRef(
     const animatedDeptHeight = useRef(new Animated.Value(0)).current;
     const animatedQuarterHeight = useRef(new Animated.Value(0)).current;
 
-    // const departmentOptions = Object.keys(departmentMapping).map((code) => ({
-    //   code,
-    //   label: departmentMapping[code][0],
-    // }));
     const departmentOptions = [
       { code: "Your Major", label: "Cancel Selection" }, // Add "My Major" option
       ...Object.keys(departmentMapping).map((code) => ({
@@ -148,7 +144,7 @@ const CategorySearch = forwardRef(
     return (
       <View style={styles.container}>
         <View style={styles.buttonRow}>
-          <TouchableOpacity
+      <TouchableOpacity
             style={[styles.toggleButton, styles.centeredButton]}
             onPress={toggleDeptDropdown}
           >
