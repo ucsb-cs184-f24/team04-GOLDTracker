@@ -1,7 +1,6 @@
 import React from "react";
 import { StyleSheet, TouchableOpacity, Image, Text } from "react-native";
 
-import Entypo from "@expo/vector-icons/Entypo";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { createStackNavigator } from "@react-navigation/stack";
 import { COLORS } from "../theme/theme";
@@ -15,6 +14,7 @@ import HelpScreen from "../screen/HelpScreen";
 import TermsOfUseScreen from "../screen/TermOfUseScreen";
 import CourseDetailScreen from "../screen/CourseDetailScreen";
 import CustomizedPage from "../screen/CustomizedPage";
+import { BlurView } from "expo-blur";
 
 import Header from "../components/Header";
 
@@ -216,7 +216,9 @@ const Navigator = () => {
           fontFamily: 'Nunito-Bold',
         },
         tabBarStyle: {
-          backgroundColor: '#e77757',
+          backgroundColor: 'rgba(231, 119, 87, 0.9)', // Add transparency to your color
+          position: 'absolute', // Keep the bar overlaying
+          borderTopWidth: 0, // Remove the border for a clean look
         },
         headerShown: false, 
       }}

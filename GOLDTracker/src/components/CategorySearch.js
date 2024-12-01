@@ -17,7 +17,7 @@ import {
 import { COLORS } from "../theme/theme";
 import departmentMapping from "../assets/departmentMapping.json";
 import AntDesign from "react-native-vector-icons/AntDesign";
-import LinearGradient from "react-native-linear-gradient";
+
 
 const CategorySearch = forwardRef(
   (
@@ -146,6 +146,7 @@ const CategorySearch = forwardRef(
               name={isDeptDropdownVisible ? "caretup" : "caretdown"}
               size={12}
               color="#fff"
+              style={styles.shadowIcon}
             />
           </TouchableOpacity>
 
@@ -164,6 +165,7 @@ const CategorySearch = forwardRef(
               name={isQuarterDropdownVisible ? "caretup" : "caretdown"}
               size={12}
               color="#fff"
+              style={styles.shadowIcon}
             />
           </TouchableOpacity>
         </View>
@@ -306,6 +308,13 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     color: COLORS.orange,
     fontFamily: "Nunito-Regular", 
+  },
+  shadowIcon: {
+    shadowColor: "#000",
+    shadowOffset: { width: 1, height: 3 },
+    shadowOpacity: 0.5,
+    shadowRadius: 5,
+    elevation: 5, // Shadow for Android
   },
 });
 
