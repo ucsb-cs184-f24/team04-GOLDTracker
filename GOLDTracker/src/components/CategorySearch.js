@@ -43,7 +43,7 @@ const CategorySearch = forwardRef(
     //   label: departmentMapping[code][0],
     // }));
     const departmentOptions = [
-      { code: "Major", label: "My Major" }, // Add "My Major" option
+      { code: "Your Major", label: "Cancel Selection" }, // Add "My Major" option
       ...Object.keys(departmentMapping).map((code) => ({
         code,
         label: departmentMapping[code][0],
@@ -105,7 +105,7 @@ const CategorySearch = forwardRef(
 
     const handleSelect = (type, item) => {
       if (type === "department") {
-        if (item.code === "myMajor") {
+        if (item.code === "Your Major") {
           onDepartmentSelect(major); // Set to the user's major
           onSearch(major); // Trigger search with major
         } else {
