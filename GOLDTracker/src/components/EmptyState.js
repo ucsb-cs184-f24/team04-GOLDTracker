@@ -15,7 +15,7 @@ const EmptyState = ({ navigation }) => {
       </Text>
       <TouchableOpacity
         style={styles.editMajorButton}
-        onPress={() => navigation.navigate("CustomizedPage")}
+        onPress={() => navigation.navigate("CustomizedPage", { isEditable: true })}
       >
         <Text style={styles.editMajorButtonText}>Edit Major</Text>
       </TouchableOpacity>

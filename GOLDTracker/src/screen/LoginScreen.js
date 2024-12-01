@@ -5,10 +5,10 @@ import { COLORS } from "../theme/theme";
 
 export default function LoginScreen({ promptAsync }) {
   return (
-    <LinearGradient
-      colors={['#9ad5e6', '#b4d5de', '#cdeef7']} 
-      style={styles.container}
-    >
+    // <LinearGradient
+    //   colors={['#9ad5e6', '#b4d5de', '#cdeef7']} 
+    //   style={styles.container}
+    // >
       <SafeAreaView style={styles.safeArea}>
         <StatusBar barStyle="dark-content" />
         <View style={styles.logoContainer}>
@@ -31,7 +31,7 @@ export default function LoginScreen({ promptAsync }) {
           <Text style={styles.loginButtonText}>Sign in With Your UCSB Account</Text>
         </TouchableOpacity>
       </SafeAreaView>
-    </LinearGradient>
+   /* </LinearGradient> */
   );
 }
 

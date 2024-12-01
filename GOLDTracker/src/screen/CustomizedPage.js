@@ -13,16 +13,16 @@ import categories from '../assets/categories';
 import { doc, getDoc, updateDoc, setDoc } from "firebase/firestore";
 import { auth, firestore } from "../../firebaseConfig";
 
-const CustomizedPage = ({navigation}) => {
-  const [major, setMajor] = useState(''); // Selected major
+const CustomizedPage = ({ navigation, route }) => {
+   const [major, setMajor] = useState(''); // Selected major
   const [classTimes, setClassTimes] = useState({
     pass1: new Date(),
     pass2: new Date(),
     pass3: new Date(),
   }); // Selected dates and times
   const [showTimePicker, setShowTimePicker] = useState(false); 
-  const [isEditable, setIsEditable] = useState(false); // Edit mode state
- 
+  const [isEditable, setIsEditable] = useState(route.params?.isEditable || false); // Initialize isEditable based on route params
+
   // Fetch user data from Firestore
   const fetchUserData = async () => {
     const user = auth.currentUser;
