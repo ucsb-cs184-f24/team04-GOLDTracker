@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import { FetchProfessorsByDepartment } from "../components/FetchProfessors"
-import { JustifyText } from "react-native-text"
 
 const CourseDetailScreen = ({ route }) => {
   const { course } = route.params; // course is the "classes" component of the json return by UCSB search API 
@@ -176,7 +175,7 @@ const styles = StyleSheet.create({
     textAlign: "justify", // Justifies text to align edges
     marginLeft: 28, // Indent subsequent lines
     lineHeight: 24,
-    maxWidth: 280,
+    maxWidth: 290,
     
   },
 });
