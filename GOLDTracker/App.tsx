@@ -77,7 +77,7 @@ const App = () => {
             const credential = GoogleAuthProvider.credential(id_token);
             signInWithCredential(auth, credential).then((result) => {
                 const user = result.user;
-                if (!user.email || !user.email.endsWith("@ucsb.edu")) {
+                if (!user) {
                     alert("Only UCSB emails are allowed."); // Display the alert
                     signOut(auth).then(() => {
                     setTimeout(() => {

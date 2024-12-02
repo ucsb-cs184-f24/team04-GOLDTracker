@@ -5,6 +5,7 @@ import { auth } from "../../firebaseConfig";
 import { COLORS, SPACING } from "../theme/theme";
 import { Swipeable } from 'react-native-gesture-handler';
 import Clipboard from '@react-native-clipboard/clipboard';
+import Ionicons from '@expo/vector-icons/Ionicons'; 
 
 const CartFetch = ({ setClasses, setErrorMessage }) => {
     const [fullCourseDetails, setFullCourseDetails] = useState([]);
@@ -94,14 +95,14 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
                         style={styles.followButton}
                         onPress={() => handleUnfollow(item.classEnrollCode, item.sectionEnrollCode)}
                     >
-                        <Text style={styles.FollowText}>Following</Text>
+                        <Text style={styles.FollowText}>Unfollow</Text>
                     </TouchableOpacity>
                     {/* Copy to Clipboard Button */}
                     <TouchableOpacity
                         style={styles.joinButton}
                         onPress={() => copyToClipboard(sectionEnrollCode)}
                     >
-                        <Text style={styles.JoinText}>Join</Text>
+                        <Text style={styles.JoinText}>Copy ID</Text>
                     </TouchableOpacity>
                 </View>
             );
@@ -136,7 +137,7 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
                                         styles.sectionContainer,
                                         {
                                             backgroundColor:
-                                                index % 2 === 0 ? COLORS.lightGrey : COLORS.darkGrey,
+                                                index % 2 === 0 ? COLORS.darkGrey : COLORS.lightGrey,
                                             paddingVertical: 12,
                                             paddingHorizontal: 10,
                                             flexDirection: 'row',
@@ -152,6 +153,13 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
                                         <Text style={styles.sectionSpace}>
                                             Space: {section.enrolledTotal || 0}/{section.maxEnroll || 0}
                                         </Text>
+                                    </View>
+                                    <View style={styles.sectionDetails}>
+                                        <Ionicons
+                                            name="chevron-back-outline"
+                                            size={20}
+                                            color= {COLORS.darkBlue}
+                                        />
                                     </View>
                                 </View>
                             </Swipeable>
@@ -178,7 +186,7 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.pullToRefreshText}>Pull to refresh</Text>
+            <Text style={styles.pullToRefreshText}>Pull to Refresh</Text>
             <FlatList
                 data={fullCourseDetails}
                 keyExtractor={(item) => item.courseId}
@@ -205,7 +213,7 @@ const styles = StyleSheet.create({
         color: 'grey',
     },
     classBox: {
-        backgroundColor: '#f9fafb',
+        backgroundColor: COLORS.lightGrey,
         borderRadius: 20,
         marginVertical: 10,
         shadowColor: "#000",
@@ -213,20 +221,22 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 3.5,
         elevation: 5,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 15,
+        marginRight: 15,
     },
     courseId: {
         fontSize: 18,
         paddingVertical: 6,
         marginLeft: 15,
         marginTop: 8,
+        marginBottom: 10,
         fontWeight: 'bold',
     },
     sectionDetails: {
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
+        
     },
     sectionContainer: {
         flexDirection: "row",
@@ -234,9 +244,10 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         borderRadius: 16,
         paddingVertical: 10,
+        height: 40,
     },
     sectionTime: {
-        width: 150,
+        width: 170,
         fontSize: 14,
         color: COLORS.black,
     },
@@ -248,20 +259,20 @@ const styles = StyleSheet.create({
     followButton: {
         color: 'white',
         width: 100,
-        paddingVertical: 10,
+        paddingVertical: 9,
         borderRadius: 16,
         alignItems: "center",
         textAlign: 'center',
-        backgroundColor: COLORS.lightBlue,
+        backgroundColor: "#ba2f33",
         marginRight: 4,
     },
     joinButton: {
         width: 100,
-        paddingVertical: 10,
+        paddingVertical: 9,
         borderRadius: 16,
         alignItems: "center",
         textAlign: 'center',
-        backgroundColor: "#e3dd98",
+        backgroundColor: COLORS.darkBlue,
     },
     courseContainerNoSections: {
         padding: 12,
@@ -281,22 +292,23 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 15,
         marginBottom:4,
+        height: 40,
     },
     FollowText:{
         fontSize: 15,
         color: "#fff",
         fontWeight: "500",
-        textShadowColor: COLORS.darkBlue,
-        textShadowOffset: { width: 3, height: 3 }, // Shadow offset
+        textShadowColor: COLORS.black,
+        textShadowOffset: { width: 1, height: 1 }, // Shadow offset
         textShadowRadius: 8, // Shadow blur radius
         fontFamily:"Nunito-Regular",
     },
     JoinText:{
         fontSize: 15,
-        color: "#000",
+        color: "#fff",
         fontWeight: "500",
-        textShadowColor: "#f0f0f",
-        textShadowOffset: { width: 3, height: 3 }, // Increased offset for a larger shadow
+        textShadowColor: COLORS.black,
+        textShadowOffset: { width: 1, height: 1 }, 
         textShadowRadius: 3, // Increased radius for a more spread out blur
         fontFamily: "Nunito-Regular",
     }
