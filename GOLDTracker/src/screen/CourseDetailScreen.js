@@ -42,22 +42,23 @@ const CourseDetailScreen = ({ route }) => {
   }, [courseDepartment, courseInstructor]);
 
   const toggleFollowAll = async () => {
-    if (followingAll) {
-      // Deregister all sections
-      for (let section of course.classSections) {
-        if (section.enrollCode) {
-          await deregisterClass(course.courseId, section.enrollCode);
-        }
-      }
-    } else {
-      // Register all sections
-      for (let section of course.classSections) {
-        if (section.enrollCode) {
-          await registerClass(course.courseId, section.enrollCode);
-        }
-      }
-    }
-    setFollowingAll(!followingAll); // Toggle the state
+    // if (followingAll) {
+    //   // Deregister all sections
+    //   for (let section of course.classSections) {
+    //     if (section.enrollCode) {
+    //       await deregisterClass(course.enrollCode, section.enrollCode);
+    //     }
+    //   }
+    // } else {
+    //   // Register all sections
+    //   for (let section of course.classSections) {
+    //     if (section.enrollCode) {
+    //       await registerClass(course.enrollCode, section.enrollCode);
+    //     }
+    //   }
+    // }
+    // setFollowingAll(!followingAll); // Toggle the state
+    Alert.alert("not finished");
   };
 
   return (
