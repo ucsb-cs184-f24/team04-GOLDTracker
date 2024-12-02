@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
     userInfoContainer: {
         marginBottom: 10,
-        marginTop: 20, // wait for header bar
+        marginTop: 30, // wait for header bar
         marginLeft:40,
     },
     profileRow: {
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
         width: '100%', // Adjust width if needed
         backgroundColor: '#e0e0e0', // Line color
         elevation: 4, // Android shadow effect
+        marginTop:20,
     },
     menu: {
         marginTop: 10,
