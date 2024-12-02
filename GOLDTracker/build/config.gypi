@@ -407,7 +407,7 @@
     "want_separate_host_toolset": 0,
     "xcode_version": "13.0",
     "nodedir": "/var/folders/7l/5hk7wkwj1ml0v68qdz8wj9rh0000gn/T/prebuild/node/18.20.4",
-    "python": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "python": "/opt/homebrew/opt/python@3.13/bin/python3.13",
     "standalone_static_library": 1,
     "target": "18.20.4",
     "build_v8_with_gn": "false",
