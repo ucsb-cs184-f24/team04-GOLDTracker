@@ -38,6 +38,6 @@
     "splash": {
       "backgroundColor": "#ffffff"
     },
-    "icon": "./src/assets/icon.png"
+    "icon": "./src/assets/images/default.jpg"
   }
 }
