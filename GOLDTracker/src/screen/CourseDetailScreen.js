@@ -46,57 +46,69 @@ const CourseDetailScreen = ({ route }) => {
       <Text style={styles.courseCode}>{courseCode}</Text>
       <Text style={styles.courseTitle}>{courseTitle}</Text>
       <Text style={styles.courseDescription}>{courseDescription}</Text>
-      
+  
       <View style={styles.professorContainer}>
         <Text style={styles.sectionHeader}>Instructor's RateMyProfessor</Text>
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : professor ? (
-          <View style={styles.professorCard}>
-            <Text style={styles.professorName}>{professor.firstName} {professor.lastName}</Text>
-            <View style={styles.professorStats}>
-              <Text style={[styles.rating,
-                {
-                  color: professor.avgRating > 3 ? "#2e8b57" : "#ff4500", // Green for rating > 3, else red
-                }
-              ]}>
-                ⭐ Rating: {professor.avgRating} / 5
+          <>
+            {/* Professor Information Card */}
+            <View style={styles.professorCard}>
+              <Text style={styles.professorName}>
+                {professor.firstName} {professor.lastName}
               </Text>
-              <Text style={[styles.difficulty,
-                {
-                  color: professor.avgDifficulty < 3 ? "#2e8b57" : "#ff4500", //Green for difficulty < 3, else red
-                }
-              ]}>
-                🔥 Difficulty: {professor.avgDifficulty} / 5
-              </Text>
-              <Text
-                style={[
-                  styles.takeAgain,
-                  {
-                    color: professor.wouldTakeAgainPercent > 70 ? "#2e8b57" : "#ff4500", // Similar to above
-                  },
-                ]}
-              >
-                💯 Would Take Again: {professor.wouldTakeAgainPercent}%
-              </Text>
-              <Text style={styles.numRatings}>
-                🗳 Number of Ratings: {professor.numRatings}
-              </Text>
-              <View style={styles.commentContainer}>
-                <Text style={styles.commentTitle}>💬 Summarized Comments:</Text>
-                <Text style={styles.commentContent}>
-                  {professor.commentsSummarizedByGPT || "Not enough comments"}
+              <View style={styles.professorStats}>
+                <Text
+                  style={[
+                    styles.rating,
+                    {
+                      color: professor.avgRating > 3 ? "#2e8b57" : "#ff4500", // Green for rating > 3, else red
+                    },
+                  ]}
+                >
+                  ⭐ Rating: {professor.avgRating} / 5
+                </Text>
+                <Text
+                  style={[
+                    styles.difficulty,
+                    {
+                      color: professor.avgDifficulty < 3 ? "#2e8b57" : "#ff4500", // Green for difficulty < 3, else red
+                    },
+                  ]}
+                >
+                  🔥 Difficulty: {professor.avgDifficulty} / 5
+                </Text>
+                <Text
+                  style={[
+                    styles.takeAgain,
+                    {
+                      color: professor.wouldTakeAgainPercent > 70 ? "#2e8b57" : "#ff4500", // Similar to above
+                    },
+                  ]}
+                >
+                  💯 Would Take Again: {professor.wouldTakeAgainPercent}%
+                </Text>
+                <Text style={styles.numRatings}>
+                  🗳 Number of Ratings: {professor.numRatings}
                 </Text>
               </View>
             </View>
-          </View>
+  
+            {/* New Comments Card */}
+            <View style={styles.commentsCard}>
+              <Text style={styles.commentTitle}>💬 Summarized Comments:</Text>
+              <Text style={styles.commentContent}>
+                {professor.commentsSummarizedByGPT || "Not enough comments"}
+              </Text>
+            </View>
+          </>
         ) : (
           <Text style={styles.noProfessorText}>
             No matching professor found for this course.
           </Text>
         )}
       </View>
-
     </ScrollView>
   );
 };
@@ -163,6 +175,18 @@ const styles = StyleSheet.create({
   },
   commentContainer: {
     marginBottom: 10,
+  },
+  commentsCard: {
+    marginTop: 16, // Add spacing from the professor card
+    padding: 16, // Padding inside the card
+    backgroundColor: "#f0f8ff", // Light background color for contrast
+    borderRadius: 8, // Rounded corners
+    shadowColor: "#000", // Shadow for iOS
+    shadowOpacity: 0.1, // Shadow opacity for iOS
+    shadowRadius: 8, // Shadow radius for iOS
+    elevation: 4, // Shadow for Android
+    borderWidth: 1, // Optional: Add border
+    borderColor: "#ddd", // Optional: Border color
   },
   commentTitle: {
     fontSize: 18, // Font size for the title
