@@ -10,7 +10,7 @@ export async function FetchProfessorsByDepartment(departmentCode, courseInstruct
   console.log("start to find professor's rmp")
   // Get possible department names for the given code from the imported JSON
   const departmentNames = departmentMapping[departmentCode] || [];
-  console.log('departmentName mapped: ', departmentNames[0])
+  console.log('deartmentName mapped: ', departmentNames)
   try {
     for (const deptName of departmentNames) {
       const q = query(collection(db, `professors/${deptName}/profList`));
@@ -25,6 +25,7 @@ export async function FetchProfessorsByDepartment(departmentCode, courseInstruct
           avgDifficulty: data.avgDifficulty,
           numRatings: data.numRatings,
           wouldTakeAgainPercent: data.wouldTakeAgainPercent,
+          commentsSummarizedByGPT: data.comments_summarized_by_gpt
         });
       });
     }
