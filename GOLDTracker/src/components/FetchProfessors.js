@@ -25,6 +25,7 @@ export async function FetchProfessorsByDepartment(departmentCode, courseInstruct
           avgDifficulty: data.avgDifficulty,
           numRatings: data.numRatings,
           wouldTakeAgainPercent: data.wouldTakeAgainPercent,
+          commentsSummarizedByGPT: data.comments_summarized_by_gpt
         });
       });
     }

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator } from "react-native";
 import { FetchProfessorsByDepartment } from "../components/FetchProfessors"
+import { JustifyText } from "react-native-text"
 
 const CourseDetailScreen = ({ route }) => {
   const { course } = route.params; // course is the "classes" component of the json return by UCSB search API 
@@ -41,7 +42,6 @@ const CourseDetailScreen = ({ route }) => {
 
     fetchData();
   }, [courseDepartment, courseInstructor]);
-
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.courseCode}>{courseCode}</Text>
@@ -83,6 +83,12 @@ const CourseDetailScreen = ({ route }) => {
               <Text style={styles.numRatings}>
                 🗳 Number of Ratings: {professor.numRatings}
               </Text>
+              <View style={styles.commentContainer}>
+                <Text style={styles.commentTitle}>💬 Summarized Comments:</Text>
+                <Text style={styles.commentContent}>
+                  {professor.commentsSummarizedByGPT || "Not enough comments"}
+                </Text>
+              </View>
             </View>
           </View>
         ) : (
@@ -154,6 +160,24 @@ const styles = StyleSheet.create({
   numRatings: {
     fontSize: 18,
     color: "#555",
+    marginBottom: 0,
+  },
+  commentContainer: {
+    marginBottom: 10,
+  },
+  commentTitle: {
+    fontSize: 18, // Font size for the title
+    // Bold for the title
+    lineHeight: 28, 
+  },
+  commentContent: {
+    fontSize: 18, // Font size for the content
+    color: "#555", // Text color
+    textAlign: "justify", // Justifies text to align edges
+    marginLeft: 28, // Indent subsequent lines
+    lineHeight: 24,
+    maxWidth: 280,
+    
   },
 });
 
