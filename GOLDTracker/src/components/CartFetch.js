@@ -144,7 +144,7 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
                                             justifyContent: 'space-between',
                                             alignItems: 'center',
                                             borderRadius: 12,
-                                            marginBottom: 8,
+                                            marginTop: 8,
                                         },
                                     ]}
                                 >
@@ -293,6 +293,7 @@ const styles = StyleSheet.create({
         borderRadius: 15,
         marginBottom:4,
         height: 40,
+        marginTop:8,
     },
     FollowText:{
         fontSize: 15,
