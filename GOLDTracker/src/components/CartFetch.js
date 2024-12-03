@@ -21,7 +21,7 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
                 let authHeader = new Headers();
                 authHeader.append("authorization", idToken);
 
-                const currentClass = await (await fetch(`https://us-central1-goldtracker-beb96.cloudfunctions.net/poll/20244/${courseId}`, { headers: authHeader })).json();
+                const currentClass = await (await fetch(`https://us-central1-goldtracker-beb96.cloudfunctions.net/poll/20251/${courseId}`, { headers: authHeader })).json();
 
                 currentClass.classSections = currentClass.classSections.filter(section =>
                     classList[courseId] && classList[courseId].includes(section.enrollCode)

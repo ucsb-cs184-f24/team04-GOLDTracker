@@ -13,7 +13,6 @@ import { auth, firestore } from "../../firebaseConfig";
 import { doc, getDoc } from "firebase/firestore";
 import Class from "../components/Class";
 import { useFocusEffect } from "@react-navigation/native";
-import { API_KEY, API_URL } from "@env";
 import EmptyState from "../components/EmptyState";
 
 const HomeScreen = ({ navigation }) => {
@@ -24,6 +23,7 @@ const HomeScreen = ({ navigation }) => {
   const [isSearching, setIsSearching] = useState(false);
 
   const resetStateRef = useRef(() => {});
+  const API_URL = "https://us-central1-goldtracker-beb96.cloudfunctions.net/search";
 
   useEffect(() => {
     const fetchUserMajor = async () => {
@@ -94,18 +94,16 @@ const HomeScreen = ({ navigation }) => {
   }, [resetState]);
 
   const fetchCoursesForMajor = async (major) => {
-    const quarter = "20244";
+    const quarter = "20251";
     const apiUrl = `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
       major
     )}&includeClassSections=true`;
 
     try {
+      const headers = new Headers();
+      headers.append("authorization", await auth.currentUser.getIdToken());
       const response = await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          "ucsb-api-key": API_KEY,
-          "Content-Type": "application/json",
-        },
+        method: "GET", headers: headers
       });
 
       if (!response.ok) {

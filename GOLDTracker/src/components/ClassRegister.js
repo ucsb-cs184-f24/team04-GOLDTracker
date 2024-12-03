@@ -55,6 +55,21 @@ export async function getClasses(){
 
 }
 
+export async function getIndividualClass(classId){
+    let classList = await AsyncStorage.getItem("class-list");
+    if(!classList){
+        return {};
+    }else{
+        classList = JSON.parse(classList);
+        if(classList.hasOwnProperty(classId)){
+            return classList[`${classId}`];
+        }else{
+            return {};
+        }
+    }
+
+}
+
 export async function reset(){
     await AsyncStorage.setItem("class-list","");
     await AsyncStorage.setItem("timestamp","");
@@ -117,7 +132,6 @@ async function updateServer(classList, timestamp){
         classList: JSON.stringify(classList),
         timestamp: timestamp
     });
-    console.log("this ran")
 }
 
 async function updateLocal(classList, timestamp){

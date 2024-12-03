@@ -10,7 +10,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedDept, setSelectedDept] = useState(null);
-  const [selectedQuarter, setSelectedQuarter] = useState("20244");
+  const [selectedQuarter, setSelectedQuarter] = useState("20251");
   const [isLoading, setIsLoading] = useState(false);
 
   const categorySearchRef = useRef(null);
@@ -36,6 +36,23 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
             }
           : course
       )
+    );
+  };
+
+  const setFollow = (courseId, sectionId, value) => {
+    setResults((prevResults) =>
+        prevResults.map((course) =>
+            course.courseId.trim() === courseId
+                ? {
+                  ...course,
+                  classSections: course.classSections.map((section) =>
+                      section.section === sectionId
+                          ? { ...section, following: value }
+                          : section
+                  ),
+                }
+                : course
+        )
     );
   };
 
@@ -97,6 +114,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     <Class
       course={item}
       toggleFollow={toggleFollow}
+      setFollow={setFollow}
       navigation={navigation}
     />
   );

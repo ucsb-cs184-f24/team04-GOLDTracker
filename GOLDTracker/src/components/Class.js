@@ -11,7 +11,7 @@ class Class extends React.Component {
   };
 
   render() {
-    const { course, toggleFollow } = this.props;
+    const { course, toggleFollow, setFollow } = this.props;
 
     const courseCode = course.courseId ? course.courseId.trim() : "N/A";
     const firstSection = course.classSections && course.classSections[0];

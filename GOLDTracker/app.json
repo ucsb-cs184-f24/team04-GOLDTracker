@@ -28,6 +28,9 @@
     "splash": {
       "backgroundColor": "#ffffff"
     },
-    "icon": "./src/assets/images/default.jpg"
+    "icon": "./src/assets/images/default.jpg",
+    "androidStatusBar": {
+      "translucent": false
+    }
   }
 }

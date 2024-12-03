@@ -47,6 +47,7 @@ const CategorySearch = forwardRef(
     ];
 
     const quarterOptions = [
+      {code: "20251", label: "Winter 2025"},
       { code: "20244", label: "Fall 2024" },
       { code: "20243", label: "Summer 2024" },
       { code: "20242", label: "Spring 2024" },

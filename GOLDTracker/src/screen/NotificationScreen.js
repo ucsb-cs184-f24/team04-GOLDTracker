@@ -11,8 +11,7 @@ export default function NotificationScreen() {
             let courses = await BackgroundRegister.checkAvailability();
             setCurrentCourses(courses);
         }
-        getCourses();
-        console.log("please no more infinite loop")
+        getCourses()
     },[])
     const renderNotification = (item) => {
         return (
