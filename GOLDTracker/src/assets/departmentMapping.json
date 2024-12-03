@@ -2,11 +2,11 @@
     "ANTH": ["anthropology"],
     "ART": ["art", "graphic arts", "fine arts", "art history"],
     "ARTHI": ["art history"],
-    "ARTST": ["art studio", "graphic arts", "fine arts"],
-    "AAM": ["asian american studies"],
-    "ASTRO": ["astronomy"],
-    "BIOE": ["biological engineering"],
-    "BIOL": ["biology", "life science"],
+    "ARTST": ["art studio", "graphic arts", "fine arts"], //not correct
+    "ASAM": ["asian american studies"],
+    "ASTRO": ["astronomy"], // not correct
+    "BIOE": ["biological engineering"],//not
+    "BIOL": ["biology", "life science"], // not correct
     "BLKST": ["black studies", "african-american studies"],
     "CHE": ["chemical engineering"],
     "CHEM": ["chemistry and biochemistry", "chemistry", "biochemistry"],
@@ -16,17 +16,17 @@
     "COMM": ["communication"],
     "CLIT": [ "comparative literature & lang", "religious studies", "languages", "germanic & russian studies", "germanic amp russian studies", "chinese", "global studies"],
     "CMPSC": ["computer science"],
-    "CMPTG": ["computing"],
+    "CMPTG": ["computing"],//
     "CNCSP": ["counseling, clinical, school psychology", "psychology"],
-    "DANCE": ["dance"],
+    "DANCE": ["dance"],//
     "DYNS": ["dynamical neuroscience"],
-    "EARTH": ["earth science", "geology"],
-    "EACS": ["east asian cultural studies", "east asian languages & cultures", "east asian languages amp cultures"],
+    "EARTH": ["earth science", "geology"],//
+    "EACS": ["east asian cultural studies", "east asian languages & cultures", "east asian languages amp cultures"],//
     "EEMB": ["ecology, evolution & marine biology"],
     "ECON": ["economics", "finance"],
-    "ED": ["education"],
+    "ED": ["education"],//
     "ECE": ["electrical computer engineering", "electrical & comp. engineering", "electrical amp comp. engineering"],
-    "ENGR": ["engineering sciences", "engineering"],
+    "ENGR": ["engineering sciences", "engineering"],//
     "ENGL": ["english"],
     "EDS": ["environmental data science"],
     "ESM": ["environmental science & management", "environmental science amp mgmt.", "environmental science", "environmental science  mgmt."],
@@ -82,6 +82,6 @@
     "PSTAT": ["statistics", "statistics & applied probability"],
     "TMP": ["technology management", "management"],
     "THTR": ["theater"],
-    "WRIT": ["writing", "writing & literature"],
-    "W&L": ["writing & literature"]
+    "WRIT": ["writing", "writing & literature"],//ARHISW
+    "W&L": ["writing & literature"]//
 }
