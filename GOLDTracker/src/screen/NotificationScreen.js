@@ -20,7 +20,6 @@ export default function NotificationScreen() {
     }
     return (
         <View style={styles.container}>
-            <Text>Notification</Text>
             <StatusBar style="auto"/>
             <FlatList data={currentCourses} keyExtractor={(item) => item.courseId.trim()}
                       renderItem={renderNotification} contentContainerStyle={{paddingBottom: 20}}/>

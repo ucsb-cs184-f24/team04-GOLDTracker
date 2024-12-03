@@ -83,7 +83,7 @@ async function prepareNotification(availableCourses, currentPass){
 
 export async function runBackgroundNotificationSequence(){
     const {pass1, pass2, pass3} = await getPasses();
-    if(!pass1 || !pass2 || pass3){
+    if(!pass1 || !pass2 || !pass3){
         return BackgroundFetchResult.NoData;
     }
     let currentDate = new Date();

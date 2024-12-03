@@ -5,110 +5,48 @@ import * as WebBrowser from 'expo-web-browser';
 
 
 export default class Notification extends Component {
-    render(){
+    render() {
         const {course} = this.props;
         const courseCode = course.courseId ? course.courseId.trim() : "N/A";
-        return(
-            <View style={styles.wrapper}>
-                <View style={styles.courseContainer}>
+        const courseProfessor = course.classSections[0]?.instructors[0] ? course.classSections[0]?.instructors[0].instructor : "TBA"
+        return (
+            <View style={styles.container}>
+                <View style={styles.element}>
                     <TouchableOpacity onPress={this.handlePress}>
-                        <Text style={styles.courseHeader}>{`${courseCode} has available sections`}</Text>
+                        <Text style={styles.text}>{`${courseCode.replace(/\s+/, " ")} with ${courseProfessor} has available sections`}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         )
     }
 
-    async handlePress(){
+    async handlePress() {
         await WebBrowser.openBrowserAsync("https://my.sa.ucsb.edu/gold/");
     }
 }
 
 const styles = StyleSheet.create({
-    wrapper: {
-        paddingTop: SPACING.space_10,
-        paddingHorizontal: SPACING.space_16,
-
-    },
-    courseContainer: {
-        backgroundColor: COLORS.lightGrey,
-        paddingTop: SPACING.space_8,
-        paddingHorizontal: 0,
-        borderRadius: 16,
-        marginTop: SPACING.space_18,
-    },
-    courseCode: {
-        fontSize: 18,
-        fontWeight: "bold",
-        color: COLORS.ucsbBlue,
-        paddingVertical: SPACING.space_4,
-        marginLeft: SPACING.space_8,
-    },
-    courseDetailsContainer: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-        alignItems: "center",
-        marginBottom: SPACING.space_4,
-    },
-    professorContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-    },
-    courseTime: {
-        fontSize: 14,
-        color: COLORS.black,
+    container: {
         flex: 1,
-        marginLeft: SPACING.space_8,
+        padding: 16,
+        backgroundColor: COLORS.white,
     },
-    courseProfessor: {
-        fontSize: 14,
-        color: COLORS.black,
-        marginRight: SPACING.space_6,
-    },
-    detailsButton: {
-        padding: 0,
-    },
-    sectionContainer: {
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        borderRadius: 16,
-        marginTop: SPACING.space_4,
-        paddingHorizontal: 0,
-        paddingBottom: 0,
-    },
-    sectionTime: {
-        width: 150,
-        fontSize: 14,
-        color: COLORS.black,
-        marginLeft: SPACING.space_8,
-    },
-    sectionSpace: {
-        width: 100,
-        fontSize: 14,
-        color: COLORS.black,
-        textAlign: "left",
-    },
-    followButton: {
-        width: 80,
-        paddingVertical: SPACING.space_8,
-        borderRadius: 16,
-        alignItems: "center",
-
-    },
-    following: {
-        backgroundColor: COLORS.lightBlue,
-    },
-    notFollowing: {
+    element: {
         backgroundColor: COLORS.darkBlue,
-    },
-    followText: {
-        color: COLORS.white,
-    },
-    courseHeader: {
+        paddingVertical: 8,
+        paddingHorizontal: 10,
+        borderRadius: 12,
         flexDirection: "row",
-        justifyContent: "space-between",
         alignItems: "center",
-        marginBottom: SPACING.space_4,
+        justifyContent: "space-between",
+        marginHorizontal: 18
     },
+    text: {
+        color: "#fff",
+        fontSize: 20,
+        fontWeight: "bold",
+        textAlign: "center",
+        paddingRight: 5,
+        fontFamily: "Nunito-Regular",
+    }
 });

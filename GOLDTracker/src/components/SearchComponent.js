@@ -68,7 +68,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     }else{
       searchTerm = search.trim();
     }
-    
+
     try {
       const quarter = selectedQuarter; 
       // Prioritize deptCode; fallback to text input
