@@ -5,6 +5,7 @@ import Class from "../components/Class";
 import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebaseConfig";
 import CategorySearch from "../components/CategorySearch";
+import * as ClassRegister from "./ClassRegister";
 
 const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const [results, setResults] = useState([]);
@@ -67,14 +68,12 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     }else{
       searchTerm = search.trim();
     }
-
-    console.log(search)
+    
     try {
       const quarter = selectedQuarter; 
       // Prioritize deptCode; fallback to text input
       // If major is not an empty string, use the major as deptCode
 
-      console.log(searchTerm);
 
       if (!searchTerm) {
         setErrorMessage("Please enter a search term or select a department.");
@@ -94,15 +93,29 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       const response = await fetch(apiUrl, { headers });
 
       const data = await response.json();
-
+      const followedCourses = await ClassRegister.getClasses();
       if (data.classes && data.classes.length > 0) {
-        const coursesWithFollowing = data.classes.map((course) => ({
+        const coursesWithFollowing = data.classes.map((course) => {
+          let lectureSections = [];
+          for(let i = 0; i < course.classSections.length; i++){
+            if(course.classSections[i].section.slice(2,4)==="00"){
+              lectureSections.push(course.classSections[i].enrollCode);
+            }
+          }
+          return{
           ...course,
-          classSections: course.classSections.map((section) => ({
+          classSections: course.classSections.map((section) => {
+            let isFollowing = false;
+            if(followedCourses.hasOwnProperty(lectureSections[parseInt(section.section.slice(0,2))-1])) {
+              if(followedCourses[`${lectureSections[parseInt(section.section.slice(0,2))-1]}`].indexOf(section.enrollCode) !== -1){
+                isFollowing = true;
+              }
+            }
+            return{
             ...section,
-            following: false,
-          })),
-        }));
+            following: isFollowing,
+          }}),
+        }});
         setResults(coursesWithFollowing);
         setErrorMessage("");
       } else {

@@ -17,7 +17,6 @@ export default function Class(props) {
     const toggleFollow = props.toggleFollow;
     const setFollow = props.setFollow;
     let lectureSections = [];
-    let [followedSections, setFollowedSections] = useState([]);
     for(let i = 0; i < course.classSections.length; i++){
       if(course.classSections[i].section.slice(2,4)==="00"){
         lectureSections.push(course.classSections[i].enrollCode);
@@ -27,20 +26,6 @@ export default function Class(props) {
     if(lectureSections.length === course.classSections.length){
       noSections = true;
     }
-    useEffect(()=>{
-      const getFollowedSections = async () => {
-        let totalSections = []
-        for(let i = 0; i < lectureSections.length; i++){
-          let sections = await ClassRegister.getIndividualClass(lectureSections[i]);
-          if(sections.length > 0){
-            totalSections = totalSections.concat(sections);
-          }
-        }
-        setFollowedSections(prevState => [...prevState, ...totalSections]);
-      }
-      getFollowedSections();
-    },[])
-    console.log("this is rerendering")
 
     const courseCode = course.courseId ? course.courseId.trim() : "N/A";
 
@@ -113,17 +98,6 @@ export default function Class(props) {
                 section.maxEnroll || 0
               }`;
 
-              if (section.following === undefined) {
-                section.following = false;
-              }
-
-              if(followedSections.length > 0){
-                console.log(section.enrollCode)
-              }
-              if(section.following === false && followedSections.indexOf(section.enrollCode) !== -1){
-                setFollow(course.courseId.trim(), section.section, true)
-                section.following = true;
-              }
 
               return (
                 <View
