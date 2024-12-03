@@ -57,23 +57,31 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   };
 
   const handleSearchSubmit = async (deptCode = null) => {
-    if (major && major !== "") {
+    let searchTerm = "";
+    if(deptCode){
+      searchTerm = deptCode;
+    }
+    else if (!search && major && major !== "") {
       searchTerm = major;
       setIsLoading(true);
-    }  
-      
+    }else{
+      searchTerm = search.trim();
+    }
+
+    console.log(search)
     try {
       const quarter = selectedQuarter; 
-      const searchTerm = deptCode || search.trim(); // Prioritize deptCode; fallback to text input
+      // Prioritize deptCode; fallback to text input
       // If major is not an empty string, use the major as deptCode
 
+      console.log(searchTerm);
 
       if (!searchTerm) {
         setErrorMessage("Please enter a search term or select a department.");
         return;
       }
 
-      const apiUrl = /^[A-Z]{2,}\s[\dA-Z]+$/.test(searchTerm)
+      const apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
         ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true`

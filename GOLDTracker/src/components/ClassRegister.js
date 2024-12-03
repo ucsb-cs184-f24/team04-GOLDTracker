@@ -48,7 +48,7 @@ export async function deregisterClass(courseId, sectionId){
 export async function getClasses(){
     let classList = await AsyncStorage.getItem("class-list");
     if(!classList){
-        return null;
+        return {};
     }else{
         return JSON.parse(classList);
     }
@@ -58,13 +58,13 @@ export async function getClasses(){
 export async function getIndividualClass(classId){
     let classList = await AsyncStorage.getItem("class-list");
     if(!classList){
-        return {};
+        return [];
     }else{
         classList = JSON.parse(classList);
         if(classList.hasOwnProperty(classId)){
             return classList[`${classId}`];
         }else{
-            return {};
+            return [];
         }
     }
 

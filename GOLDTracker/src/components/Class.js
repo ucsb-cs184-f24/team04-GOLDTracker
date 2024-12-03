@@ -1,43 +1,48 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import { COLORS, SPACING } from "../theme/theme";
 import Entypo from "@expo/vector-icons/Entypo";
 import { deregisterClass, registerClass } from "./ClassRegister";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import * as ClassRegister from "./ClassRegister";
 
-class Class extends React.Component {
-  goToDetails = () => {
-    const { course, navigation } = this.props;
+export default function Class(props) {
+  const goToDetails = () => {
+    const course = props.course;
+    const navigation = props.navigation;
     navigation.navigate("CourseDetailScreen", { course });
   };
 
-  render() {
-    const { course, toggleFollow, setFollow } = this.props;
+    const course = props.course;
+    const toggleFollow = props.toggleFollow;
+    const setFollow = props.setFollow;
+    let lectureSections = [];
+    let [followedSections, setFollowedSections] = useState([]);
+    for(let i = 0; i < course.classSections.length; i++){
+      if(course.classSections[i].section.slice(2,4)==="00"){
+        lectureSections.push(course.classSections[i].enrollCode);
+      }
+    }
+    let noSections = false;
+    if(lectureSections.length === course.classSections.length){
+      noSections = true;
+    }
+    useEffect(()=>{
+      const getFollowedSections = async () => {
+        let totalSections = []
+        for(let i = 0; i < lectureSections.length; i++){
+          let sections = await ClassRegister.getIndividualClass(lectureSections[i]);
+          if(sections.length > 0){
+            totalSections = totalSections.concat(sections);
+          }
+        }
+        setFollowedSections(prevState => [...prevState, ...totalSections]);
+      }
+      getFollowedSections();
+    },[])
+    console.log("this is rerendering")
 
     const courseCode = course.courseId ? course.courseId.trim() : "N/A";
-    const firstSection = course.classSections && course.classSections[0];
-
-    const timeLocation =
-      firstSection &&
-      firstSection.timeLocations &&
-      firstSection.timeLocations[0];
-
-    const days =
-      timeLocation && timeLocation.days
-        ? timeLocation.days.replace(/\s/g, "")
-        : "N/A";
-
-    const beginTime = timeLocation && timeLocation.beginTime;
-    const endTime = timeLocation && timeLocation.endTime;
-
-    const courseTime =
-      days && beginTime && endTime
-        ? `${days} ${beginTime} - ${endTime}`
-        : "N/A";
-
-    const courseProfessor =
-      firstSection && firstSection.instructors && firstSection.instructors[0]
-        ? firstSection.instructors[0].instructor
-        : "N/A";
 
     return (
       <View style={styles.wrapper}>
@@ -46,23 +51,47 @@ class Class extends React.Component {
             {/* Course Code */}
             <Text style={styles.courseCode}>{courseCode}</Text>
             <TouchableOpacity
-              onPress={this.goToDetails}
+              onPress={goToDetails}
               style={styles.detailsButton}
             >
               <Entypo name="chevron-right" size={24} color={COLORS.black} />
             </TouchableOpacity>
           </View>
 
-          <View style={styles.courseDetailsContainer}>
-            <Text style={styles.courseTime}>{courseTime}</Text>
-            <View style={styles.professorContainer}>
-              <Text style={styles.courseProfessor}>{courseProfessor}</Text>
-            </View>
-          </View>
-
           {course.classSections &&
             course.classSections.filter((section) => section.courseCancelled !== "C         ").map((section, index) => {
-              if (index === 0) return null;
+              if(!noSections && section.section.slice(2,4)==="00"){
+                const timeLocation =
+                    section &&
+                    section.timeLocations &&
+                    section.timeLocations[0];
+
+                const days =
+                    timeLocation && timeLocation.days
+                        ? timeLocation.days.replace(/\s/g, "")
+                        : "N/A";
+
+                const beginTime = timeLocation && timeLocation.beginTime;
+                const endTime = timeLocation && timeLocation.endTime;
+
+                const courseTime =
+                    days && beginTime && endTime
+                        ? `${days} ${beginTime} - ${endTime}`
+                        : "N/A";
+
+                const courseProfessor =
+                    section && section.instructors && section.instructors[0]
+                        ? section.instructors[0].instructor
+                        : "N/A";
+                return(
+                    <View key={section.enrollCode} style={styles.courseDetailsContainer}>
+                      <Text style={styles.courseTime}>{courseTime}</Text>
+                      <View style={styles.professorContainer}>
+                        <Text style={styles.courseProfessor}>{courseProfessor}</Text>
+                      </View>
+                    </View>
+                )
+              }
 
               const timeLocation =
                 section.timeLocations && section.timeLocations[0];
@@ -86,6 +115,14 @@ class Class extends React.Component {
 
               if (section.following === undefined) {
                 section.following = false;
+              }
+
+              if(followedSections.length > 0){
+                console.log(section.enrollCode)
+              }
+              if(section.following === false && followedSections.indexOf(section.enrollCode) !== -1){
+                setFollow(course.courseId.trim(), section.section, true)
+                section.following = true;
               }
 
               return (
@@ -113,12 +150,12 @@ class Class extends React.Component {
                       toggleFollow(course.courseId.trim(), section.section);
                       if (section.following) {
                         deregisterClass(
-                          `${course.classSections[0].enrollCode}`,
+                          `${lectureSections[parseInt(section.section.slice(0,2))-1]}`,
                           `${section.enrollCode}`
                         );
                       } else {
                         registerClass(
-                          `${course.classSections[0].enrollCode}`,
+                          `${lectureSections[parseInt(section.section.slice(0,2))-1]}`,
                           `${section.enrollCode}`
                         );
                       }
@@ -134,7 +171,6 @@ class Class extends React.Component {
         </View>
       </View>
     );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -231,4 +267,3 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Class;

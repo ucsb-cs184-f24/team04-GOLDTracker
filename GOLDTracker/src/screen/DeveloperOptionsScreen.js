@@ -3,6 +3,7 @@ import {View, Text, ScrollView, StyleSheet, TouchableOpacity} from 'react-native
 import {runBackgroundNotificationSequence} from "../components/BackgroundRegister";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePicker from "@react-native-community/datetimepicker";
+import * as ClassRegister from "../components/ClassRegister";
 
 const DeveloperOptionsScreen = () => {
     const [time, setTime] = useState(new Date());
@@ -13,7 +14,9 @@ const DeveloperOptionsScreen = () => {
         await AsyncStorage.setItem("notifiedClasses", "");
         await AsyncStorage.setItem("lastPass", "");
     }
-    console.log(time);
+    const resetStorage = async () => {
+        await ClassRegister.reset();
+    }
     return (
         <ScrollView style={styles.container}>
             <TouchableOpacity onPress={handlePress}>
@@ -22,7 +25,9 @@ const DeveloperOptionsScreen = () => {
             <TouchableOpacity onPress={resetItems}>
                 <Text>Press to reset already sent notifications for the pass</Text>
             </TouchableOpacity>
-            <DateTimePicker mode="date" value={time} onChange={(event) => console.log(event)} />
+            <TouchableOpacity onPress={resetStorage}>
+                <Text>Press to reset local storage</Text>
+            </TouchableOpacity>
         </ScrollView>
     );
 };
