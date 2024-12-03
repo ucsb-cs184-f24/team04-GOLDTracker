@@ -1,31 +1,22 @@
-import React, { useState } from "react";
-import { StatusBar, StyleSheet, Text, View, FlatList, TouchableOpacity} from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { StatusBar, StyleSheet, View, FlatList, Text,ActivityIndicator } from "react-native";
 import { SearchBar } from "react-native-elements";
 import Class from "../components/Class";
 import { useNavigation } from "@react-navigation/native";
-import {auth} from "../../firebaseConfig";
-import departmentMapping from "../assets/departmentMapping.json";
-import RNPickerSelect from "react-native-picker-select";
-import { COLORS } from "../theme/theme";
+import { auth } from "../../firebaseConfig";
+import CategorySearch from "../components/CategorySearch";
 
-const SearchComponent = ({ search, setSearch }) => {
+const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedDept, setSelectedDept] = useState(null);
-  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+  const [selectedQuarter, setSelectedQuarter] = useState("20244");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const data = departmentMapping;
-
-
+  const categorySearchRef = useRef(null);
   const navigation = useNavigation();
-  const API_URL = "https://us-central1-goldtracker-beb96.cloudfunctions.net/search"
-  
-
-  const deptOptions = Object.keys(departmentMapping).map((dept) => ({
-    label: dept,
-    value: dept,
-  }));
-
+  const API_URL =
+    "https://us-central1-goldtracker-beb96.cloudfunctions.net/search";
 
   const updateSearch = (searchText) => {
     setSearch(searchText);
@@ -48,152 +39,163 @@ const SearchComponent = ({ search, setSearch }) => {
     );
   };
 
-  const handleSearchSubmit = async () => {
-    if (search.trim() || selectedDept) {
-      try {
-        const quarter = "20244";
-        let apiUrl;
-        console.log("Search:", search);
+  const handleSearchSubmit = async (deptCode = null) => {
+    if (major && major !== "") {
+      searchTerm = major;
+      setIsLoading(true);
+    }  
+      
+    try {
+      const quarter = selectedQuarter; 
+      const searchTerm = deptCode || search.trim(); // Prioritize deptCode; fallback to text input
+      // If major is not an empty string, use the major as deptCode
 
-        if (/^[A-Z]{2,}\s[\dA-Z]+$/.test(search.trim())) {
-          apiUrl = `${ API_URL }?quarter=${quarter}&courseId=${encodeURIComponent(
-            search
-          )}&includeClassSections=true`;
-        } else if (selectedDept) {
-          apiUrl = `${API_URL}?quarter=20244&deptCode=${encodeURIComponent(
-            selectedDept
-        )}&includeClassSections=true&pageNumber=1&pageSize=30`;
-        } else {
-          apiUrl = `${ API_URL }?quarter=${quarter}&deptCode=${encodeURIComponent(
-            search
-          )}&includeClassSections=true&pageNumber=1&pageSize=30`;
-        }
-        console.log(apiUrl);
-        const headers = new Headers();
-        headers.append("authorization", await auth.currentUser.getIdToken());
-        const response = await fetch(apiUrl, {headers:headers});
 
-        const data = await response.json();
-        // console.log("API Response:", JSON.stringify(data, null, 2));
-
-        if (data.classes && data.classes.length > 0) {
-          const coursesWithFollowing = data.classes.map((course) => ({
-            ...course,
-            classSections: course.classSections.map((section) => ({
-              ...section,
-              following: false,
-            })),
-          }));
-          setResults(coursesWithFollowing);
-          setErrorMessage("");
-        } else {
-          setResults([]);
-          setErrorMessage("No classes found for the given search term.");
-        }
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setResults([]);
-        setErrorMessage("An error occurred while fetching data.");
+      if (!searchTerm) {
+        setErrorMessage("Please enter a search term or select a department.");
+        return;
       }
+
+      const apiUrl = /^[A-Z]{2,}\s[\dA-Z]+$/.test(searchTerm)
+        ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
+            searchTerm
+          )}&includeClassSections=true`
+        : `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
+            searchTerm
+          )}&includeClassSections=true&pageNumber=1&pageSize=30`;
+
+      const headers = new Headers();
+      headers.append("authorization", await auth.currentUser.getIdToken());
+      const response = await fetch(apiUrl, { headers });
+
+      const data = await response.json();
+
+      if (data.classes && data.classes.length > 0) {
+        const coursesWithFollowing = data.classes.map((course) => ({
+          ...course,
+          classSections: course.classSections.map((section) => ({
+            ...section,
+            following: false,
+          })),
+        }));
+        setResults(coursesWithFollowing);
+        setErrorMessage("");
+      } else {
+        setResults([]);
+        setErrorMessage("No classes found for the given search term.");
+      }
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setResults([]);
+      setErrorMessage("An error occurred while fetching data.");
+    }finally {
+      setIsLoading(false);
     }
   };
 
-  const renderCourseItem = ({ item }) => {
-    return (
-      <Class
-        course={item}
-        toggleFollow={toggleFollow}
-        navigation={navigation}
-      />
-    );
+  const renderCourseItem = ({ item }) => (
+    <Class
+      course={item}
+      toggleFollow={toggleFollow}
+      navigation={navigation}
+    />
+  );
+
+  useEffect(() => {
+    if (major && major !== "") {
+      handleSearchSubmit(major); // Fetch courses for the major if it's not empty
+    }
+  }, [major]);
+
+  const handleClearSearch = () => {
+    setSearch(""); // Clear the search input
+    setResults([]); // Reset the search results
+    setErrorMessage(""); // Reset the error message
+    setIsSearching(false); // Stop the searching state
+
+    if (major && major !== "") {
+      handleSearchSubmit(major);
+    }
   };
 
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
 
-      <TouchableOpacity
-        style={styles.toggleButton}
-        onPress={() => setIsDropdownVisible((prev) => !prev)}
-      >
-        <Text style={styles.toggleButtonText}>
-          {isDropdownVisible ? "Back to Search" : "Search by Department"}
-        </Text>
-      </TouchableOpacity>
+      {/* Search Bar */}
+      <SearchBar
+        placeholder="Search by course or department"
+        onChangeText={updateSearch}
+        value={search}
+        lightTheme
+        round
+        containerStyle={styles.searchBarContainer}
+        inputContainerStyle={styles.searchInputContainer}
+        onSubmitEditing={() => handleSearchSubmit()}
+        returnKeyType="search"
+        onFocus={() => setIsSearching(true)} // Set isSearching to true when focused
+        onBlur={() => {
+          if (search.trim() === "") {
+            setIsSearching(false);
+          }
+        }} 
+        leftIconContainerStyle={styles.leftIconContainer}
+        onClear={handleClearSearch}
+      />
 
-      {isDropdownVisible ? (
-        <View style={styles.dropdownContainer}>
-          <RNPickerSelect
-            onValueChange={(value) => setSearch(value)} 
-            items={deptOptions}
-            placeholder={{
-              label: "Select a department",
-              value: null,
-            }}
-            style={{
-              ...pickerSelectStyles,
-            }}
-          />
+      {/* Category Search Dropdown */}
+      <CategorySearch
+        ref={categorySearchRef}
+        onDepartmentSelect={setSelectedDept}
+        onQuarterSelect={setSelectedQuarter}
+        selectedDept={selectedDept}
+        onSearch={handleSearchSubmit}
+        selectedQuarter={selectedQuarter}
+        setIsSearching={setIsSearching} // Pass the setter function
+        major = {major}
+      />
 
-          <TouchableOpacity style={styles.dropdownButton} onPress={handleSearchSubmit}>
-            <Text style={styles.buttonText}>Submit</Text>
-          </TouchableOpacity>
-        </View>
-      ) : (
-        <SearchBar
-          placeholder="Search by course or department"
-          onChangeText={updateSearch}
-          value={search}
-          lightTheme
-          round
-          containerStyle={styles.searchBarContainer}
-          inputContainerStyle={styles.searchInputContainer}
-          onSubmitEditing={handleSearchSubmit}
-          returnKeyType="search"
-        />
-      )}
+    {isLoading ? (
+      <ActivityIndicator size={25} color="#0000ff" />
+    ) : null}
 
+      {/* Error Message or Results */}
       {errorMessage ? (
         <View style={styles.errorBox}>
           <Text style={styles.errorMessage}>{errorMessage}</Text>
         </View>
-      ) : (
-        <FlatList
-          data={results}
-          keyExtractor={(item) => item.courseId.trim()}
-          renderItem={renderCourseItem}
-          contentContainerStyle={{ paddingBottom: 20 }}
-          style={styles.flatList}
-        />
-      )}
+      ) : results.length > 0 ? (
+        <View style={styles.listContainer}>
+          <FlatList
+            data={results}
+            keyExtractor={(item) => item.courseId.trim()}
+            renderItem={renderCourseItem}
+            contentContainerStyle={{ paddingBottom: 20 }}
+            onScroll={() => {
+              if (categorySearchRef.current) {
+                categorySearchRef.current.closeDropdowns();
+              }
+            }}
+            style={styles.flatList}
+          />
+        </View>
+      ) : null}
     </View>
   );
 };
 
+
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-  },
-  searchBarBackground: {
-    position: "absolute",
-    top: 0,
-    left: 0,
-    right: 0,
-    height: 80,
-    backgroundColor: "white",
-    elevation: 5,
-    zIndex: 0,
   },
   searchBarContainer: {
     width: "95%",
     backgroundColor: "transparent",
     borderBottomWidth: 0,
     borderTopWidth: 0,
-    position: "absolute",
-    top: 20,
-    paddingTop: 15,
-    zIndex: 1,
     alignSelf: "center",
+    marginTop: 10,
   },
   searchInputContainer: {
     backgroundColor: "#e0e0e0",
@@ -203,70 +205,19 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     margin: 10,
-    marginTop: 90,
+    marginTop: 10,
   },
   errorMessage: {
     color: "#d9534f",
     textAlign: "center",
   },
   flatList: {
-    marginTop: 80,
-    zIndex: 0
+    marginTop: 20, // Space between search bar and first course
   },
-  toggleButton: {
-    marginTop: 5,
-    alignSelf: "center",
-    backgroundColor: COLORS.darkBlue,
-    borderRadius: 8,
-    paddingLeft: 20,
-    paddingTop: 1,
-    paddingBottom: 1,
-    paddingRight: 20,
+  leftIconContainer: {
+    marginLeft: 15, // Adjust the value to move the icon further to the right
   },
-  toggleButtonText: {
-    color: "white",
-    fontSize: 16,
-  },
-  dropdownContainer: {
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      width: "95%",
-      zIndex: 1,
-      position: "absolute",
-      top: 30, 
-  },
-  dropdownButton: {
-    alignSelf: "center",
-    backgroundColor: COLORS.darkBlue,
-    borderRadius: 8,
-    paddingLeft: 9,
-    paddingTop: 10,
-    paddingBottom: 10,
-    paddingRight: 9,
-    marginTop: 5,
-    marginLeft: 10,
-  },
-  buttonText: {
-    color: "white",
-    fontSize: 16,
-  },
-});
-
-const pickerSelectStyles = StyleSheet.create({
-  inputIOS: {
-    fontSize: 16,
-    paddingVertical: 12,
-    paddingHorizontal: 60,
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 4,
-    backgroundColor: "#e0e0e0",
-    alignSelf: "center",
-    height: 45,
-    width: 250, 
-    marginTop: 5,
-  },
+  
 });
 
 export default SearchComponent;

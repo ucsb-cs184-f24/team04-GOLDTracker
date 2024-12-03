@@ -39,6 +39,8 @@ interface Color {
     
     black: string;
     white: string;
+
+    orange: string;
 }
   
   
@@ -66,6 +68,7 @@ export const COLORS: Color = {
     //white
     white: '#ffffff',
    
+    orange: '#e77757',
 };
   
 interface FontFamily {

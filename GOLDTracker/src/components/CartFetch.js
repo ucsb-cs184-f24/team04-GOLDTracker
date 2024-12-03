@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList, Alert, Text, TouchableOpacity } from "react-native"; 
-import { getClasses, deregisterClass } from '../components/ClassRegister'; 
-import { auth } from "../../firebaseConfig"; 
+import { StyleSheet, View, FlatList, Alert, Text, TouchableOpacity } from "react-native";
+import { getClasses, deregisterClass } from '../components/ClassRegister';
+import { auth } from "../../firebaseConfig";
 import { COLORS, SPACING } from "../theme/theme";
+import { Swipeable } from 'react-native-gesture-handler';
+import Clipboard from '@react-native-clipboard/clipboard';
+import Ionicons from '@expo/vector-icons/Ionicons'; 
 
 const CartFetch = ({ setClasses, setErrorMessage }) => {
     const [fullCourseDetails, setFullCourseDetails] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
-    const [refreshing, setRefreshing] = useState(false); 
+    const [refreshing, setRefreshing] = useState(false);
 
     const fetchCartClasses = async () => {
         const classList = await getClasses();
-        console.log("Class List: ", classList);
         if (classList) {
             const courseIds = Object.keys(classList);
             const courseDetails = await Promise.all(courseIds.map(async (courseId) => {
@@ -26,11 +28,11 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
                 );
 
                 currentClass.classSections.forEach(section => {
-                    section.following = true;
+                    section.following = true; 
                 });
 
-                const classEnrollCode = courseId; 
-                const sectionEnrollCode = classList[courseId][0];  
+                const classEnrollCode = courseId;
+                const sectionEnrollCode = classList[courseId][0];
 
                 return { courseId, classEnrollCode, sectionEnrollCode, ...currentClass };
             }));
@@ -44,63 +46,139 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
     };
 
     useEffect(() => {
-        fetchCartClasses(); 
-    }, [isUpdated]); 
+        fetchCartClasses();
+    }, [isUpdated]);
 
     const handleUnfollow = async (classEnrollCode, sectionEnrollCode) => {
-        console.log(`Unfollowing Class with Enroll Code: ${classEnrollCode}, Section Enroll Code: ${sectionEnrollCode}`);
 
-        const success = await deregisterClass(classEnrollCode, sectionEnrollCode);
-        if (success) {
-            Alert.alert("Success", "You have unfollowed the class.");
-            setIsUpdated(!isUpdated);
-        }
+        Alert.alert(
+            "Unfollow",
+            "Are you sure you want to unfollow this section?",
+            [
+                {
+                    text: "Cancel",
+                    style: "cancel",
+                },
+                {
+                    text: "Yes",
+                    onPress: async () => {
+                        try {
+                            await deregisterClass(classEnrollCode, sectionEnrollCode);
+                            setIsUpdated(!isUpdated);
+                            //DevSettings.reload(); // Reload the app after successful sign-out
+                        } catch (error) {
+                            console.error("Error signing out: ", error);
+                        }
+                    },
+                },
+            ]
+        )
     };
 
     const onRefresh = async () => {
         setRefreshing(true);
         await fetchCartClasses();
-        setRefreshing(false); 
+        setRefreshing(false);
     };
 
+    const copyToClipboard = (sectionId) => {
+        Clipboard.setString(sectionId);
+        Alert.alert("Success!", `Section ID has been copied to clipboard.`);
+    };
+    // ${sectionId}
     const renderClassItem = ({ item }) => {
+        const renderRightActions = (progress, dragX, sectionEnrollCode) => {
+            return (
+                <View style={styles.rightAction}>
+                    {/* Follow Button */}
+                    <TouchableOpacity
+                        style={styles.followButton}
+                        onPress={() => handleUnfollow(item.classEnrollCode, item.sectionEnrollCode)}
+                    >
+                        <Text style={styles.FollowText}>Unfollow</Text>
+                    </TouchableOpacity>
+                    {/* Copy to Clipboard Button */}
+                    <TouchableOpacity
+                        style={styles.joinButton}
+                        onPress={() => copyToClipboard(sectionEnrollCode)}
+                    >
+                        <Text style={styles.JoinText}>Copy ID</Text>
+                    </TouchableOpacity>
+                </View>
+            );
+        };
+
         return (
             <View style={styles.classBox}>
-                <Text style={styles.courseId}>Course ID: {item.courseId}</Text>
-                <Text style={styles.courseTitle}>Title: {item.title}</Text>
+                <Text style={styles.courseId}>{item.courseId}</Text>
 
                 {item.classSections.length > 0 ? (
-                    item.classSections.map((section) => {
+                    item.classSections.map((section, index) => {
                         const sectionEnrollCode = section.enrollCode;
 
-                        const sectionTime = section.timeLocations.length > 0
-                            ? `${section.timeLocations[0].days} ${section.timeLocations[0].beginTime} - ${section.timeLocations[0].endTime}`
+                        const sectionTime =
+                            section.timeLocations.length > 0
+                                ? `${section.timeLocations[0].days} ${section.timeLocations[0].beginTime} - ${section.timeLocations[0].endTime}`
+                                : "N/A";
+
+                        const formattedSectionTime = sectionTime
+                            ? sectionTime.replace(/(\w)\s(\d{2}:\d{2})/g, "$1 $2") // Adjusting for consistent formatting
                             : "N/A";
 
                         return (
-                            <View key={sectionEnrollCode} style={styles.sectionContainer}>
-                                <Text style={styles.sectionTime}>Time: {sectionTime}</Text>
-                                <Text style={styles.sectionSpace}>
-                                    Space: {section.enrolledTotal || 0}/{section.maxEnroll || 0}
-                                </Text>
-                                <TouchableOpacity
-                                    style={styles.unfollowButton}
-                                    onPress={() => handleUnfollow(item.classEnrollCode, sectionEnrollCode)}
+                            <Swipeable
+                                key={sectionEnrollCode}
+                                renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, sectionEnrollCode)}
+                                overshootRight={false}
+                            >
+                                <View
+                                    key={sectionEnrollCode}
+                                    style={[
+                                        styles.sectionContainer,
+                                        {
+                                            backgroundColor:
+                                                index % 2 === 0 ? COLORS.darkGrey : COLORS.lightGrey,
+                                            paddingVertical: 12,
+                                            paddingHorizontal: 10,
+                                            flexDirection: 'row',
+                                            justifyContent: 'space-between',
+                                            alignItems: 'center',
+                                            borderRadius: 12,
+                                            marginTop: 8,
+                                        },
+                                    ]}
                                 >
-                                    <Text style={{ color: '#fff' }}>Unfollow</Text>
-                                </TouchableOpacity>
-                            </View>
+                                    <View style={styles.sectionDetails}>
+                                        <Text style={styles.sectionTime}>{formattedSectionTime}</Text>
+                                        <Text style={styles.sectionSpace}>
+                                            Space: {section.enrolledTotal || 0}/{section.maxEnroll || 0}
+                                        </Text>
+                                    </View>
+                                    <View style={styles.sectionDetails}>
+                                        <Ionicons
+                                            name="chevron-back-outline"
+                                            size={20}
+                                            color= {COLORS.darkBlue}
+                                        />
+                                    </View>
+                                </View>
+                            </Swipeable>
                         );
                     })
                 ) : (
-                    <Text style={styles.noSectionsText}>No sections available for this course. 
-                        <TouchableOpacity
-                            style={styles.unfollowButton2}
-                            onPress={() => handleUnfollow(item.classEnrollCode, item.sectionEnrollCode)}
+                    // For courses with no sections, allow swipeable functionality for the entire course card
+                    <Swipeable
+                        key={item.courseId}
+                        renderRightActions={(progress, dragX) => renderRightActions(progress, dragX, item.classEnrollCode)}
+                        overshootRight={false}
+                    >
+                        <View
+                            key={item.courseId}
+                            style={styles.courseContainerNoSections}
                         >
-                            <Text style={{ color: '#fff' }}>Unfollow</Text>
-                        </TouchableOpacity>
-                    </Text>
+                            <Text style={styles.noSectionsText}>No sections available</Text>
+                        </View>
+                    </Swipeable>
                 )}
             </View>
         );
@@ -108,15 +186,15 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
 
     return (
         <View style={styles.container}>
-                <Text style={styles.pullToRefreshText}>Pull to refresh</Text>
-                <FlatList
-                    data={fullCourseDetails}
-                    keyExtractor={(item) => item.courseId}
-                    renderItem={renderClassItem}
-                    refreshing={refreshing}
-                    onRefresh={onRefresh}
-                    contentContainerStyle={styles.flatListContainer}
-                /> 
+            <Text style={styles.pullToRefreshText}>Pull to Refresh</Text>
+            <FlatList
+                data={fullCourseDetails}
+                keyExtractor={(item) => item.courseId}
+                renderItem={renderClassItem}
+                refreshing={refreshing}
+                onRefresh={onRefresh}
+                contentContainerStyle={styles.flatListContainer}
+            />
         </View>
     );
 };
@@ -124,79 +202,117 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        display: 'flex'
+        display: 'flex',
+        backgroundColor: COLORS.white,
     },
     flatListContainer: {
-        paddingBottom: 20,
+        paddingBottom: 100,
     },
     pullToRefreshText: {
         textAlign: 'center',
-        color: 'grey'
+        color: 'grey',
     },
     classBox: {
-        backgroundColor: '#f9fafb',
-        padding: 15,
-        borderRadius: 10,
+        backgroundColor: COLORS.lightGrey,
+        borderRadius: 20,
         marginVertical: 10,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.25,
         shadowRadius: 3.5,
         elevation: 5,
-        marginLeft: 10,
-        marginRight: 10,
+        marginLeft: 15,
+        marginRight: 15,
     },
     courseId: {
         fontSize: 18,
-        fontWeight: 'bold',
-        marginBottom: 5,
-    },
-    courseTitle: {
-        fontSize: 16,
-        color: '#333',
+        paddingVertical: 6,
+        marginLeft: 15,
+        marginTop: 8,
         marginBottom: 10,
+        fontWeight: 'bold',
+    },
+    sectionDetails: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        
     },
     sectionContainer: {
-        marginTop: 10,
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "space-between",
+        borderRadius: 16,
+        paddingVertical: 10,
+        height: 40,
     },
     sectionTime: {
+        width: 170,
         fontSize: 14,
-        color: '#555',
+        color: COLORS.black,
     },
     sectionSpace: {
+        width: 100,
         fontSize: 14,
-        color: '#555',
+        color: COLORS.black,
     },
-    unfollowButton: {
-        color : 'white',
-        paddingVertical: SPACING.space_8,
-        borderRadius: 16,
-        alignItems: "center",
-        textAlign: 'center',
-        marginLeft: 120,
-        marginRight: 120,
-        backgroundColor: COLORS.darkBlue,
-
-    },
-    unfollowButton2: {
+    followButton: {
         color: 'white',
-        paddingVertical: SPACING.space_8,
+        width: 100,
+        paddingVertical: 9,
         borderRadius: 16,
         alignItems: "center",
         textAlign: 'center',
-        marginLeft: 120,
-        marginRight: 120,
-        paddingLeft: 20,
-        paddingRight: 20,
+        backgroundColor: "#ba2f33",
+        marginRight: 4,
+    },
+    joinButton: {
+        width: 100,
+        paddingVertical: 9,
+        borderRadius: 16,
+        alignItems: "center",
+        textAlign: 'center',
         backgroundColor: COLORS.darkBlue,
-
+    },
+    courseContainerNoSections: {
+        padding: 12,
+        borderRadius: 12,
+        backgroundColor: COLORS.lightGrey,
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     noSectionsText: {
-        color: 'gray',
         fontSize: 14,
+        color: COLORS.black,
         textAlign: 'center',
-        marginTop: 5,
     },
+    rightAction: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderRadius: 15,
+        marginBottom:4,
+        height: 40,
+        marginTop:8,
+    },
+    FollowText:{
+        fontSize: 15,
+        color: "#fff",
+        fontWeight: "500",
+        textShadowColor: COLORS.black,
+        textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+        textShadowRadius: 8, // Shadow blur radius
+        fontFamily:"Nunito-Regular",
+    },
+    JoinText:{
+        fontSize: 15,
+        color: "#fff",
+        fontWeight: "500",
+        textShadowColor: COLORS.black,
+        textShadowOffset: { width: 1, height: 1 }, 
+        textShadowRadius: 3, // Increased radius for a more spread out blur
+        fontFamily: "Nunito-Regular",
+    }
 });
 
 export default CartFetch;

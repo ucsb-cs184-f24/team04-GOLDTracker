@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
 import { FetchProfessorsByDepartment } from "../components/FetchProfessors"
+import { COLORS, SPACING } from "../theme/theme";
 
 const CourseDetailScreen = ({ route }) => {
   const { course } = route.params;
@@ -8,6 +9,7 @@ const CourseDetailScreen = ({ route }) => {
   const [professor, setProfessor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false); // State for description toggle
+  const [followingAll, setFollowingAll] = useState(false); // Track the state of following all sections
 
   const courseCode = course.courseId ? course.courseId.trim() : "N/A";
   const courseTitle = course.title || "No Title";
@@ -42,6 +44,27 @@ const CourseDetailScreen = ({ route }) => {
     fetchData();
   }, [courseDepartment, courseInstructor]);
 
+
+  const toggleFollowAll = async () => {
+    // if (followingAll) {
+    //   // Deregister all sections
+    //   for (let section of course.classSections) {
+    //     if (section.enrollCode) {
+    //       await deregisterClass(course.enrollCode, section.enrollCode);
+    //     }
+    //   }
+    // } else {
+    //   // Register all sections
+    //   for (let section of course.classSections) {
+    //     if (section.enrollCode) {
+    //       await registerClass(course.enrollCode, section.enrollCode);
+    //     }
+    //   }
+    // }
+    // setFollowingAll(!followingAll); // Toggle the state
+    Alert.alert("not finished");
+  };
+
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.courseCode}>{courseCode}</Text>
@@ -57,6 +80,16 @@ const CourseDetailScreen = ({ route }) => {
       <TouchableOpacity onPress={() => setShowFullDescription(!showFullDescription)}>
         <Text style={styles.readMoreButton}>
           {showFullDescription ? "Read less" : "Read more"}
+        </Text>
+      </TouchableOpacity>
+
+      {/* Follow all sections button */}
+      <TouchableOpacity
+        style={[styles.followAllButton, followingAll ? styles.following : styles.notFollowing]}
+        onPress={toggleFollowAll}
+      >
+        <Text style={styles.followAllButtonText}>
+          {followingAll ? "Following All Sections" : "Follow All Sections"}
         </Text>
       </TouchableOpacity>
 
@@ -129,6 +162,7 @@ const CourseDetailScreen = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
+
   container: {
     flex: 1,
     padding: 16,
@@ -203,6 +237,7 @@ const styles = StyleSheet.create({
     elevation: 4, // Shadow for Android
     borderWidth: 1, // Optional: Add border
     borderColor: "#ddd", // Optional: Border color
+    marginBottom: 120,
   },
   commentTitle: {
     fontSize: 18, // Font size for the title
@@ -224,6 +259,29 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginTop: -14,
     marginBottom: 8,
+  },
+  followAllButton: {
+    width: "100%",
+    paddingVertical: SPACING.space_8,
+    borderRadius: 16,
+    alignItems: "center",
+    marginTop: 10,
+    marginBottom: 10,
+  },
+  following: {
+    backgroundColor: COLORS.lightBlue,
+  },
+  notFollowing: {
+    backgroundColor: COLORS.darkBlue,
+  },
+  followAllButtonText: {
+    fontSize: 18,
+    color: "#fff", // Blue color for "Follow"
+    fontWeight: "500",
+    textShadowColor: "#007BFF", // Shadow color (black)
+    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+    textShadowRadius: 3, // Shadow blur radius
+    fontFamily:"Nunito-Regular",
   },
 });
 

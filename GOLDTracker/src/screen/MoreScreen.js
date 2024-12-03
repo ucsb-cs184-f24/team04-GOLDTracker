@@ -79,9 +79,9 @@ export default function MoreScreen({ navigation }) {
                 <MenuButton icon="link" label="Link To GOLD" onPress={handlePress} />
                 {/*<MenuButton icon="share" label="Share GoldTracker" onPress={() => navigation.navigate("ShareScreen")} />*/}
                 <MenuButton icon="help" label="Help" onPress={() => navigation.navigate("HelpScreen")} />
-                <MenuButton icon="text-document" label="Term of Use" onPress={() => navigation.navigate("TermsOfUseScreen")} />
-                <MenuButton icon="info" label="About" onPress={() => navigation.navigate("AboutScreen")} />
-
+                <MenuButton icon="info" label="About" onPress={() => navigation.navigate("AboutScreen")} />    
+                {/* <MenuButton icon="text-document" label="Term of Use" onPress={() => navigation.navigate("TermsOfUseScreen")} />
+                <MenuButton icon="dots-three-horizontal" label="More" onPress={() => navigation.navigate("AboutScreen")} /> */}
                 <MenuButton
                     icon="log-out"
                     label="Log Out"
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     },
     userInfoContainer: {
         marginBottom: 10,
-        marginTop: 10, // wait for header bar
+        marginTop: 30, // wait for header bar
         marginLeft:40,
     },
     profileRow: {
@@ -145,6 +145,7 @@ const styles = StyleSheet.create({
         width: '100%', // Adjust width if needed
         backgroundColor: '#e0e0e0', // Line color
         elevation: 4, // Android shadow effect
+        marginTop:20,
     },
     menu: {
         marginTop: 10,

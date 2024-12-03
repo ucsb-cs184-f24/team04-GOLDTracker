@@ -139,7 +139,6 @@ class Class extends React.Component {
 
 const styles = StyleSheet.create({
   wrapper: {
-    paddingTop: SPACING.space_10,
     paddingHorizontal: SPACING.space_16,
     
   },
@@ -216,7 +215,13 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.darkBlue,
   },
   followText: {
-    color: COLORS.white,
+    fontSize: 15,
+    color: "#fff", // Blue color for "Follow"
+    fontWeight: "500",
+    textShadowColor: "#007BFF", // Shadow color (black)
+    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
+    textShadowRadius: 3, // Shadow blur radius
+    fontFamily:"Nunito-Regular",
   },
   courseHeader: {
     flexDirection: "row",
