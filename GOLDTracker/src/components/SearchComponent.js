@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, forwardRef, useImperativeHandle, } from "react";
+import React, { useState, useEffect, useRef, useImperativeHandle, } from "react";
 import { 
   StatusBar, 
   StyleSheet, 
@@ -19,8 +19,12 @@ import { COLORS } from "../theme/theme";
 import departmentMapping from "../assets/departmentMapping.json";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
+const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
+
+  const [scrollY, setScrollY] = useState(new Animated.Value(0));
+
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedDept, setSelectedDept] = useState(null);
@@ -32,6 +36,20 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const animatedDeptHeight = useRef(new Animated.Value(0)).current;
   const animatedQuarterHeight = useRef(new Animated.Value(0)).current;
 
+    // Interpolation for search bar's animation when scrolling
+    const animatedSearchBarTranslate = scrollY.interpolate({
+      inputRange: [0, 100], // The search bar hides after scrolling 60 pixels
+      outputRange: [0, -600], // Moves the search bar up
+      extrapolate: "clamp", // Prevents the translation value from going negative
+    });
+  
+    // Interpolation for filter section's sticky behavior
+    const animatedFilterTranslate = scrollY.interpolate({
+      inputRange: [0, 30], // Scroll threshold
+      outputRange: [0, -60], // Filter moves up until it hits the top
+      extrapolate: "clamp", // Keeps the translation at 0 once it reaches the top
+    });
+
   const departmentOptions = [
     { code: "Your Major", label: "Cancel Selection" }, // Add "My Major" option
     ...Object.keys(departmentMapping).map((code) => ({
@@ -41,6 +59,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   ];
 
   const quarterOptions = [
+    {code: "20251", label: "Winter 2025"},
     { code: "20244", label: "Fall 2024" },
     { code: "20243", label: "Summer 2024" },
     { code: "20242", label: "Spring 2024" },
@@ -243,6 +262,13 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     <View style={styles.container}>
       <StatusBar style="auto" />
 
+      {/* Animated Search Bar */}
+      <Animated.View
+        style={[
+          styles.searchBarContainer,
+          { transform: [{ translateY: animatedSearchBarTranslate }] },
+        ]}
+      >
       {/* Search Bar */}
       <SearchBar
         placeholder="Search by course or department"
@@ -250,7 +276,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         value={search}
         lightTheme
         round
-        containerStyle={styles.searchBarContainer}
+        containerStyle={styles.searchBar}
         inputContainerStyle={styles.searchInputContainer}
         onSubmitEditing={() => handleSearchSubmit()}
         returnKeyType="search"
@@ -263,7 +289,17 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         leftIconContainerStyle={styles.leftIconContainer}
         onClear={handleClearSearch}
       />
+    </Animated.View>
+    
+      {/* Sticky Filter Section */}
+      <Animated.View
+        style={[
+          styles.stickyFilterContainer,
+          { transform: [{ translateY: animatedFilterTranslate }] },
+        ]}
+      >
 
+      
       {/*filters */}
       <View style={styles.buttonRow}>
       <TouchableOpacity
@@ -300,7 +336,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
             />
           </TouchableOpacity>
         </View>
-
+      </Animated.View>
         {(isDeptDropdownVisible || isQuarterDropdownVisible) && (
           <TouchableWithoutFeedback onPress={closeDropdowns}>
             <View style={styles.overlay}>
@@ -329,7 +365,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
                         </Text>
                       </TouchableOpacity>
                     )}
-                    contentContainerStyle={{ paddingBottom: 20 }}
+                  // contentContainerStyle={{ paddingBottom: 20 }}
                   />
                 </Animated.View>
               )}
@@ -359,7 +395,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
                         </Text>
                       </TouchableOpacity>
                     )}
-                    contentContainerStyle={{ paddingBottom: 20 }}
+                    //contentContainerStyle={{ paddingBottom: 20 }}
                   />
                 </Animated.View>
               )}
@@ -377,17 +413,23 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           <Text style={styles.errorMessage}>{errorMessage}</Text>
         </View>
       ) : results.length > 0 ? (
-        <View style={styles.listContainer}>
-          <FlatList
+        <View style = {styles.list}>
+          <AnimatedFlatList
             data={results}
             keyExtractor={(item) => item.courseId.trim()}
             renderItem={renderCourseItem}
             contentContainerStyle={{ paddingBottom: 20 }}
-            onScroll={() => {
-              if (categorySearchRef.current) {
-                categorySearchRef.current.closeDropdowns();
-              }
-            }}
+            onScroll={Animated.event(
+              [{ nativeEvent: { contentOffset: { y: scrollY } } }],
+              { useNativeDriver: true },
+              // {
+              //   if (categorySearchRef.current) {
+              //     categorySearchRef.current.closeDropdowns();
+              //   }
+              // }
+            )}
+            scrollEventThrottle={16}
+
             style={styles.flatList}
           />
         </View>
@@ -403,12 +445,18 @@ const styles = StyleSheet.create({
     flex:1,
   },
   searchBarContainer: {
-    width: "95%",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 2,
+  },
+  searchBar: {
     backgroundColor: "transparent",
     borderBottomWidth: 0,
     borderTopWidth: 0,
-    alignSelf: "center",
     marginTop: 10,
+    marginHorizontal: 20,
   },
   searchInputContainer: {
     backgroundColor: "#e0e0e0",
@@ -418,7 +466,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 8,
     margin: 10,
-    marginTop: 10,
+    marginTop: 130,
   },
   errorMessage: {
     color: "#d9534f",
@@ -426,23 +474,31 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
-    top: 130,  // Start at the top of the screen/container
+    top: 120,  // Start at the top of the screen/container
     left: 0,  // Align with the left side of the screen
     right: 0,  // Align with the right side of the screen
     bottom: 0,  // Cover everything below the header (up to the course list)
     backgroundColor: "rgba(0, 0, 0, 0.3)",  // Semi-transparent grey overlay
-    zIndex: 1,  // Ensure it is above the course list and other elements
-  },
-  flatList: {
-    marginTop: 20, // Space between search bar and first course
+    zIndex: 10,  // Ensure it is above the course list and other elements
   },
   leftIconContainer: {
     marginLeft: 15, // Adjust the value to move the icon further to the right
   },
   buttonRow: {
-    marginTop: 10,
+    marginTop: 5,
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  stickyFilterContainer: {
+    position: "absolute",
+    top: 60, // Initially placed below the search bar
+    left: 0,
+    right: 0,
+    zIndex: 1,
+    backgroundColor: "rgba(255, 255, 255, 1)",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderBottomColor: "#ccc",
   },
   toggleButton: {
     backgroundColor: COLORS.darkBlue,
@@ -503,6 +559,10 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5, // Shadow for Android
   },
+  list: {
+    marginTop:110,
+    flex:1,
+  }
 });
 
 export default SearchComponent;
