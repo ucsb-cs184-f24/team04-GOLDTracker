@@ -1,8 +1,25 @@
 ## Allen:
-### Role: 
+### Role:
+# UI
+### Contribution:
+
 ## Daniel:
+### Role: 
+### Contribution:
+
 ## June:
+### Role: 
+### Contribution:
+
 ## Karsten:
+### Role: 
+### Contribution:
+
 ## Simon:
-## Xinyao
+### Role: 
+### Contribution:
+
+## Xinyao:
+### Role: 
+### Contribution:
 
