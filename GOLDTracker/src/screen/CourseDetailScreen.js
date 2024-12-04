@@ -2,16 +2,17 @@ import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
 import { FetchProfessorsByDepartment } from "../components/FetchProfessors"
 import { COLORS, SPACING } from "../theme/theme";
+import {deregisterClass, getClasses, getIndividualClass, registerClass} from "../components/ClassRegister";
 
 const CourseDetailScreen = ({ route }) => {
-  const { course } = route.params;
+  const { course, lectureSections } = route.params;
 
   const [professor, setProfessor] = useState(null);
   const [loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false); // State for description toggle
   const [followingAll, setFollowingAll] = useState(false); // Track the state of following all sections
 
-  const courseCode = course.courseId ? course.courseId.trim() : "N/A";
+  const courseCode = course.courseId ? course.courseId.replace(/\s+/, " ") : "N/A";
   const courseTitle = course.title || "No Title";
   const courseDescription = course.description || "No Description";
   const courseInstructor = course.classSections[0].instructors[0].instructor;
@@ -37,6 +38,19 @@ const CourseDetailScreen = ({ route }) => {
       } catch (error) {
         console.error("Error fetching professors:", error);
       } finally {
+        let sectionCount = 0;
+        for(let i = 0; i < lectureSections.length; i++) {
+          let currentClass = await getIndividualClass(lectureSections[i]);
+          sectionCount += currentClass.length;
+        }
+        if(course.classSections.length === lectureSections.length){
+          if(lectureSections.length === sectionCount){
+            setFollowingAll(true);
+          }
+        }
+        if((course.classSections.length - lectureSections.length) === sectionCount){
+          setFollowingAll(true);
+        }
         setLoading(false);
       }
     };
@@ -44,25 +58,38 @@ const CourseDetailScreen = ({ route }) => {
     fetchData();
   }, [courseDepartment, courseInstructor]);
 
-
   const toggleFollowAll = async () => {
-    // if (followingAll) {
-    //   // Deregister all sections
-    //   for (let section of course.classSections) {
-    //     if (section.enrollCode) {
-    //       await deregisterClass(course.enrollCode, section.enrollCode);
-    //     }
-    //   }
-    // } else {
-    //   // Register all sections
-    //   for (let section of course.classSections) {
-    //     if (section.enrollCode) {
-    //       await registerClass(course.enrollCode, section.enrollCode);
-    //     }
-    //   }
-    // }
-    // setFollowingAll(!followingAll); // Toggle the state
-    Alert.alert("not finished");
+    /*if (followingAll) {
+      // Deregister all sections
+      for (let section of course.classSections) {
+        if (section.enrollCode) {
+          if (section.section.slice(2, 4) === "00") {
+            continue;
+          } else {
+            await deregisterClass(
+                `${lectureSections[parseInt(section.section.slice(0, 2)) - 1]}`,
+                `${section.enrollCode}`
+            );
+          }
+        }
+      }
+    } else {
+      // Register all sections
+      for (let section of course.classSections) {
+        if (section.enrollCode) {
+          if (section.section.slice(2, 4) === "00") {
+            continue;
+          } else {
+            await registerClass(
+                `${lectureSections[parseInt(section.section.slice(0, 2)) - 1]}`,
+                `${section.enrollCode}`
+            );
+          }
+        }
+      }
+    }
+    console.log(await getClasses())
+    setFollowingAll(!followingAll);*/ // Toggle the state
   };
 
   return (

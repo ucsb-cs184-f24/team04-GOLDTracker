@@ -14,7 +14,9 @@ export async function registerClass(courseId, sectionId){
         let parsedClassList = JSON.parse(classList);
         if(parsedClassList[`${courseId}`]&&!parsedClassList[`${courseId}`].includes(`${sectionId}`)){
             parsedClassList[`${courseId}`].push(`${sectionId}`);
-        }else{
+        }else if(parsedClassList[`${courseId}`]&&parsedClassList[`${courseId}`].includes(`${sectionId}`)){
+            return;
+        } else{
             parsedClassList[`${courseId}`] = [`${sectionId}`]
         }
         await AsyncStorage.setItem("class-list", JSON.stringify(parsedClassList));
@@ -33,7 +35,6 @@ export async function deregisterClass(courseId, sectionId){
                 delete parsedClassList[`${courseId}`];
             }else{
                 let index = parsedClassList[`${courseId}`].indexOf(`${sectionId}`);
-                console.log(index)
                 parsedClassList[`${courseId}`].splice(index,1);
             }
             await AsyncStorage.setItem("class-list", JSON.stringify(parsedClassList));

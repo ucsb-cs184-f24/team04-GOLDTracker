@@ -8,32 +8,34 @@ import * as WebBrowser from 'expo-web-browser';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { COLORS, SPACING } from "../theme/theme";
+import {useFocusEffect} from "@react-navigation/native";
 
 
 
 export default function NotificationScreen() {
     let [currentCourses, setCurrentCourses] = useState([]);
 
-    useEffect(() => {
+    useFocusEffect(React.useCallback(() => {
         async function getCourses() {
-            let courses = await BackgroundRegister.checkAvailability();
+            let courses = await BackgroundRegister.getNotificationHistory();
+            console.log(courses);
             setCurrentCourses(courses);
         }
         getCourses();
-    }, []);
+    },[]));
 
     const handlePress = async () => {
         await WebBrowser.openBrowserAsync("https://my.sa.ucsb.edu/gold/");
     };
 
     //TO DO
-    const handleDelete = () => {
-       //setCurrentCourses(prevCourses => prevCourses.filter(course => course.courseId !== courseId));
-       Alert.alert("wait to implement");
+    const handleDelete = async (id) => {
+        await BackgroundRegister.deleteNotification(id);
+        setCurrentCourses(prevCourses => prevCourses.filter(course => course.id !== id));
     };
 
     const renderNotification = ({ item }) => {
-        const courseCode = item.courseId ? item.courseId.trim() : "N/A";
+        const courseCode = item.courseId ? item.courseId.replace(/\s+/, " ") : "N/A";
         const courseProfessor = item.classSections[0]?.instructors[0] ? item.classSections[0]?.instructors[0].instructor : "TBA";
 
         const renderRightActions = (progress, dragX) => {
@@ -49,7 +51,7 @@ export default function NotificationScreen() {
                     {/* Delete Notification Button */}
                     <TouchableOpacity
                         style={styles.deleteButton}
-                        onPress={() => handleDelete} //To DO 
+                        onPress={() => handleDelete(item.id)}
                     >
                         <Text style={styles.deleteText}>Delete</Text>
                     </TouchableOpacity>
@@ -59,11 +61,11 @@ export default function NotificationScreen() {
 
         return (
             <Swipeable
-                key={item.courseId}
+                key={item.id}
                 renderRightActions={renderRightActions}
                 overshootRight={false}
             >
-                <View key={item.courseId} style={styles.courseContainerNoSections}>
+                <View key={item.id} style={styles.courseContainerNoSections}>
                     <View style={styles.sectionDetails}>
                         <Text style={styles.text}>{`${courseCode.replace(/\s+/, " ")} with ${courseProfessor} has available sections`}</Text> 
                         <FontAwesome
@@ -82,7 +84,7 @@ export default function NotificationScreen() {
             <StatusBar style="auto" />
             <FlatList
                 data={currentCourses}
-                keyExtractor={(item) => item.courseId.trim()}
+                keyExtractor={(item) => item.id}
                 renderItem={renderNotification}
                 contentContainerStyle={styles.flatListContainer}
             />

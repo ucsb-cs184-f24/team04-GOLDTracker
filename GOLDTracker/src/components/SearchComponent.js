@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { StatusBar, StyleSheet, View, FlatList, Text,ActivityIndicator } from "react-native";
 import { SearchBar } from "react-native-elements";
 import Class from "../components/Class";
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from "@react-navigation/native";
 import { auth } from "../../firebaseConfig";
 import CategorySearch from "../components/CategorySearch";
 import * as ClassRegister from "./ClassRegister";
@@ -26,7 +26,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const toggleFollow = (courseId, sectionId) => {
     setResults((prevResults) =>
       prevResults.map((course) =>
-        course.courseId.trim() === courseId
+        course.courseId.replace(/\s+/, " ") === courseId
           ? {
               ...course,
               classSections: course.classSections.map((section) =>
@@ -43,7 +43,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const setFollow = (courseId, sectionId, value) => {
     setResults((prevResults) =>
         prevResults.map((course) =>
-            course.courseId.trim() === courseId
+            course.courseId.replace(/\s+/, " ") === courseId
                 ? {
                   ...course,
                   classSections: course.classSections.map((section) =>
@@ -207,7 +207,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         <View style={styles.listContainer}>
           <FlatList
             data={results}
-            keyExtractor={(item) => item.courseId.trim()}
+            keyExtractor={(item) => item.courseId.replace(/\s+/, " ")}
             renderItem={renderCourseItem}
             contentContainerStyle={{ paddingBottom: 20 }}
             onScroll={() => {

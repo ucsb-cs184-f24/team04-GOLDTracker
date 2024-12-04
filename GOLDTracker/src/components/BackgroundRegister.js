@@ -29,7 +29,7 @@ export async function checkAvailability() {
         authHeader.append("authorization", idToken);
         for (let i = 0; i < classes.length; i++) {
             let currentClass = await (await fetch(`https://us-central1-goldtracker-beb96.cloudfunctions.net/poll/20251/${classes[i]}`, {headers: authHeader})).json()
-            if (currentClass.classSections[0].hasOwnProperty("enrolledTotal") && (currentClass.classSections[0]["enrolledTotal"] < currentClass.classSections[0]["maxEnroll"])) {
+            if (currentClass.classSections.length > 1 && currentClass.classSections[0].hasOwnProperty("enrolledTotal") && (currentClass.classSections[0]["enrolledTotal"] < currentClass.classSections[0]["maxEnroll"])) {
                 for (let j = 1; j < currentClass.classSections.length; j++) {
                     if (classList[classes[i]].indexOf(currentClass.classSections[j]["enrollCode"]) !== -1) {
                         if (currentClass.classSections[j].hasOwnProperty("enrolledTotal") && (currentClass.classSections[j]["enrolledTotal"] < currentClass.classSections[j]["maxEnroll"])){
@@ -37,6 +37,10 @@ export async function checkAvailability() {
                             break;
                         }
                     }
+                }
+            }else if(currentClass.classSections[0].hasOwnProperty("enrolledTotal") && (currentClass.classSections[0]["enrolledTotal"] < currentClass.classSections[0]["maxEnroll"])){
+                if(classList[classes[i]].indexOf(currentClass.classSections[0]["enrollCode"]) !== -1){
+                    availCourses.push(currentClass);
                 }
             }
         }
@@ -63,6 +67,7 @@ async function prepareNotification(availableCourses, currentPass){
             shouldSetBadge: false,
         }),
     });
+    let newNotifications = [];
     for(let i = 0; i < availableCourses.length; i++){
         if(alreadyNotified.indexOf(availableCourses[i]["classSections"][0]["enrollCode"]) === -1){
             scheduleNotificationAsync({
@@ -73,9 +78,10 @@ async function prepareNotification(availableCourses, currentPass){
                 trigger: null,
             });
             alreadyNotified.push(availableCourses[i]["classSections"][0]["enrollCode"]);
+            newNotifications.push(availableCourses[i]);
         }
     }
-
+    await addNotifications(newNotifications);
     await AsyncStorage.setItem("notifiedClasses", JSON.stringify(alreadyNotified));
     await AsyncStorage.setItem("lastPass", `${currentPass}`);
 }
@@ -118,4 +124,38 @@ async function getPasses(){
     pass2 = Date.parse(pass2);
     pass3 = Date.parse(pass3);
     return {pass1, pass2, pass3};
+}
+
+export async function getNotificationHistory(){
+    let notificationHistory = await AsyncStorage.getItem("notificationHistory");
+    if(notificationHistory != null){
+        return JSON.parse(notificationHistory);
+    }else{
+        return [];
+    }
+}
+
+export async function deleteNotification(id){
+    let notificationHistory = await getNotificationHistory();
+    for(let i = 0; i < notificationHistory.length; i++){
+        if(notificationHistory[i].id === id){
+            notificationHistory.splice(i, 1);
+            break;
+        }
+    }
+    await AsyncStorage.setItem("notificationHistory", JSON.stringify(notificationHistory));
+}
+
+async function addNotifications(notifications){
+    let notificationHistory = await getNotificationHistory();
+    let nextId;
+    if(notificationHistory.length === 0){
+        nextId = 0;
+    }else{
+        nextId = notificationHistory[notificationHistory.length-1].id +1;
+    }
+    for(let i = 0; i < notifications.length; i++){
+        notificationHistory.push({...notifications[i],id:nextId+i});
+    }
+    await AsyncStorage.setItem("notificationHistory", JSON.stringify(notificationHistory));
 }
