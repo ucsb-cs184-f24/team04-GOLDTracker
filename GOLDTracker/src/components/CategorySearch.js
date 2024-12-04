@@ -209,7 +209,6 @@ const CategorySearch = forwardRef(
                       </TouchableOpacity>
                     )}
                     contentContainerStyle={{ paddingBottom: 20 }}
-                    style={{flex: 1}}
                   />
                 </Animated.View>
               )}
@@ -240,7 +239,6 @@ const CategorySearch = forwardRef(
                       </TouchableOpacity>
                     )}
                     contentContainerStyle={{ paddingBottom: 20 }}
-                    style={{flex: 1}}
                   />
                 </Animated.View>
               )}
@@ -284,6 +282,7 @@ const styles = StyleSheet.create({
     fontFamily: "Nunito-Regular", 
   },
   dropdownOverlay: {
+    flex: 1,
     position: "absolute",
     top: 50,
     left: 0,

@@ -15,7 +15,9 @@ const CourseDetailScreen = ({ route }) => {
   const courseCode = course.courseId ? course.courseId.replace(/\s+/, " ") : "N/A";
   const courseTitle = course.title || "No Title";
   const courseDescription = course.description || "No Description";
-  const courseInstructor = course.classSections[0].instructors[0].instructor;
+  const courseInstructor = course.classSections[0] && course.classSections.instructors && course.classSections.instructors[0]
+      ? course.classSections.instructors[0].instructor
+      : "N/A";
   const courseDepartment = course.deptCode;
 
   const removeLeadingAndTrailingSpaces = (str) => str.trim();
