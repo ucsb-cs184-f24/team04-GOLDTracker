@@ -80,14 +80,29 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         return;
       }
 
-      const apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
+      console.log("department code in search is: ", deptCode)
+      console.log("search.trim in search is: ", search.trim())
+      apiUrl = ""
+      if (deptCode){
+        apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
+
         ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true`
         : `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true&pageNumber=1&pageSize=30`;
-
+      }
+      else{
+        apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
+        ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
+            searchTerm
+          )}&includeClassSections=true`
+        : `${API_URL}?quarter=${quarter}&subjectCode=${encodeURIComponent(
+            searchTerm
+          )}&includeClassSections=true&pageNumber=1&pageSize=30`;
+      }
+      
       const headers = new Headers();
       headers.append("authorization", await auth.currentUser.getIdToken());
       const response = await fetch(apiUrl, { headers });
@@ -163,7 +178,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
       {/* Search Bar */}
       <SearchBar
-        placeholder="Search by course or department"
+        placeholder="Search by course"
         onChangeText={updateSearch}
         value={search}
         lightTheme

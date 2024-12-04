@@ -15,7 +15,7 @@ import {
   TouchableWithoutFeedback, ScrollView,
 } from "react-native";
 import { COLORS } from "../theme/theme";
-import departmentMapping from "../assets/departmentMapping.json";
+import departmentMapping from "../assets/departmentList.json";
 import AntDesign from "react-native-vector-icons/AntDesign";
 
 
@@ -42,7 +42,7 @@ const CategorySearch = forwardRef(
       { code: "Your Major", label: "Cancel Selection" }, // Add "My Major" option
       ...Object.keys(departmentMapping).map((code) => ({
         code,
-        label: departmentMapping[code][0],
+        label: departmentMapping[code],
       })),
     ];
 
