@@ -178,7 +178,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
       {/* Search Bar */}
       <SearchBar
-        placeholder="Search by course or department"
+        placeholder="Search by course"
         onChangeText={updateSearch}
         value={search}
         lightTheme
