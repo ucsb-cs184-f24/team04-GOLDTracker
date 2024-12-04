@@ -19,6 +19,7 @@ const CustomizedPage = ({ navigation, route }) => {
     pass2: new Date(),
     pass3: new Date(),
   });
+  const [showDatePicker, setShowDatePicker] = useState({ show: false, key: null });
   const [showTimePicker, setShowTimePicker] = useState({ show: false, key: null });
   const [isEditable, setIsEditable] = useState(route.params?.isEditable || false);
   const [showDropdown, setShowDropdown] = useState(false);
@@ -168,24 +169,39 @@ const CustomizedPage = ({ navigation, route }) => {
           <Text style={styles.label}>{`Pass ${index + 1}`}</Text>
           <TouchableOpacity
             style={styles.timeButton}
-            onPress={() => isEditable && setShowTimePicker({ show: true, key: pass })}
+            onPress={() => {
+              isEditable && setShowTimePicker({ show: true, key: pass })
+              isEditable && setShowDatePicker({ show: true, key: pass });}}
           >
             <Text style={styles.timeText}>
               {classTimes[pass].toLocaleDateString()} {classTimes[pass].toLocaleTimeString()}
             </Text>
           </TouchableOpacity>
-          {showTimePicker.show && showTimePicker.key === pass && (
+          {showDatePicker.show && showDatePicker.key === pass && (
             <DateTimePicker
               value={classTimes[pass]}
-              mode="datetime"
+              mode="date"
               display="default"
               onChange={(event, selectedDate) => {
                 if (selectedDate) {
                   setClassTimes((prev) => ({ ...prev, [pass]: selectedDate }));
                 }
-                setShowTimePicker({ show: false, key: null });
+                setShowDatePicker({ show: false, key: null });
               }}
             />
+          )}
+          {!showDatePicker.show && showTimePicker.show && showTimePicker.key === pass && (
+              <DateTimePicker
+                  value={classTimes[pass]}
+                  mode="time"
+                  display="default"
+                  onChange={(event, selectedDate) => {
+                    if (selectedDate) {
+                      setClassTimes((prev) => ({ ...prev, [pass]: selectedDate }));
+                    }
+                    setShowTimePicker({ show: false, key: null });
+                  }}
+              />
           )}
         </View>
       ))}

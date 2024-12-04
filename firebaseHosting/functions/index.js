@@ -67,3 +67,30 @@ exports.poll = required.https.onRequest(async (request, response) => {
   const gotResponse = await fetch(sendRequest).then((response) => response.json());
   response.send(gotResponse);
 });
+
+exports.quarter = required.https.onRequest(async (request, response) => {
+  // lines 74-84 taken from
+  // https://github.com/firebase/functions-samples/blob/main/Node-1st-gen/authorized-https-endpoint/functions/index.js
+  if (!request.headers.authorization) {
+    response.status(401).send("Unauthorized");
+    return;
+  }
+
+  try {
+    await app.auth().verifyIdToken(request.headers.authorization);
+  } catch (e) {
+    response.status(401).send("Unauthorized");
+    return;
+  }
+
+  const url =
+      `https://api.ucsb.edu/academics/quartercalendar/v1/quarters?quarter=20251`
+  const headers = new Headers();
+  console.log(process.env.UCSB_API_KEY);
+  headers.append("ucsb-api-key", process.env.UCSB_API_KEY);
+  headers.append("accept", "application/json");
+  headers.append("ucsb-api-version", "3.0");
+  const sendRequest = new Request(url, {headers: headers} );
+  const gotResponse = await fetch(sendRequest).then((response) => response.json());
+  response.send(gotResponse);
+});

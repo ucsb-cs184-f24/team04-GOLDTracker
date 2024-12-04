@@ -1,57 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, Alert } from "react-native";
-
-import { StatusBar } from 'expo-status-bar';
-import * as BackgroundRegister from "../components/BackgroundRegister";
-import { Swipeable } from 'react-native-gesture-handler';
-import * as WebBrowser from 'expo-web-browser';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-
 import { COLORS, SPACING } from "../theme/theme";
-import {useFocusEffect} from "@react-navigation/native";
-
-
+import * as WebBrowser from 'expo-web-browser';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import Notification from "../components/Notification"; 
+import { Swipeable } from 'react-native-gesture-handler';
 
 export default function NotificationScreen() {
-    let [currentCourses, setCurrentCourses] = useState([]);
-
-    useFocusEffect(React.useCallback(() => {
-        async function getCourses() {
-            let courses = await BackgroundRegister.getNotificationHistory();
-            console.log(courses);
-            setCurrentCourses(courses);
-        }
-        getCourses();
-    },[]));
+    //notifications history, not save in the database now
+    const [fullCourseDetails, setFullCourseDetails] = useState([
+        { courseId: "CS 101", courseName: "Intro to Computer Science", classEnrollCode: "123", instructor: "Dr. Smith" },
+        { courseId: "CS 102", courseName: "Data Structures", classEnrollCode: "124", instructor: "Prof. Johnson" },
+    ]);
 
     const handlePress = async () => {
         await WebBrowser.openBrowserAsync("https://my.sa.ucsb.edu/gold/");
     };
 
-    //TO DO
-    const handleDelete = async (id) => {
-        await BackgroundRegister.deleteNotification(id);
-        setCurrentCourses(prevCourses => prevCourses.filter(course => course.id !== id));
+    //Need to Change it
+    const handleDelete = (courseId) => {
+        // Logic to delete the notification (remove item from state)
+        setFullCourseDetails(prevState => prevState.filter(item => item.courseId !== courseId));
+        Alert.alert("Notification deleted!");
     };
 
-    const renderNotification = ({ item }) => {
-        const courseCode = item.courseId ? item.courseId.replace(/\s+/, " ") : "N/A";
-        const courseProfessor = item.classSections[0]?.instructors[0] ? item.classSections[0]?.instructors[0].instructor : "TBA";
-
+    const renderClassItem = ({ item }) => {
         const renderRightActions = (progress, dragX) => {
             return (
                 <View style={styles.rightAction}>
                     {/* Go to Gold Button */}
                     <TouchableOpacity
                         style={styles.goToGold}
-                        onPress={handlePress}
+                        onPress={handlePress} // Fix by calling the function
                     >
                         <Text style={styles.Goldtext}>Go To Gold</Text>
                     </TouchableOpacity>
                     {/* Delete Notification Button */}
                     <TouchableOpacity
                         style={styles.deleteButton}
-                        onPress={() => handleDelete(item.id)}
+                        onPress={() => handleDelete(item.courseId)} // Pass the courseId to handleDelete
                     >
                         <Text style={styles.deleteText}>Delete</Text>
                     </TouchableOpacity>
@@ -61,15 +48,15 @@ export default function NotificationScreen() {
 
         return (
             <Swipeable
-                key={item.id}
+                key={item.courseId}
                 renderRightActions={renderRightActions}
                 overshootRight={false}
             >
-                <View key={item.id} style={styles.courseContainerNoSections}>
+                <View key={item.courseId} style={styles.courseContainerNoSections}>
+                    <Text style={styles.text}>{`${item.courseName} with ${item.instructor} has available sections`}</Text>
                     <View style={styles.sectionDetails}>
-                        <Text style={styles.text}>{`${courseCode.replace(/\s+/, " ")} with ${courseProfessor} has available sections`}</Text> 
-                        <FontAwesome
-                            name="chevron-left"
+                        <Ionicons
+                            name="chevron-back-outline"
                             size={20}
                             color={COLORS.darkBlue}
                         />
@@ -81,11 +68,10 @@ export default function NotificationScreen() {
 
     return (
         <View style={styles.container}>
-            <StatusBar style="auto" />
             <FlatList
-                data={currentCourses}
-                keyExtractor={(item) => item.id}
-                renderItem={renderNotification}
+                data={fullCourseDetails}
+                keyExtractor={(item) => item.courseId}
+                renderItem={renderClassItem}
                 contentContainerStyle={styles.flatListContainer}
             />
         </View>
@@ -95,11 +81,14 @@ export default function NotificationScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        padding: 20,
+        padding: 16,
+        backgroundColor: COLORS.white,
     },
-    flatListContainer: {
-        paddingBottom: 90,
+    text: {
+        color: "#000",
+        fontSize: 16,
+        fontWeight: "bold",
+        fontFamily: "Nunito-Regular",
     },
     goToGold: {
         backgroundColor: COLORS.darkBlue,
@@ -109,11 +98,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginRight: 10,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
-        elevation: 5,
     },
     deleteButton: {
         backgroundColor: "#ba2f33",
@@ -121,18 +105,18 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 16,
         justifyContent: "center",
-        alignItems: "center",        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
-        elevation: 5,
+        alignItems: "center",
     },
     rightAction: {
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
         borderRadius: 15,
-        marginBottom: 10,
+        marginBottom: 6,
+        //height:40,
+        //paddingVertical:10,
+        //paddingHorizontal:10,
+        //marginTop: 8,
     },
     Goldtext: {
         color: "#fff",
@@ -152,21 +136,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     courseContainerNoSections: {
-        padding: 30,
-        //borderRadius: 12,
+        padding: 15,
+        borderRadius: 12,
         backgroundColor: COLORS.lightGrey,
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 10,
-        borderRadius: 20,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.5,
-        elevation: 5,
+        marginBottom:10,
     },
-    text : {
-        marginRight:20,
-        fontSize: 16,
-    }
+    flatListContainer: {
+        paddingBottom: 90,
+    },
 });

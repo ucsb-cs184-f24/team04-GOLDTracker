@@ -2,15 +2,16 @@ import React, { useState, useEffect, useRef } from "react";
 import { StatusBar, StyleSheet, View, FlatList, Text,ActivityIndicator } from "react-native";
 import { SearchBar } from "react-native-elements";
 import Class from "../components/Class";
-import { useNavigation } from "@react-navigation/native";
+import {useNavigation} from "@react-navigation/native";
 import { auth } from "../../firebaseConfig";
 import CategorySearch from "../components/CategorySearch";
+import * as ClassRegister from "./ClassRegister";
 
 const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [selectedDept, setSelectedDept] = useState(null);
-  const [selectedQuarter, setSelectedQuarter] = useState("20244");
+  const [selectedQuarter, setSelectedQuarter] = useState("20251");
   const [isLoading, setIsLoading] = useState(false);
 
   const categorySearchRef = useRef(null);
@@ -25,7 +26,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const toggleFollow = (courseId, sectionId) => {
     setResults((prevResults) =>
       prevResults.map((course) =>
-        course.courseId.trim() === courseId
+        course.courseId.replace(/\s+/, " ") === courseId
           ? {
               ...course,
               classSections: course.classSections.map((section) =>
@@ -39,15 +40,38 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     );
   };
 
+  const setFollow = (courseId, sectionId, value) => {
+    setResults((prevResults) =>
+        prevResults.map((course) =>
+            course.courseId.replace(/\s+/, " ") === courseId
+                ? {
+                  ...course,
+                  classSections: course.classSections.map((section) =>
+                      section.section === sectionId
+                          ? { ...section, following: value }
+                          : section
+                  ),
+                }
+                : course
+        )
+    );
+  };
+
   const handleSearchSubmit = async (deptCode = null) => {
-    if (major && major !== "") {
+    let searchTerm = "";
+    if(deptCode){
+      searchTerm = deptCode;
+    }
+    else if (!search && major && major !== "") {
       searchTerm = major;
       setIsLoading(true);
-    }  
-      
+    }else{
+      searchTerm = search.trim();
+    }
+
     try {
       const quarter = selectedQuarter; 
-      const searchTerm = deptCode || search.trim(); // Prioritize deptCode; fallback to text input
+      // Prioritize deptCode; fallback to text input
       // If major is not an empty string, use the major as deptCode
 
 
@@ -56,7 +80,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         return;
       }
 
-      const apiUrl = /^[A-Z]{2,}\s[\dA-Z]+$/.test(searchTerm)
+      const apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
         ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true`
@@ -69,15 +93,29 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       const response = await fetch(apiUrl, { headers });
 
       const data = await response.json();
-
+      const followedCourses = await ClassRegister.getClasses();
       if (data.classes && data.classes.length > 0) {
-        const coursesWithFollowing = data.classes.map((course) => ({
+        const coursesWithFollowing = data.classes.map((course) => {
+          let lectureSections = [];
+          for(let i = 0; i < course.classSections.length; i++){
+            if(course.classSections[i].section.slice(2,4)==="00"){
+              lectureSections.push(course.classSections[i].enrollCode);
+            }
+          }
+          return{
           ...course,
-          classSections: course.classSections.map((section) => ({
+          classSections: course.classSections.map((section) => {
+            let isFollowing = false;
+            if(followedCourses.hasOwnProperty(lectureSections[parseInt(section.section.slice(0,2))-1])) {
+              if(followedCourses[`${lectureSections[parseInt(section.section.slice(0,2))-1]}`].indexOf(section.enrollCode) !== -1){
+                isFollowing = true;
+              }
+            }
+            return{
             ...section,
-            following: false,
-          })),
-        }));
+            following: isFollowing,
+          }}),
+        }});
         setResults(coursesWithFollowing);
         setErrorMessage("");
       } else {
@@ -97,6 +135,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     <Class
       course={item}
       toggleFollow={toggleFollow}
+      setFollow={setFollow}
       navigation={navigation}
     />
   );
@@ -168,7 +207,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         <View style={styles.listContainer}>
           <FlatList
             data={results}
-            keyExtractor={(item) => item.courseId.trim()}
+            keyExtractor={(item) => item.courseId.replace(/\s+/, " ")}
             renderItem={renderCourseItem}
             contentContainerStyle={{ paddingBottom: 20 }}
             onScroll={() => {

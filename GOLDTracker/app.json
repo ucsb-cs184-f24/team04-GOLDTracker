@@ -8,20 +8,15 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.cs184.goldtracker",
-      "googleServicesFile": "./GoogleService-Info.plist",
-      "infoPlist": {
-        "UIBackgroundModes": [
-          "fetch",
-          "processing"
-        ],
-        "BGTaskSchedulerPermittedIdentifiers": [
-          "com.transistorsoft.fetch"
-        ]
-      }
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "package": "com.cs184.goldtracker",
-      "googleServicesFile": "./google-services.json"
+      "googleServicesFile": "./google-services.json",
+      "adaptiveIcon": {
+        "foregroundImage": "./src/assets/images/default_noBG.png",
+        "backgroundColor": "#E77757"
+      }
     },
     "web": {},
     "extra": {
@@ -32,12 +27,14 @@
     "scheme": "goldtracker",
     "owner": "alize",
     "plugins": [
-      "@react-native-google-signin/google-signin",
-      "react-native-background-fetch"
+      "@react-native-google-signin/google-signin"
     ],
     "splash": {
       "backgroundColor": "#ffffff"
     },
-    "icon": "./src/assets/images/default.jpg"
+    "icon": "./src/assets/images/icon.png",
+    "androidStatusBar": {
+      "translucent": false
+    }
   }
 }
