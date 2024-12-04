@@ -177,6 +177,13 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
                             style={styles.courseContainerNoSections}
                         >
                             <Text style={styles.noSectionsText}>No sections available</Text>
+                            <View style={styles.sectionDetails}>
+                                        <Ionicons
+                                            name="chevron-back-outline"
+                                            size={20}
+                                            color= {COLORS.darkBlue}
+                                        />
+                             </View>
                         </View>
                     </Swipeable>
                 )}
@@ -275,16 +282,18 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.darkBlue,
     },
     courseContainerNoSections: {
-        padding: 12,
+        padding: 15,
         borderRadius: 12,
         backgroundColor: COLORS.lightGrey,
-        alignItems: 'center',
-        justifyContent: 'center',
+        //alignItems: 'center',
+        ///justifyContent: 'center',
+        flexDirection: "row",
+        justifyContent: "space-between",
     },
     noSectionsText: {
         fontSize: 14,
         color: COLORS.black,
-        textAlign: 'center',
+        marginLeft:100,
     },
     rightAction: {
         flexDirection: 'row',
