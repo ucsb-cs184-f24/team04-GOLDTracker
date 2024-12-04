@@ -23,11 +23,17 @@ import { auth } from "../../firebaseConfig";
 import { COLORS } from "../theme/theme";
 import departmentMapping from "../assets/departmentMapping.json";
 import AntDesign from "react-native-vector-icons/AntDesign";
+import EmptyState from "../components/EmptyState"; // Import EmptyState
 
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
-const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
-  const scrollY = useRef(new Animated.Value(0)).current; // Changed to useRef
+const SearchComponent = ({
+  search,
+  setSearch,
+  setIsSearching,
+  major,
+}) => {
+  const scrollY = useRef(new Animated.Value(0)).current;
 
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -45,16 +51,16 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
   // Interpolation for search bar's animation when scrolling
   const animatedSearchBarTranslate = scrollY.interpolate({
-    inputRange: [0, 100], // The search bar hides after scrolling 100 pixels
-    outputRange: [0, -600], // Moves the search bar up
-    extrapolate: "clamp", // Prevents the translation value from going negative
+    inputRange: [0, 100],
+    outputRange: [0, -600],
+    extrapolate: "clamp",
   });
 
   // Interpolation for filter section's sticky behavior
   const animatedFilterTranslate = scrollY.interpolate({
-    inputRange: [0, 30], // Scroll threshold
-    outputRange: [0, -60], // Filter moves up until it hits the top
-    extrapolate: "clamp", // Keeps the translation at 0 once it reaches the top
+    inputRange: [0, 30],
+    outputRange: [0, -60],
+    extrapolate: "clamp",
   });
 
   // Interpolation for the FlatList to move up with the search bar
@@ -65,7 +71,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   });
 
   const departmentOptions = [
-    { code: "Your Major", label: "Cancel Selection" }, // Add "My Major" option
+    { code: "Your Major", label: "Cancel Selection" },
     ...Object.keys(departmentMapping).map((code) => ({
       code,
       label: departmentMapping[code][0],
@@ -105,6 +111,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       )
     );
   };
+
   const toggleDeptDropdown = () => {
     if (!isDeptDropdownVisible) {
       setIsSearching(true);
@@ -154,8 +161,8 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const handleSelect = (type, item) => {
     if (type === "department") {
       if (item.code === "Your Major") {
-        setSelectedDept(major); // Set to the user's major
-        handleSearchSubmit(major); // Trigger search with major
+        setSelectedDept(major);
+        handleSearchSubmit(major);
       } else {
         setSelectedDept(item.code);
         handleSearchSubmit(item.code);
@@ -194,18 +201,18 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   }));
 
   const handleSearchSubmit = async (deptCode = null) => {
-    if (major && major !== "") {
-      setIsLoading(true);
-    }
+    setIsSearching(true); // Start searching
+    setIsLoading(true);
 
     try {
       const quarter = selectedQuarter;
-      const searchTerm = deptCode || search.trim(); // Prioritize deptCode; fallback to text input
+      const searchTerm = deptCode || search.trim();
 
       if (!searchTerm) {
         setErrorMessage(
           "Please enter a search term or select a department."
         );
+        setIsSearching(false); // Stop searching
         return;
       }
 
@@ -243,6 +250,8 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       setErrorMessage("An error occurred while fetching data.");
     } finally {
       setIsLoading(false);
+      // Keep isSearching true if there are results or an error message
+      setIsSearching(!(results.length === 0 && !errorMessage));
     }
   };
 
@@ -256,16 +265,15 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
   useEffect(() => {
     if (major && major !== "") {
-      handleSearchSubmit(major); // Fetch courses for the major if it's not empty
+      handleSearchSubmit(major);
     }
   }, [major]);
 
   const handleClearSearch = () => {
-    setSearch(""); // Clear the search input
-    setResults([]); // Reset the search results
-    setErrorMessage(""); // Reset the error message
-    setIsSearching(false); // Stop the searching state
-
+    setSearch("");
+    setResults([]);
+    setErrorMessage("");
+    setIsSearching(false); // Stop searching
     if (major && major !== "") {
       handleSearchSubmit(major);
     }
@@ -293,12 +301,6 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           inputContainerStyle={styles.searchInputContainer}
           onSubmitEditing={() => handleSearchSubmit()}
           returnKeyType="search"
-          onFocus={() => setIsSearching(true)} // Set isSearching to true when focused
-          onBlur={() => {
-            if (search.trim() === "") {
-              setIsSearching(false);
-            }
-          }}
           leftIconContainerStyle={styles.leftIconContainer}
           onClear={handleClearSearch}
         />
@@ -335,8 +337,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
             <Text style={styles.toggleButtonText}>
               {selectedQuarter
                 ? `${selectedQuarter.slice(0, 4)} ${
-                    quarterOptions.find((q) => q.code === selectedQuarter)
-                      ?.label[0]
+                    quarterOptions.find((q) => q.code === selectedQuarter)?.label[0]
                   }`
                 : "Select Quarter"}
             </Text>
@@ -414,18 +415,19 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         </TouchableWithoutFeedback>
       )}
 
-      {isLoading ? (
+      {isLoading && (
         <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#0000ff" />
         </View>
-      ) : null}
+      )}
 
-      {/* Error Message or Results */}
+      {/* Error Message */}
       {errorMessage ? (
         <View style={styles.errorBox}>
           <Text style={styles.errorMessage}>{errorMessage}</Text>
         </View>
       ) : results.length > 0 ? (
+        // Results List
         <Animated.View
           style={{
             flex: 1,
@@ -448,7 +450,14 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
             style={styles.flatList}
           />
         </Animated.View>
-      ) : null}
+      ) : (
+        // Empty State
+        !isLoading && (
+          <View style={styles.emptyStateContainer}>
+            <EmptyState navigation={navigation} />
+          </View>
+        )
+      )}
     </View>
   );
 };
@@ -488,15 +497,15 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
-    top: 120, 
-    left: 0, 
-    right: 0, 
-    bottom: 0, 
-    backgroundColor: "rgba(0, 0, 0, 0.3)", // Semi-transparent grey overlay
-    zIndex: 10, 
+    top: 120,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    backgroundColor: "rgba(0, 0, 0, 0.3)",
+    zIndex: 10,
   },
   leftIconContainer: {
-    marginLeft: 15, // Adjust the value to move the icon further to the right
+    marginLeft: 15,
   },
   buttonRow: {
     marginTop: 5,
@@ -505,7 +514,7 @@ const styles = StyleSheet.create({
   },
   stickyFilterContainer: {
     position: "absolute",
-    top: 60, // Initially placed below the search bar
+    top: 60,
     left: 0,
     right: 0,
     zIndex: 1,
@@ -539,10 +548,9 @@ const styles = StyleSheet.create({
   dropdownContainer: {
     backgroundColor: "#fff",
     overflow: "hidden",
-    borderRadius: 5, 
+    borderRadius: 5,
     marginHorizontal: 0,
     marginTop: -3,
-    // borderBottomWidth: 8,
     width: "100%",
     borderBottomColor: COLORS.orange,
     shadowColor: "#000",
@@ -572,23 +580,28 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 1, height: 3 },
     shadowOpacity: 0.5,
     shadowRadius: 5,
-    elevation: 5, // Shadow for Android
+    elevation: 5,
   },
   list: {
     flex: 1,
   },
   loadingContainer: {
     position: "absolute",
-    top: 0,
+    top: 120,
     left: 0,
     right: 0,
     bottom: 0,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.3)", 
-    zIndex: 20, 
+    backgroundColor: "rgba(255, 255, 255, 0.7)",
+    zIndex: 20,
   },
-  
+  emptyStateContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    paddingTop: 120,
+  },
 });
 
 export default SearchComponent;
