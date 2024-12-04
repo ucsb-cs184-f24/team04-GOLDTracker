@@ -12,7 +12,7 @@ import {
   Animated,
   Easing,
   StyleSheet,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback, ScrollView,
 } from "react-native";
 import { COLORS } from "../theme/theme";
 import departmentMapping from "../assets/departmentMapping.json";
@@ -209,6 +209,7 @@ const CategorySearch = forwardRef(
                       </TouchableOpacity>
                     )}
                     contentContainerStyle={{ paddingBottom: 20 }}
+                    style={{flex: 1}}
                   />
                 </Animated.View>
               )}
@@ -239,6 +240,7 @@ const CategorySearch = forwardRef(
                       </TouchableOpacity>
                     )}
                     contentContainerStyle={{ paddingBottom: 20 }}
+                    style={{flex: 1}}
                   />
                 </Animated.View>
               )}

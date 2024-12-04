@@ -15,14 +15,14 @@ import {useFocusEffect} from "@react-navigation/native";
 export default function NotificationScreen() {
     let [currentCourses, setCurrentCourses] = useState([]);
 
-    useFocusEffect(() => {
+    useFocusEffect(React.useCallback(() => {
         async function getCourses() {
             let courses = await BackgroundRegister.getNotificationHistory();
             console.log(courses);
             setCurrentCourses(courses);
         }
         getCourses();
-    });
+    },[]));
 
     const handlePress = async () => {
         await WebBrowser.openBrowserAsync("https://my.sa.ucsb.edu/gold/");
