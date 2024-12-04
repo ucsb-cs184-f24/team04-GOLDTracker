@@ -7,10 +7,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ClassRegister from "./ClassRegister";
 
 export default function Class(props) {
-  const goToDetails = () => {
+  const goToDetails = (lectureSections) => {
     const course = props.course;
     const navigation = props.navigation;
-    navigation.navigate("CourseDetailScreen", { course });
+    navigation.navigate("CourseDetailScreen", { course, lectureSections, setFollow });
   };
 
     const course = props.course;
@@ -27,7 +27,7 @@ export default function Class(props) {
       noSections = true;
     }
 
-    const courseCode = course.courseId ? course.courseId.trim() : "N/A";
+    const courseCode = course.courseId ? course.courseId.replace(/\s+/," ") : "N/A";
 
     return (
       <View style={styles.wrapper}>
@@ -36,7 +36,7 @@ export default function Class(props) {
             {/* Course Code */}
             <Text style={styles.courseCode}>{courseCode}</Text>
             <TouchableOpacity
-              onPress={goToDetails}
+              onPress={() => goToDetails(lectureSections)}
               style={styles.detailsButton}
             >
               <Entypo name="chevron-right" size={24} color={COLORS.black} />
@@ -121,7 +121,7 @@ export default function Class(props) {
                         : styles.notFollowing,
                     ]}
                     onPress={() => {
-                      toggleFollow(course.courseId.trim(), section.section);
+                      toggleFollow(course.courseId.replace(/\s+/, " "), section.section);
                       if (section.following) {
                         deregisterClass(
                           `${lectureSections[parseInt(section.section.slice(0,2))-1]}`,

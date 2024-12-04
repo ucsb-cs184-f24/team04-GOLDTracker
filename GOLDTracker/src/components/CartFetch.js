@@ -5,13 +5,13 @@ import { auth } from "../../firebaseConfig";
 import { COLORS, SPACING } from "../theme/theme";
 import { Swipeable } from 'react-native-gesture-handler';
 import Clipboard from '@react-native-clipboard/clipboard';
-import Ionicons from '@expo/vector-icons/Ionicons'; 
+import Ionicons from '@expo/vector-icons/Ionicons';
+import {useFocusEffect} from "@react-navigation/native";
 
 const CartFetch = ({ setClasses, setErrorMessage }) => {
     const [fullCourseDetails, setFullCourseDetails] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
-
     const fetchCartClasses = async () => {
         const classList = await getClasses();
         if (classList) {
@@ -110,7 +110,7 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
 
         return (
             <View style={styles.classBox}>
-                <Text style={styles.courseId}>{item.courseId}</Text>
+                <Text style={styles.courseId}>{item.courseId.replace(/\s+/, " ")}</Text>
 
                 {item.classSections.length > 0 ? (
                     item.classSections.map((section, index) => {
@@ -196,7 +196,7 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
             <Text style={styles.pullToRefreshText}>Pull to Refresh</Text>
             <FlatList
                 data={fullCourseDetails}
-                keyExtractor={(item) => item.courseId}
+                keyExtractor={(item) => item.classSections[0].enrollCode}
                 renderItem={renderClassItem}
                 refreshing={refreshing}
                 onRefresh={onRefresh}

@@ -56,6 +56,7 @@ const HomeStackScreen = () => (
                         showImage={false}
                         showUser={false}
                         showBackButton={true}
+                        forceReload={false}
                         navigation={navigation}
                     />
                 ),
@@ -227,7 +228,7 @@ const Navigator = () => {
     const [courseCount, setCourseCount] = useState(0);
     useEffect(() => {
         async function getCourses() {
-            let courses = await BackgroundRegister.checkAvailability();
+            let courses = await BackgroundRegister.getNotificationHistory();
             setCourseCount(courses.length);
         }
         getCourses()

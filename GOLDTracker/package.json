@@ -37,7 +37,6 @@
     "native": "^0.3.3",
     "react": "18.2.0",
     "react-native": "0.74.5",
-    "react-native-background-fetch": "^4.2.6",
     "react-native-config": "^1.5.3",
     "react-native-dotenv": "^3.4.11",
     "react-native-elements": "^3.4.3",
