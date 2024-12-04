@@ -1,55 +1,44 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { StyleSheet, Text, TouchableOpacity, View, FlatList, Alert } from "react-native";
-
-import { StatusBar } from 'expo-status-bar';
-import * as BackgroundRegister from "../components/BackgroundRegister";
-import { Swipeable } from 'react-native-gesture-handler';
+import { COLORS, SPACING } from "../theme/theme";
 import * as WebBrowser from 'expo-web-browser';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
-import { COLORS, SPACING } from "../theme/theme";
-
-
+import Notification from "../components/Notification"; 
+import { Swipeable } from 'react-native-gesture-handler';
 
 export default function NotificationScreen() {
-    let [currentCourses, setCurrentCourses] = useState([]);
-
-    useEffect(() => {
-        async function getCourses() {
-            let courses = await BackgroundRegister.checkAvailability();
-            setCurrentCourses(courses);
-        }
-        getCourses();
-    }, []);
+    //notifications history, not save in the database now
+    const [fullCourseDetails, setFullCourseDetails] = useState([
+        { courseId: "CS 101", courseName: "Intro to Computer Science", classEnrollCode: "123", instructor: "Dr. Smith" },
+        { courseId: "CS 102", courseName: "Data Structures", classEnrollCode: "124", instructor: "Prof. Johnson" },
+    ]);
 
     const handlePress = async () => {
         await WebBrowser.openBrowserAsync("https://my.sa.ucsb.edu/gold/");
     };
 
-    //TO DO
-    const handleDelete = () => {
-       //setCurrentCourses(prevCourses => prevCourses.filter(course => course.courseId !== courseId));
-       Alert.alert("wait to implement");
+    //Need to Change it
+    const handleDelete = (courseId) => {
+        // Logic to delete the notification (remove item from state)
+        setFullCourseDetails(prevState => prevState.filter(item => item.courseId !== courseId));
+        Alert.alert("Notification deleted!");
     };
 
-    const renderNotification = ({ item }) => {
-        const courseCode = item.courseId ? item.courseId.trim() : "N/A";
-        const courseProfessor = item.classSections[0]?.instructors[0] ? item.classSections[0]?.instructors[0].instructor : "TBA";
-
+    const renderClassItem = ({ item }) => {
         const renderRightActions = (progress, dragX) => {
             return (
                 <View style={styles.rightAction}>
                     {/* Go to Gold Button */}
                     <TouchableOpacity
                         style={styles.goToGold}
-                        onPress={handlePress}
+                        onPress={handlePress} // Fix by calling the function
                     >
                         <Text style={styles.Goldtext}>Go To Gold</Text>
                     </TouchableOpacity>
                     {/* Delete Notification Button */}
                     <TouchableOpacity
                         style={styles.deleteButton}
-                        onPress={() => handleDelete} //To DO 
+                        onPress={() => handleDelete(item.courseId)} // Pass the courseId to handleDelete
                     >
                         <Text style={styles.deleteText}>Delete</Text>
                     </TouchableOpacity>
@@ -64,8 +53,8 @@ export default function NotificationScreen() {
                 overshootRight={false}
             >
                 <View key={item.courseId} style={styles.courseContainerNoSections}>
+                    <Text style={styles.text}>{`${item.courseName} with ${item.instructor} has available sections`}</Text>
                     <View style={styles.sectionDetails}>
-                        <Text style={styles.text}>{`${courseCode.replace(/\s+/, " ")} with ${courseProfessor} has available sections`}</Text> 
                         <Ionicons
                             name="chevron-back-outline"
                             size={20}
@@ -79,11 +68,10 @@ export default function NotificationScreen() {
 
     return (
         <View style={styles.container}>
-            <StatusBar style="auto" />
             <FlatList
-                data={currentCourses}
-                keyExtractor={(item) => item.courseId.trim()}
-                renderItem={renderNotification}
+                data={fullCourseDetails}
+                keyExtractor={(item) => item.courseId}
+                renderItem={renderClassItem}
                 contentContainerStyle={styles.flatListContainer}
             />
         </View>
@@ -93,11 +81,14 @@ export default function NotificationScreen() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
-        padding: 20,
+        padding: 16,
+        backgroundColor: COLORS.white,
     },
-    flatListContainer: {
-        paddingBottom: 90,
+    text: {
+        color: "#000",
+        fontSize: 16,
+        fontWeight: "bold",
+        fontFamily: "Nunito-Regular",
     },
     goToGold: {
         backgroundColor: COLORS.darkBlue,
@@ -121,7 +112,11 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderRadius: 15,
-        marginBottom: 10,
+        marginBottom: 6,
+        //height:40,
+        //paddingVertical:10,
+        //paddingHorizontal:10,
+        //marginTop: 8,
     },
     Goldtext: {
         color: "#fff",
@@ -141,11 +136,14 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     courseContainerNoSections: {
-        padding: 20,
+        padding: 15,
         borderRadius: 12,
         backgroundColor: COLORS.lightGrey,
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 10,
+        marginBottom:10,
+    },
+    flatListContainer: {
+        paddingBottom: 90,
     },
 });
