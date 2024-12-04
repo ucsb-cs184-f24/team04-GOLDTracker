@@ -527,7 +527,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     borderRadius: 5, // Outer curve for the border
     marginHorizontal: 5,
-    marginTop: 10,
+    //marginTop: 10,
     borderBottomWidth: 8, 
     borderBottomColor: COLORS.orange, 
     shadowColor: "#000", 
@@ -560,7 +560,7 @@ const styles = StyleSheet.create({
     elevation: 5, // Shadow for Android
   },
   list: {
-    marginTop:110,
+    top:100,
     flex:1,
   }
 });
