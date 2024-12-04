@@ -55,15 +55,28 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         setErrorMessage("Please enter a search term or select a department.");
         return;
       }
-
-      const apiUrl = /^[A-Z]{2,}\s[\dA-Z]+$/.test(searchTerm)
+      console.log("department code in search is: ", deptCode)
+      console.log("search.trim in search is: ", search.trim())
+      apiUrl = ""
+      if (deptCode){
+        apiUrl = /^[A-Z]{2,}\s[\dA-Z]+$/.test(searchTerm)
         ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true`
         : `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true&pageNumber=1&pageSize=30`;
-
+      }
+      else{
+        apiUrl = /^[A-Z]{2,}\s[\dA-Z]+$/.test(searchTerm)
+        ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
+            searchTerm
+          )}&includeClassSections=true`
+        : `${API_URL}?quarter=${quarter}&subjectCode=${encodeURIComponent(
+            searchTerm
+          )}&includeClassSections=true&pageNumber=1&pageSize=30`;
+      }
+      
       const headers = new Headers();
       headers.append("authorization", await auth.currentUser.getIdToken());
       const response = await fetch(apiUrl, { headers });
