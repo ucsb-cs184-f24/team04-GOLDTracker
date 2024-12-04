@@ -5,7 +5,6 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {NavigationContainer} from "@react-navigation/native";
 import Navigator from "./src/components/Navigator";
 import LoginScreen from "./src/screen/LoginScreen";
-import Header from "./src/components/Header"
 
 import {auth, firestore} from "./firebaseConfig";
 import { doc, setDoc, getDoc } from "firebase/firestore";
@@ -22,12 +21,14 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { IOS_CLIENT_ID , ANDROID_CLIENT_ID } from "@env";
 import {syncToFirebase} from "./src/components/ClassRegister";
 import {AppState} from "react-native"
-import {getPermissionsAsync, requestPermissionsAsync} from "expo-notifications";
-import {setupBackgroundNotifications} from "./src/components/BackgroundRegister";
+import {getPermissionsAsync, requestPermissionsAsync, useLastNotificationResponse} from "expo-notifications";
+import {runBackgroundNotificationSequence, setupBackgroundNotifications} from "./src/components/BackgroundRegister";
 import { DevSettings } from "react-native";
+import * as TaskManager from "expo-task-manager";
 
 
 WebBrowser.maybeCompleteAuthSession();
+TaskManager.defineTask("notif-fetch", runBackgroundNotificationSequence)
 
 const Stack = createNativeStackNavigator();
 
@@ -38,6 +39,15 @@ const App = () => {
         iosClientId:IOS_CLIENT_ID,
         androidClientId: ANDROID_CLIENT_ID,
     });
+
+
+    const openNotification = useLastNotificationResponse();
+
+    useEffect(() => {
+        if(openNotification){
+
+        }
+    })
 
     const saveUserOnLogin = async (user) => {
         try {
@@ -112,20 +122,11 @@ const App = () => {
         getPermissionsAsync().then(async (hasPermissions) => {
             if (!hasPermissions.granted && hasPermissions.canAskAgain) {
                 await requestPermissionsAsync();
-
             }
         })
         setupBackgroundNotifications();
     }, []);
 
-    useEffect(() => {
-        getPermissionsAsync().then(async (hasPermissions) => {
-            if (!hasPermissions.granted && hasPermissions.canAskAgain) {
-                await requestPermissionsAsync();
-            }
-        });
-        setupBackgroundNotifications();
-    }, []);
 
 
     useEffect(() => {

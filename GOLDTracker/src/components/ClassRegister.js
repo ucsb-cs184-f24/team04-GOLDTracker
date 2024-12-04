@@ -14,7 +14,9 @@ export async function registerClass(courseId, sectionId){
         let parsedClassList = JSON.parse(classList);
         if(parsedClassList[`${courseId}`]&&!parsedClassList[`${courseId}`].includes(`${sectionId}`)){
             parsedClassList[`${courseId}`].push(`${sectionId}`);
-        }else{
+        }else if(parsedClassList[`${courseId}`]&&parsedClassList[`${courseId}`].includes(`${sectionId}`)){
+            return;
+        } else{
             parsedClassList[`${courseId}`] = [`${sectionId}`]
         }
         await AsyncStorage.setItem("class-list", JSON.stringify(parsedClassList));
@@ -33,7 +35,6 @@ export async function deregisterClass(courseId, sectionId){
                 delete parsedClassList[`${courseId}`];
             }else{
                 let index = parsedClassList[`${courseId}`].indexOf(`${sectionId}`);
-                console.log(index)
                 parsedClassList[`${courseId}`].splice(index,1);
             }
             await AsyncStorage.setItem("class-list", JSON.stringify(parsedClassList));
@@ -48,9 +49,24 @@ export async function deregisterClass(courseId, sectionId){
 export async function getClasses(){
     let classList = await AsyncStorage.getItem("class-list");
     if(!classList){
-        return null;
+        return {};
     }else{
         return JSON.parse(classList);
+    }
+
+}
+
+export async function getIndividualClass(classId){
+    let classList = await AsyncStorage.getItem("class-list");
+    if(!classList){
+        return [];
+    }else{
+        classList = JSON.parse(classList);
+        if(classList.hasOwnProperty(classId)){
+            return classList[`${classId}`];
+        }else{
+            return [];
+        }
     }
 
 }
@@ -117,7 +133,6 @@ async function updateServer(classList, timestamp){
         classList: JSON.stringify(classList),
         timestamp: timestamp
     });
-    console.log("this ran")
 }
 
 async function updateLocal(classList, timestamp){

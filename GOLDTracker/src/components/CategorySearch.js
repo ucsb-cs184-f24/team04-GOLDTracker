@@ -12,7 +12,7 @@ import {
   Animated,
   Easing,
   StyleSheet,
-  TouchableWithoutFeedback,
+  TouchableWithoutFeedback, ScrollView,
 } from "react-native";
 import { COLORS } from "../theme/theme";
 import departmentMapping from "../assets/departmentList.json";
@@ -47,6 +47,7 @@ const CategorySearch = forwardRef(
     ];
 
     const quarterOptions = [
+      {code: "20251", label: "Winter 2025"},
       { code: "20244", label: "Fall 2024" },
       { code: "20243", label: "Summer 2024" },
       { code: "20242", label: "Spring 2024" },
@@ -281,6 +282,7 @@ const styles = StyleSheet.create({
     fontFamily: "Nunito-Regular", 
   },
   dropdownOverlay: {
+    flex: 1,
     position: "absolute",
     top: 50,
     left: 0,

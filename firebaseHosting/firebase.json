@@ -18,6 +18,12 @@
         "function": {
           "functionId": "poll"
         }
+      },
+      {
+        "source": "/quarter",
+        "function": {
+          "functionId": "quarter"
+        }
       }
     ]
   },
