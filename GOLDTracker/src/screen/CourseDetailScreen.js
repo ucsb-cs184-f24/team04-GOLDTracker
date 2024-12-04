@@ -5,7 +5,7 @@ import { COLORS, SPACING } from "../theme/theme";
 import {deregisterClass, getClasses, getIndividualClass, registerClass} from "../components/ClassRegister";
 
 const CourseDetailScreen = ({ route }) => {
-  const { course, lectureSections, setFollow } = route.params;
+  const { course, lectureSections } = route.params;
 
   const [professor, setProfessor] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -59,7 +59,7 @@ const CourseDetailScreen = ({ route }) => {
   }, [courseDepartment, courseInstructor]);
 
   const toggleFollowAll = async () => {
-    if (followingAll) {
+    /*if (followingAll) {
       // Deregister all sections
       for (let section of course.classSections) {
         if (section.enrollCode) {
@@ -70,7 +70,6 @@ const CourseDetailScreen = ({ route }) => {
                 `${lectureSections[parseInt(section.section.slice(0, 2)) - 1]}`,
                 `${section.enrollCode}`
             );
-            setFollow(course.courseId, section.section, false)
           }
         }
       }
@@ -85,13 +84,12 @@ const CourseDetailScreen = ({ route }) => {
                 `${lectureSections[parseInt(section.section.slice(0, 2)) - 1]}`,
                 `${section.enrollCode}`
             );
-            setFollow(course.courseId, section.section, true)
           }
         }
       }
     }
     console.log(await getClasses())
-    setFollowingAll(!followingAll); // Toggle the state
+    setFollowingAll(!followingAll);*/ // Toggle the state
   };
 
   return (

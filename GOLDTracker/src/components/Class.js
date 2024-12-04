@@ -10,7 +10,7 @@ export default function Class(props) {
   const goToDetails = (lectureSections) => {
     const course = props.course;
     const navigation = props.navigation;
-    navigation.navigate("CourseDetailScreen", { course, lectureSections, setFollow });
+    navigation.navigate("CourseDetailScreen", { course, lectureSections });
   };
 
     const course = props.course;
