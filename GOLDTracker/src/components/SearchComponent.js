@@ -1,16 +1,21 @@
-import React, { useState, useEffect, useRef, useImperativeHandle, } from "react";
-import { 
-  StatusBar, 
-  StyleSheet, 
-  View, 
-  FlatList, 
+import React, {
+  useState,
+  useEffect,
+  useRef,
+  useImperativeHandle,
+} from "react";
+import {
+  StatusBar,
+  StyleSheet,
+  View,
+  FlatList,
   Text,
   ActivityIndicator,
   TouchableOpacity,
   Animated,
   Easing,
   TouchableWithoutFeedback,
- } from "react-native";
+} from "react-native";
 import { SearchBar } from "react-native-elements";
 import Class from "../components/Class";
 import { useNavigation } from "@react-navigation/native";
@@ -22,8 +27,7 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 const AnimatedFlatList = Animated.createAnimatedComponent(FlatList);
 
 const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
-
-  const [scrollY, setScrollY] = useState(new Animated.Value(0));
+  const scrollY = useRef(new Animated.Value(0)).current; // Changed to useRef
 
   const [results, setResults] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
@@ -36,19 +40,29 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const animatedDeptHeight = useRef(new Animated.Value(0)).current;
   const animatedQuarterHeight = useRef(new Animated.Value(0)).current;
 
-    // Interpolation for search bar's animation when scrolling
-    const animatedSearchBarTranslate = scrollY.interpolate({
-      inputRange: [0, 100], // The search bar hides after scrolling 60 pixels
-      outputRange: [0, -600], // Moves the search bar up
-      extrapolate: "clamp", // Prevents the translation value from going negative
-    });
-  
-    // Interpolation for filter section's sticky behavior
-    const animatedFilterTranslate = scrollY.interpolate({
-      inputRange: [0, 30], // Scroll threshold
-      outputRange: [0, -60], // Filter moves up until it hits the top
-      extrapolate: "clamp", // Keeps the translation at 0 once it reaches the top
-    });
+  // Total height of the search bar and filter section
+  const totalHeaderHeight = 120;
+
+  // Interpolation for search bar's animation when scrolling
+  const animatedSearchBarTranslate = scrollY.interpolate({
+    inputRange: [0, 100], // The search bar hides after scrolling 100 pixels
+    outputRange: [0, -600], // Moves the search bar up
+    extrapolate: "clamp", // Prevents the translation value from going negative
+  });
+
+  // Interpolation for filter section's sticky behavior
+  const animatedFilterTranslate = scrollY.interpolate({
+    inputRange: [0, 30], // Scroll threshold
+    outputRange: [0, -60], // Filter moves up until it hits the top
+    extrapolate: "clamp", // Keeps the translation at 0 once it reaches the top
+  });
+
+  // Interpolation for the FlatList to move up with the search bar
+  const animatedListTranslate = scrollY.interpolate({
+    inputRange: [0, totalHeaderHeight],
+    outputRange: [0, -totalHeaderHeight],
+    extrapolate: "clamp",
+  });
 
   const departmentOptions = [
     { code: "Your Major", label: "Cancel Selection" }, // Add "My Major" option
@@ -59,7 +73,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   ];
 
   const quarterOptions = [
-    {code: "20251", label: "Winter 2025"},
+    { code: "20251", label: "Winter 2025" },
     { code: "20244", label: "Fall 2024" },
     { code: "20243", label: "Summer 2024" },
     { code: "20242", label: "Spring 2024" },
@@ -181,18 +195,17 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
   const handleSearchSubmit = async (deptCode = null) => {
     if (major && major !== "") {
-      searchTerm = major;
       setIsLoading(true);
-    }  
-      
-    try {
-      const quarter = selectedQuarter; 
-      const searchTerm = deptCode || search.trim(); // Prioritize deptCode; fallback to text input
-      // If major is not an empty string, use the major as deptCode
+    }
 
+    try {
+      const quarter = selectedQuarter;
+      const searchTerm = deptCode || search.trim(); // Prioritize deptCode; fallback to text input
 
       if (!searchTerm) {
-        setErrorMessage("Please enter a search term or select a department.");
+        setErrorMessage(
+          "Please enter a search term or select a department."
+        );
         return;
       }
 
@@ -228,7 +241,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       console.error("Error fetching data:", error);
       setResults([]);
       setErrorMessage("An error occurred while fetching data.");
-    }finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -269,28 +282,28 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           { transform: [{ translateY: animatedSearchBarTranslate }] },
         ]}
       >
-      {/* Search Bar */}
-      <SearchBar
-        placeholder="Search by course or department"
-        onChangeText={updateSearch}
-        value={search}
-        lightTheme
-        round
-        containerStyle={styles.searchBar}
-        inputContainerStyle={styles.searchInputContainer}
-        onSubmitEditing={() => handleSearchSubmit()}
-        returnKeyType="search"
-        onFocus={() => setIsSearching(true)} // Set isSearching to true when focused
-        onBlur={() => {
-          if (search.trim() === "") {
-            setIsSearching(false);
-          }
-        }} 
-        leftIconContainerStyle={styles.leftIconContainer}
-        onClear={handleClearSearch}
-      />
-    </Animated.View>
-    
+        {/* Search Bar */}
+        <SearchBar
+          placeholder="Search by course or department"
+          onChangeText={updateSearch}
+          value={search}
+          lightTheme
+          round
+          containerStyle={styles.searchBar}
+          inputContainerStyle={styles.searchInputContainer}
+          onSubmitEditing={() => handleSearchSubmit()}
+          returnKeyType="search"
+          onFocus={() => setIsSearching(true)} // Set isSearching to true when focused
+          onBlur={() => {
+            if (search.trim() === "") {
+              setIsSearching(false);
+            }
+          }}
+          leftIconContainerStyle={styles.leftIconContainer}
+          onClear={handleClearSearch}
+        />
+      </Animated.View>
+
       {/* Sticky Filter Section */}
       <Animated.View
         style={[
@@ -298,16 +311,14 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           { transform: [{ translateY: animatedFilterTranslate }] },
         ]}
       >
-
-      
-      {/*filters */}
-      <View style={styles.buttonRow}>
-      <TouchableOpacity
+        {/* Filters */}
+        <View style={styles.buttonRow}>
+          <TouchableOpacity
             style={[styles.toggleButton, styles.centeredButton]}
             onPress={toggleDeptDropdown}
-      >
-      <Text style={styles.toggleButtonText}>
-        {selectedDept || "Department"}
+          >
+            <Text style={styles.toggleButtonText}>
+              {selectedDept || "Department"}
             </Text>
             <AntDesign
               name={isDeptDropdownVisible ? "caretup" : "caretdown"}
@@ -323,10 +334,11 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           >
             <Text style={styles.toggleButtonText}>
               {selectedQuarter
-              ? `${selectedQuarter.slice(0, 4)} ${
-                  quarterOptions.find((q) => q.code === selectedQuarter)?.label[0]
-                }`
-              : "Select Quarter"}
+                ? `${selectedQuarter.slice(0, 4)} ${
+                    quarterOptions.find((q) => q.code === selectedQuarter)
+                      ?.label[0]
+                  }`
+                : "Select Quarter"}
             </Text>
             <AntDesign
               name={isQuarterDropdownVisible ? "caretup" : "caretdown"}
@@ -337,74 +349,75 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           </TouchableOpacity>
         </View>
       </Animated.View>
-        {(isDeptDropdownVisible || isQuarterDropdownVisible) && (
-          <TouchableWithoutFeedback onPress={closeDropdowns}>
-            <View style={styles.overlay}>
-              {isDeptDropdownVisible && (
-                <Animated.View
-                  style={[
-                    styles.dropdownContainer,
-                    { height: animatedDeptHeight },
-                  ]}
-                >
-                  <FlatList
-                    data={departmentOptions}
-                    keyExtractor={(item) => item.code}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        style={styles.dropdownOption}
-                        onPress={() => handleSelect("department", item)}
-                      >
-                        <Text
-                          style={[
-                            styles.dropdownOptionText,
-                            selectedDept === item.code && styles.selectedText,
-                          ]}
-                        >
-                          {item.label} ({item.code})
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                  // contentContainerStyle={{ paddingBottom: 20 }}
-                  />
-                </Animated.View>
-              )}
 
-              {isQuarterDropdownVisible && (
-                <Animated.View
-                  style={[
-                    styles.dropdownContainer,
-                    { height: animatedQuarterHeight },
-                  ]}
-                >
-                  <FlatList
-                    data={quarterOptions}
-                    keyExtractor={(item) => item.code}
-                    renderItem={({ item }) => (
-                      <TouchableOpacity
-                        style={styles.dropdownOption}
-                        onPress={() => handleSelect("quarter", item)}
+      {(isDeptDropdownVisible || isQuarterDropdownVisible) && (
+        <TouchableWithoutFeedback onPress={closeDropdowns}>
+          <View style={styles.overlay}>
+            {isDeptDropdownVisible && (
+              <Animated.View
+                style={[
+                  styles.dropdownContainer,
+                  { height: animatedDeptHeight },
+                ]}
+              >
+                <FlatList
+                  data={departmentOptions}
+                  keyExtractor={(item) => item.code}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.dropdownOption}
+                      onPress={() => handleSelect("department", item)}
+                    >
+                      <Text
+                        style={[
+                          styles.dropdownOptionText,
+                          selectedDept === item.code && styles.selectedText,
+                        ]}
                       >
-                        <Text
-                          style={[
-                            styles.dropdownOptionText,
-                            selectedQuarter === item.code && styles.selectedText,
-                          ]}
-                        >
-                          {item.label}
-                        </Text>
-                      </TouchableOpacity>
-                    )}
-                    //contentContainerStyle={{ paddingBottom: 20 }}
-                  />
-                </Animated.View>
-              )}
-            </View>
-          </TouchableWithoutFeedback>
-        )}
+                        {item.label} ({item.code})
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </Animated.View>
+            )}
+
+            {isQuarterDropdownVisible && (
+              <Animated.View
+                style={[
+                  styles.dropdownContainer,
+                  { height: animatedQuarterHeight },
+                ]}
+              >
+                <FlatList
+                  data={quarterOptions}
+                  keyExtractor={(item) => item.code}
+                  renderItem={({ item }) => (
+                    <TouchableOpacity
+                      style={styles.dropdownOption}
+                      onPress={() => handleSelect("quarter", item)}
+                    >
+                      <Text
+                        style={[
+                          styles.dropdownOptionText,
+                          selectedQuarter === item.code && styles.selectedText,
+                        ]}
+                      >
+                        {item.label}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                />
+              </Animated.View>
+            )}
+          </View>
+        </TouchableWithoutFeedback>
+      )}
 
       {isLoading ? (
-        <ActivityIndicator size={25} color="#0000ff" />
+        <View style={styles.loadingContainer}>
+        <ActivityIndicator size="large" color="#0000ff" />
+        </View>
       ) : null}
 
       {/* Error Message or Results */}
@@ -413,36 +426,37 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           <Text style={styles.errorMessage}>{errorMessage}</Text>
         </View>
       ) : results.length > 0 ? (
-        <View style = {styles.list}>
+        <Animated.View
+          style={{
+            flex: 1,
+            transform: [{ translateY: animatedListTranslate }],
+          }}
+        >
           <AnimatedFlatList
             data={results}
             keyExtractor={(item) => item.courseId.trim()}
             renderItem={renderCourseItem}
-            contentContainerStyle={{ paddingBottom: 20 }}
+            contentContainerStyle={{
+              paddingBottom: 20,
+              paddingTop: totalHeaderHeight,
+            }}
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-              { useNativeDriver: true },
-              // {
-              //   if (categorySearchRef.current) {
-              //     categorySearchRef.current.closeDropdowns();
-              //   }
-              // }
+              { useNativeDriver: true }
             )}
             scrollEventThrottle={16}
-
             style={styles.flatList}
           />
-        </View>
+        </Animated.View>
       ) : null}
     </View>
   );
 };
 
-
 const styles = StyleSheet.create({
   container: {
     backgroundColor: "#fff",
-    flex:1,
+    flex: 1,
   },
   searchBarContainer: {
     position: "absolute",
@@ -474,12 +488,12 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
-    top: 120,  // Start at the top of the screen/container
-    left: 0,  // Align with the left side of the screen
-    right: 0,  // Align with the right side of the screen
-    bottom: 0,  // Cover everything below the header (up to the course list)
-    backgroundColor: "rgba(0, 0, 0, 0.3)",  // Semi-transparent grey overlay
-    zIndex: 10,  // Ensure it is above the course list and other elements
+    top: 120, 
+    left: 0, 
+    right: 0, 
+    bottom: 0, 
+    backgroundColor: "rgba(0, 0, 0, 0.3)", // Semi-transparent grey overlay
+    zIndex: 10, 
   },
   leftIconContainer: {
     marginLeft: 15, // Adjust the value to move the icon further to the right
@@ -520,20 +534,21 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     textAlign: "center",
     paddingRight: 5,
-    fontFamily: "Nunito-Regular", 
+    fontFamily: "Nunito-Regular",
   },
   dropdownContainer: {
     backgroundColor: "#fff",
     overflow: "hidden",
-    borderRadius: 5, // Outer curve for the border
-    marginHorizontal: 5,
-    //marginTop: 10,
-    borderBottomWidth: 8, 
-    borderBottomColor: COLORS.orange, 
-    shadowColor: "#000", 
-    shadowOffset: { width: 0, height: 4 }, 
-    shadowOpacity: 0.2, 
-    shadowRadius: 6, 
+    borderRadius: 5, 
+    marginHorizontal: 0,
+    marginTop: -3,
+    // borderBottomWidth: 8,
+    width: "100%",
+    borderBottomColor: COLORS.orange,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.2,
+    shadowRadius: 6,
     elevation: 5,
   },
   dropdownOption: {
@@ -545,12 +560,12 @@ const styles = StyleSheet.create({
   dropdownOptionText: {
     fontSize: 16,
     color: "#333",
-    fontFamily: "Nunito-Regular", 
+    fontFamily: "Nunito-Regular",
   },
   selectedText: {
     fontWeight: "bold",
     color: COLORS.orange,
-    fontFamily: "Nunito-Regular", 
+    fontFamily: "Nunito-Regular",
   },
   shadowIcon: {
     shadowColor: "#000",
@@ -560,9 +575,20 @@ const styles = StyleSheet.create({
     elevation: 5, // Shadow for Android
   },
   list: {
-    top:100,
-    flex:1,
-  }
+    flex: 1,
+  },
+  loadingContainer: {
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.3)", 
+    zIndex: 20, 
+  },
+  
 });
 
 export default SearchComponent;
