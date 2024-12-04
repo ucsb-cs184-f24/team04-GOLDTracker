@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import * as BackgroundRegister from "../components/BackgroundRegister";
 import { Swipeable } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
-import Ionicons from '@expo/vector-icons/Ionicons';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 
 import { COLORS, SPACING } from "../theme/theme";
 
@@ -66,8 +66,8 @@ export default function NotificationScreen() {
                 <View key={item.courseId} style={styles.courseContainerNoSections}>
                     <View style={styles.sectionDetails}>
                         <Text style={styles.text}>{`${courseCode.replace(/\s+/, " ")} with ${courseProfessor} has available sections`}</Text> 
-                        <Ionicons
-                            name="chevron-back-outline"
+                        <FontAwesome
+                            name="chevron-left"
                             size={20}
                             color={COLORS.darkBlue}
                         />
@@ -107,6 +107,11 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         marginRight: 10,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5,
     },
     deleteButton: {
         backgroundColor: "#ba2f33",
@@ -114,7 +119,11 @@ const styles = StyleSheet.create({
         paddingHorizontal: 12,
         borderRadius: 16,
         justifyContent: "center",
-        alignItems: "center",
+        alignItems: "center",        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5,
     },
     rightAction: {
         flexDirection: 'row',
@@ -141,11 +150,21 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     courseContainerNoSections: {
-        padding: 20,
-        borderRadius: 12,
+        padding: 30,
+        //borderRadius: 12,
         backgroundColor: COLORS.lightGrey,
         flexDirection: "row",
         justifyContent: "space-between",
         marginBottom: 10,
+        borderRadius: 20,
+        shadowColor: "#000",
+        shadowOffset: { width: 0, height: 2 },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.5,
+        elevation: 5,
     },
+    text : {
+        marginRight:20,
+        fontSize: 16,
+    }
 });
