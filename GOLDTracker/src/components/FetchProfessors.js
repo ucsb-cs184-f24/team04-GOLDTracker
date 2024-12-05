@@ -36,7 +36,6 @@ export async function FetchProfessorsByDepartment(departmentCode, courseInstruct
       
       // Ensure parts have the expected structure
       if (parts.length < 2) {
-        console.warn("courseInstructor is missing required parts:", courseInstructor);
         return false; 
       }
       
