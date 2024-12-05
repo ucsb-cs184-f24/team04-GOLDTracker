@@ -10,7 +10,6 @@ export default function LoginScreen({ promptAsync }) {
       style={styles.container}
     >
       <SafeAreaView style={styles.safeArea}>
-        <StatusBar barStyle="dark-content" />
         <View style={styles.logoContainer}>
           <Image
             source={require('../assets/images/login.png')}

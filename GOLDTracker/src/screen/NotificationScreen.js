@@ -18,7 +18,6 @@ export default function NotificationScreen() {
     useFocusEffect(React.useCallback(() => {
         async function getCourses() {
             let courses = await BackgroundRegister.getNotificationHistory();
-            console.log(courses);
             setCurrentCourses(courses);
         }
         getCourses();
@@ -81,7 +80,6 @@ export default function NotificationScreen() {
 
     return (
         <View style={styles.container}>
-            <StatusBar style="auto" />
             <FlatList
                 data={currentCourses}
                 keyExtractor={(item) => item.id}

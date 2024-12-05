@@ -174,7 +174,6 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
   return (
     <View style={styles.container}>
-      <StatusBar style="auto" />
 
       {/* Search Bar */}
       <SearchBar
