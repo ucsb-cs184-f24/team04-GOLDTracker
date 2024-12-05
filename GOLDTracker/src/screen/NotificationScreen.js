@@ -5,7 +5,7 @@ import { StatusBar } from 'expo-status-bar';
 import * as BackgroundRegister from "../components/BackgroundRegister";
 import { Swipeable } from 'react-native-gesture-handler';
 import * as WebBrowser from 'expo-web-browser';
-import FontAwesome from '@expo/vector-icons/FontAwesome';
+import Entypo from '@expo/vector-icons/Entypo';
 
 import { COLORS, SPACING } from "../theme/theme";
 import {useFocusEffect} from "@react-navigation/native";
@@ -67,7 +67,7 @@ export default function NotificationScreen() {
                 <View key={item.id} style={styles.courseContainerNoSections}>
                     <View style={styles.sectionDetails}>
                         <Text style={styles.text}>{`${courseCode.replace(/\s+/, " ")} with ${courseProfessor} has available sections`}</Text> 
-                        <FontAwesome
+                        <Entypo
                             name="chevron-left"
                             size={20}
                             color={COLORS.darkBlue}

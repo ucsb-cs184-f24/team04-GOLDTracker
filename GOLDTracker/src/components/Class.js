@@ -171,6 +171,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: SPACING.space_4,
+    marginTop: SPACING.space_8,
   },
   professorContainer: {
     flexDirection: "row",
