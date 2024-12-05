@@ -1475,13 +1475,11 @@ PODS:
     - React-logger (= 0.74.5)
     - React-perflogger (= 0.74.5)
     - React-utils (= 0.74.5)
-  - RNBackgroundFetch (4.2.6):
-    - React-Core
   - RNCAsyncStorage (1.23.1):
     - React-Core
   - RNCClipboard (1.15.0):
     - React-Core
-  - RNCPicker (2.10.2):
+  - RNCPicker (2.10.1):
     - React-Core
   - RNDateTimePicker (8.2.0):
     - React-Core
@@ -1707,7 +1705,6 @@ DEPENDENCIES:
   - React-runtimescheduler (from `../node_modules/react-native/ReactCommon/react/renderer/runtimescheduler`)
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
-  - RNBackgroundFetch (from `../node_modules/react-native-background-fetch`)
   - "RNCAsyncStorage (from `../node_modules/@react-native-async-storage/async-storage`)"
   - "RNCClipboard (from `../node_modules/@react-native-clipboard/clipboard`)"
   - "RNCPicker (from `../node_modules/@react-native-picker/picker`)"
@@ -1890,8 +1887,6 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native/ReactCommon/react/utils"
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
-  RNBackgroundFetch:
-    :path: "../node_modules/react-native-background-fetch"
   RNCAsyncStorage:
     :path: "../node_modules/@react-native-async-storage/async-storage"
   RNCClipboard:
@@ -2000,10 +1995,9 @@ SPEC CHECKSUMS:
   React-runtimescheduler: cfbe85c3510c541ec6dc815c7729b41304b67961
   React-utils: f242eb7e7889419d979ca0e1c02ccc0ea6e43b29
   ReactCommon: f7da14a8827b72704169a48c929bcde802698361
-  RNBackgroundFetch: 3a45a819bafb71ce405ae3899714bbac0972f1d2
   RNCAsyncStorage: 826b603ae9c0f88b5ac4e956801f755109fa4d5c
   RNCClipboard: 69ab8e51324d5b351f6ba72bbdb72478087a2c64
-  RNCPicker: d162737e03e48797110dbb60e5ddc03012e87e0b
+  RNCPicker: 0cbd0461c74ac7c3e47f6ef3a865e598657b7599
   RNDateTimePicker: 40ffda97d071a98a10fdca4fa97e3977102ccd14
   RNFS: 4ac0f0ea233904cb798630b3c077808c06931688
   RNGestureHandler: 6fee3422fd8c81c5ee756fa72e3d1780e9943d9d
