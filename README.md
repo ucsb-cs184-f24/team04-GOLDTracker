@@ -46,11 +46,10 @@ We are planning to use React Native with Expo Go
    ```bash
    npm install
    ```
-
-5. Linke assests
-  ```
-  npx react-native-asset
-  ```
+4. Linke assests
+   ```
+   npx react-native-asset
+   ```
 
 
 5. For iOS only:
