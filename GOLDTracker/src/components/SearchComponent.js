@@ -39,7 +39,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
   // Heights
   const searchBarHeight = 70; // Adjusted to match actual height
-  const filterBarHeight = 60; // Adjusted to match actual height
+  const filterBarHeight = 50; // Adjusted to match actual height
   const totalHeaderHeight = searchBarHeight + filterBarHeight; // 130
 
   // Interpolation for search bar's animation when scrolling
