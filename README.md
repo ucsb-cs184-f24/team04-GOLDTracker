@@ -47,7 +47,13 @@ We are planning to use React Native with Expo Go
    npm install
    ```
 
-4. For iOS only:
+5. Linke assests
+```
+npx react-native-asset
+```
+
+
+5. For iOS only:
    - Navigate to the ios folder:
      ```bash
      cd ios
@@ -61,7 +67,7 @@ We are planning to use React Native with Expo Go
      cd ..
      ```
 
-5. Run the app:
+6. Run the app:
    - iOS:
      ```bash
      npx expo run:ios
