@@ -46,27 +46,36 @@ const SearchComponent = ({
   const animatedDeptHeight = useRef(new Animated.Value(0)).current;
   const animatedQuarterHeight = useRef(new Animated.Value(0)).current;
 
-  // Total height of the search bar and filter section
-  const totalHeaderHeight = 120;
+  // Heights
+  const searchBarHeight = 70; // Adjusted to match actual height
+  const filterBarHeight = 60; // Adjusted to match actual height
+  const totalHeaderHeight = searchBarHeight + filterBarHeight; // 130
 
   // Interpolation for search bar's animation when scrolling
   const animatedSearchBarTranslate = scrollY.interpolate({
-    inputRange: [0, 100],
-    outputRange: [0, -600],
+    inputRange: [0, searchBarHeight],
+    outputRange: [0, -searchBarHeight],
     extrapolate: "clamp",
   });
 
-  // Interpolation for filter section's sticky behavior
-  const animatedFilterTranslate = scrollY.interpolate({
-    inputRange: [0, 30],
-    outputRange: [0, -60],
+  // Interpolation for filter bar's animation when scrolling
+  const animatedFilterBarTranslate = scrollY.interpolate({
+    inputRange: [0, searchBarHeight],
+    outputRange: [0, -searchBarHeight],
     extrapolate: "clamp",
   });
 
-  // Interpolation for the FlatList to move up with the search bar
-  const animatedListTranslate = scrollY.interpolate({
-    inputRange: [0, totalHeaderHeight],
-    outputRange: [0, -totalHeaderHeight],
+  // Interpolation for FlatList's paddingTop adjustment
+  const animatedPaddingTop = scrollY.interpolate({
+    inputRange: [0, searchBarHeight],
+    outputRange: [totalHeaderHeight, filterBarHeight], // From 130 to 60
+    extrapolate: "clamp",
+  });
+
+  // Define animatedDropdownTop
+  const animatedDropdownTop = scrollY.interpolate({
+    inputRange: [0, searchBarHeight],
+    outputRange: [searchBarHeight + filterBarHeight, filterBarHeight],
     extrapolate: "clamp",
   });
 
@@ -201,7 +210,7 @@ const SearchComponent = ({
   }));
 
   const handleSearchSubmit = async (deptCode = null) => {
-    setIsSearching(true); // Start searching
+    setIsSearching(true); 
     setIsLoading(true);
 
     try {
@@ -306,11 +315,11 @@ const SearchComponent = ({
         />
       </Animated.View>
 
-      {/* Sticky Filter Section */}
+      {/* Animated Filter Bar */}
       <Animated.View
         style={[
           styles.stickyFilterContainer,
-          { transform: [{ translateY: animatedFilterTranslate }] },
+          { transform: [{ translateY: animatedFilterBarTranslate }] },
         ]}
       >
         {/* Filters */}
@@ -337,7 +346,8 @@ const SearchComponent = ({
             <Text style={styles.toggleButtonText}>
               {selectedQuarter
                 ? `${selectedQuarter.slice(0, 4)} ${
-                    quarterOptions.find((q) => q.code === selectedQuarter)?.label[0]
+                    quarterOptions.find((q) => q.code === selectedQuarter)
+                      ?.label[0]
                   }`
                 : "Select Quarter"}
             </Text>
@@ -353,7 +363,7 @@ const SearchComponent = ({
 
       {(isDeptDropdownVisible || isQuarterDropdownVisible) && (
         <TouchableWithoutFeedback onPress={closeDropdowns}>
-          <View style={styles.overlay}>
+          <Animated.View style={[styles.overlay, { top: animatedDropdownTop }]}>
             {isDeptDropdownVisible && (
               <Animated.View
                 style={[
@@ -411,12 +421,12 @@ const SearchComponent = ({
                 />
               </Animated.View>
             )}
-          </View>
+          </Animated.View>
         </TouchableWithoutFeedback>
       )}
 
       {isLoading && (
-        <View style={styles.loadingContainer}>
+        <View style={[styles.loadingContainer, { top: totalHeaderHeight }]}>
           <ActivityIndicator size="large" color="#0000ff" />
         </View>
       )}
@@ -428,26 +438,23 @@ const SearchComponent = ({
         </View>
       ) : results.length > 0 ? (
         // Results List
-        <Animated.View
-          style={{
-            flex: 1,
-            transform: [{ translateY: animatedListTranslate }],
-          }}
-        >
+        <Animated.View style={{ flex: 1 }}>
           <AnimatedFlatList
             data={results}
             keyExtractor={(item) => item.courseId.trim()}
             renderItem={renderCourseItem}
             contentContainerStyle={{
-              paddingBottom: 20,
-              paddingTop: totalHeaderHeight,
+              paddingBottom: 140,
             }}
+            style={[
+              styles.flatList,
+              { paddingTop: animatedPaddingTop },
+            ]}
             onScroll={Animated.event(
               [{ nativeEvent: { contentOffset: { y: scrollY } } }],
-              { useNativeDriver: true }
+              { useNativeDriver: false }
             )}
             scrollEventThrottle={16}
-            style={styles.flatList}
           />
         </Animated.View>
       ) : (
@@ -473,6 +480,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     zIndex: 2,
+    height: 70, // Matches searchBarHeight
   },
   searchBar: {
     backgroundColor: "transparent",
@@ -497,7 +505,6 @@ const styles = StyleSheet.create({
   },
   overlay: {
     position: "absolute",
-    top: 120,
     left: 0,
     right: 0,
     bottom: 0,
@@ -514,7 +521,7 @@ const styles = StyleSheet.create({
   },
   stickyFilterContainer: {
     position: "absolute",
-    top: 60,
+    top: 70, // Matches searchBarHeight
     left: 0,
     right: 0,
     zIndex: 1,
@@ -522,6 +529,7 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
     paddingHorizontal: 20,
     borderBottomColor: "#ccc",
+    height: 60, // Matches filterBarHeight
   },
   toggleButton: {
     backgroundColor: COLORS.darkBlue,
@@ -531,8 +539,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    marginHorizontal: 18,
-    width: "40%",
+    marginHorizontal: 8,
+    width: "43%",
   },
   centeredButton: {
     justifyContent: "center",
@@ -552,7 +560,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 0,
     marginTop: -3,
     width: "100%",
-    borderBottomColor: COLORS.orange,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.2,
@@ -582,12 +589,11 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     elevation: 5,
   },
-  list: {
+  flatList: {
     flex: 1,
   },
   loadingContainer: {
     position: "absolute",
-    top: 120,
     left: 0,
     right: 0,
     bottom: 0,
@@ -600,7 +606,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 120,
+    paddingTop: 130, // Matches totalHeaderHeight
   },
 });
 
