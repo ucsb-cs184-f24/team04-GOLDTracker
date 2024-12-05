@@ -17,7 +17,7 @@ import { useNavigation } from "@react-navigation/native";
 import { auth } from "../../firebaseConfig";
 import * as ClassRegister from "./ClassRegister";
 import { COLORS } from "../theme/theme";
-import departmentMapping from "../assets/departmentMapping.json";
+import departmentMapping from "../assets/departmentList.json";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import EmptyState from "../components/EmptyState"; // Import EmptyState
 
@@ -74,7 +74,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     { code: "Your Major", label: "Cancel Selection" },
     ...Object.keys(departmentMapping).map((code) => ({
       code,
-      label: departmentMapping[code][0],
+      label: departmentMapping[code],
     })),
   ];
 
@@ -228,15 +228,26 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         setIsSearching(false); // Stop searching
         return;
       }
-
-      const apiUrl = /^[A-Z]{2,}\s[\dA-Z]+$/.test(searchTerm)
+      apiUrl = ""
+      if (deptCode){
+        apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
+    
         ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true`
         : `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true&pageNumber=1&pageSize=30`;
-
+      }
+      else{
+        apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
+        ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
+            searchTerm
+          )}&includeClassSections=true`
+        : `${API_URL}?quarter=${quarter}&subjectCode=${encodeURIComponent(
+            searchTerm
+          )}&includeClassSections=true&pageNumber=1&pageSize=30`;
+      }
       const headers = new Headers();
       headers.append("authorization", await auth.currentUser.getIdToken());
       const response = await fetch(apiUrl, { headers });
