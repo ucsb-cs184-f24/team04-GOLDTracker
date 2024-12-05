@@ -121,7 +121,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
           ...course,
           classSections: course.classSections.map((section) => {
             let isFollowing = false;
-            if(followedCourses.hasOwnProperty(lectureSections[parseInt(section.section.slice(0,2))-1])) {
+            if(followedCourses && followedCourses.hasOwnProperty(lectureSections[parseInt(section.section.slice(0,2))-1])) {
               if(followedCourses[`${lectureSections[parseInt(section.section.slice(0,2))-1]}`].indexOf(section.enrollCode) !== -1){
                 isFollowing = true;
               }
