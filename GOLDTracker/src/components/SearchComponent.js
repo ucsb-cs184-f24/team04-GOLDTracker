@@ -218,7 +218,16 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     setIsSearching(true);
     setIsLoading(true);
 
-    let searchTerm = deptCode || search.trim();
+    let searchTerm = "";
+    if(deptCode){
+      searchTerm = deptCode;
+    }
+    else if (!search && major && major !== "") {
+      searchTerm = major;
+      setIsLoading(true);
+    }else{
+      searchTerm = search.trim();
+    }
 
     try {
       const quarter = selectedQuarter;
@@ -231,7 +240,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       apiUrl = ""
       if (deptCode){
         apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
-    
+
         ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
             searchTerm
           )}&includeClassSections=true`
@@ -258,36 +267,25 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       if (data.classes && data.classes.length > 0) {
         const coursesWithFollowing = data.classes.map((course) => {
           let lectureSections = [];
-          for (let i = 0; i < course.classSections.length; i++) {
-            if (course.classSections[i].section.slice(2, 4) === "00") {
+          for(let i = 0; i < course.classSections.length; i++){
+            if(course.classSections[i].section.slice(2,4)==="00"){
               lectureSections.push(course.classSections[i].enrollCode);
             }
           }
-          return {
-            ...course,
-            classSections: course.classSections.map((section) => {
-              let isFollowing = false;
-              if (
-                followedCourses &&
-                followedCourses.hasOwnProperty(
-                  lectureSections[parseInt(section.section.slice(0, 2)) - 1]
-                )
-              ) {
-                if (
-                  followedCourses[
-                    `${lectureSections[parseInt(section.section.slice(0, 2)) - 1]}`
-                  ].indexOf(section.enrollCode) !== -1
-                ) {
-                  isFollowing = true;
-                }
+          return{
+          ...course,
+          classSections: course.classSections.map((section) => {
+            let isFollowing = false;
+            if(followedCourses && typeof followedCourses === "object" && followedCourses.hasOwnProperty(lectureSections[parseInt(section.section.slice(0,2))-1])) {
+              if(followedCourses[`${lectureSections[parseInt(section.section.slice(0,2))-1]}`].indexOf(section.enrollCode) !== -1){
+                isFollowing = true;
               }
-              return {
-                ...section,
-                following: isFollowing,
-              };
-            }),
-          };
-        });
+            }
+            return{
+            ...section,
+            following: isFollowing,
+          }}),
+        }});
         setResults(coursesWithFollowing);
         setErrorMessage("");
       } else {
@@ -298,10 +296,8 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       console.error("Error fetching data:", error);
       setResults([]);
       setErrorMessage("An error occurred while fetching data.");
-    } finally {
+    }finally {
       setIsLoading(false);
-      // Keep isSearching true if there are results or an error message
-      setIsSearching(!(results.length === 0 && !errorMessage));
     }
   };
 
