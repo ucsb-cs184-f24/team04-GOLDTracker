@@ -48,9 +48,9 @@ We are planning to use React Native with Expo Go
    ```
 
 5. Linke assests
-```
-npx react-native-asset
-```
+  ```
+  npx react-native-asset
+  ```
 
 
 5. For iOS only:
