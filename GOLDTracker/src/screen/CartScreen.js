@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import CartFetch from '../components/CartFetch';
+import {useFocusEffect} from "@react-navigation/native";
 
 const CartScreen = () => {
   const [classes, setClasses] = useState([]);

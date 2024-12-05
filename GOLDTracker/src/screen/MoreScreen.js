@@ -80,7 +80,7 @@ export default function MoreScreen({ navigation }) {
                 {/*<MenuButton icon="share" label="Share GoldTracker" onPress={() => navigation.navigate("ShareScreen")} />*/}
                 <MenuButton icon="help" label="Help" onPress={() => navigation.navigate("HelpScreen")} />
                 <MenuButton icon="info" label="About" onPress={() => navigation.navigate("AboutScreen")} />
-                <MenuButton icon="cog" label="Developer Options" onPress={() => navigation.navigate("DeveloperOptionsScreen")} />
+                <MenuButton icon="tools" label="Developer Options" onPress={() => navigation.navigate("DeveloperOptionsScreen")} />
                 {/* <MenuButton icon="text-document" label="Term of Use" onPress={() => navigation.navigate("TermsOfUseScreen")} />
                 <MenuButton icon="dots-three-horizontal" label="More" onPress={() => navigation.navigate("AboutScreen")} /> */}
                 <MenuButton

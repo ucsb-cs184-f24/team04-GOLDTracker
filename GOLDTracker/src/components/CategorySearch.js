@@ -7,13 +7,13 @@ import React, {
 import {
   View,
   Text,
-  FlatList,
   TouchableOpacity,
   Animated,
   Easing,
   StyleSheet,
   TouchableWithoutFeedback, ScrollView,
 } from "react-native";
+import {FlatList} from 'react-native-gesture-handler'
 import { COLORS } from "../theme/theme";
 import departmentMapping from "../assets/departmentList.json";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
     fontFamily: "Nunito-Regular", 
   },
   dropdownOverlay: {
-    flex: 1,
+    flexGrow: 1,
     position: "absolute",
     top: 50,
     left: 0,
