@@ -29,9 +29,10 @@
 ## **Xinyao Song:**  
 #### **I DID**  
 - Synctrenized header bar for all pages
+- Wrote new propt so each page's header reader slightly differently
 
 #### **I WILL DO**  
-- Improve login screen
+- Improve home search 
 
 #### **BLOCKERS**  
 - N/A
