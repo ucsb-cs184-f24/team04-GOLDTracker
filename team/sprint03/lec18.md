@@ -10,7 +10,7 @@
 - [x] Allen Hu 
 - [x] Xinyao Song 
 - [x] Zhen Bi 
-- [x] Karsten Lansing 
+- [ ] Karsten Lansing 
 - [x] Daniel Jensen 
 - [x] Simranjit Mann 
 
@@ -38,10 +38,11 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- header bar only shown in navigation four screens.
+- Improved notifications UI with swipe components
+- changing the margin bottom so users could scroll to the bottom of the notifications list.
 
 #### **I WILL DO**  
-- customized page
+- Review others' PRs
 
 #### **BLOCKERS**  
 - N/A
