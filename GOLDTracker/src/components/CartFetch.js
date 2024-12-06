@@ -8,13 +8,15 @@ import Clipboard from '@react-native-clipboard/clipboard';
 import Entypo from '@expo/vector-icons/Entypo';
 import {useFocusEffect} from "@react-navigation/native";
 
-const CartFetch = ({ setClasses, setErrorMessage }) => {
+const CartFetch = ({ setClasses }) => {
     const [fullCourseDetails, setFullCourseDetails] = useState([]);
     const [isUpdated, setIsUpdated] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+
     const fetchCartClasses = async () => {
         const classList = await getClasses();
-        if (classList) {
+        if (classList && Object.keys(classList).length !== 0) {
             const courseIds = Object.keys(classList);
             const courseDetails = await Promise.all(courseIds.map(async (courseId) => {
                 let idToken = await auth.currentUser.getIdToken();
@@ -45,9 +47,9 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
         }
     };
 
-    useEffect(() => {
-        fetchCartClasses();
-    }, [isUpdated]);
+    useFocusEffect(React.useCallback(() => {
+        fetchCartClasses()
+    },[isUpdated]))
 
     const handleUnfollow = async (classEnrollCode, sectionEnrollCode) => {
 
@@ -193,15 +195,17 @@ const CartFetch = ({ setClasses, setErrorMessage }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.pullToRefreshText}>Pull to Refresh</Text>
-            <FlatList
-                data={fullCourseDetails}
-                keyExtractor={(item) => item.classSections[0].enrollCode}
-                renderItem={renderClassItem}
-                refreshing={refreshing}
-                onRefresh={onRefresh}
-                contentContainerStyle={styles.flatListContainer}
-            />
+            {errorMessage ? (<Text style={styles.errorMessage}>{errorMessage}</Text>) :<View>
+                <Text style={styles.pullToRefreshText}>Pull to Refresh</Text>
+                <FlatList
+                    data={fullCourseDetails}
+                    keyExtractor={(item) => item.classSections[0].enrollCode}
+                    renderItem={renderClassItem}
+                    refreshing={refreshing}
+                    onRefresh={onRefresh}
+                    contentContainerStyle={styles.flatListContainer}
+                />
+            </View>}
         </View>
     );
 };
@@ -322,7 +326,12 @@ const styles = StyleSheet.create({
         textShadowOffset: { width: 1, height: 1 }, 
         textShadowRadius: 3, // Increased radius for a more spread out blur
         fontFamily: "Nunito-Regular",
-    }
+    },
+    errorMessage: {
+        color: '#d9534f',
+        textAlign: 'center',
+        marginTop: 20,
+    },
 });
 
 export default CartFetch;

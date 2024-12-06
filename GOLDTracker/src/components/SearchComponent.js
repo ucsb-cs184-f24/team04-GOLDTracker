@@ -111,18 +111,18 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
   const setFollow = (courseId, sectionId, value) => {
     setResults((prevResults) =>
-      prevResults.map((course) =>
-        course.courseId.replace(/\s+/, " ") === courseId
-          ? {
-              ...course,
-              classSections: course.classSections.map((section) =>
-                section.section === sectionId
-                  ? { ...section, following: value }
-                  : section
-              ),
-            }
-          : course
-      )
+        prevResults.map((course) =>
+            course.courseId.replace(/\s+/, " ") === courseId
+                ? {
+                  ...course,
+                  classSections: course.classSections.map((section) =>
+                      section.section === sectionId
+                          ? { ...section, following: value }
+                          : section
+                  ),
+                }
+                : course
+        )
     );
   };
 
@@ -263,7 +263,6 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
       const data = await response.json();
       const followedCourses = await ClassRegister.getClasses();
-
       if (data.classes && data.classes.length > 0) {
         const coursesWithFollowing = data.classes.map((course) => {
           let lectureSections = [];

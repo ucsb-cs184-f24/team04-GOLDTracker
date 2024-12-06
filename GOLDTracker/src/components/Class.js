@@ -5,6 +5,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { deregisterClass, registerClass } from "./ClassRegister";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ClassRegister from "./ClassRegister";
+import {useFocusEffect} from "@react-navigation/native";
 
 export default function Class(props) {
   const goToDetails = (lectureSections) => {
@@ -171,7 +172,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: SPACING.space_4,
-    marginTop: SPACING.space_8,
   },
   professorContainer: {
     flexDirection: "row",

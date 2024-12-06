@@ -64,7 +64,7 @@ const CourseDetailScreen = ({ route }) => {
   }, [courseDepartment, courseInstructor]);
 
   const toggleFollowAll = async () => {
-    /*if (followingAll) {
+    if (followingAll) {
       // Deregister all sections
       for (let section of course.classSections) {
         if (section.enrollCode) {
@@ -94,7 +94,7 @@ const CourseDetailScreen = ({ route }) => {
       }
     }
     console.log(await getClasses())
-    setFollowingAll(!followingAll);*/ // Toggle the state
+    setFollowingAll(!followingAll); // Toggle the state
   };
 
   return (
