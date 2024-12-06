@@ -43,7 +43,7 @@
 - Adjust the UI details
 
 #### **I WILL DO**  
-- improve UI, made more animations
+- make UI of notification screen consistent
 
 #### **BLOCKERS**  
 - The contains of the screen is hard to decide, so there always is a white block cannot delete
