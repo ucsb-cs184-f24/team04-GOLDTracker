@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Worked on HW 4A
 
 #### **I WILL DO**  
-- 
+- Create and improve the UI as part of HW 4B
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
