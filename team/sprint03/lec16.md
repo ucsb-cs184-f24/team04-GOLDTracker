@@ -28,10 +28,10 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- Finished Jest testing for two screens
+- Refined June's cart screen UI with user friendly icons and alined the swipable object length with buttons. 
 
 #### **I WILL DO**  
-- Fix bug in home
+- sync header bar for all pages
 
 #### **BLOCKERS**  
 - N/A
