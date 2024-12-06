@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Finished the RMP UI
 
 #### **I WILL DO**  
-- 
+- Debug the search component for department code and course ID search. 
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
