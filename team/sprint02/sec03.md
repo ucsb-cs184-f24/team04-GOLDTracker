@@ -2,7 +2,7 @@
 
 **Mentor:** Self-Mentored
 
-**Meeting Time:** 
+**Meeting Time:** Oct 18, 2024
 
 **Type of Meeting:** Daily Scrum
 
@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Doing HW 2
 
 #### **I WILL DO**  
-- 
+- Scrape all the professors' data on RateMyProfessor
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
