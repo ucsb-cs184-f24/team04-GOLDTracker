@@ -38,9 +38,13 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
--
+- Front-end customzied page
+  - there is two sections, major picker and date picker
+  - a edit button, click it will change the state to "submit"
+  - a navigator of setting screen
 #### **I WILL DO**  
-- 
+- backend customzied page
+  - uses click submit button could save it in the database, and we could use those info in other places by fetching info from the databse
 
 #### **BLOCKERS**  
 - N/A
