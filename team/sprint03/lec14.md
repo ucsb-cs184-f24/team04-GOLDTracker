@@ -38,10 +38,10 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- header bar only shown in navigation four screens.
+- add clear search function: users could click the crocs button in the search bar to clear search input and navigate to the page we want
 
 #### **I WILL DO**  
-- customized page
+- front end customized page
 
 #### **BLOCKERS**  
 - N/A
