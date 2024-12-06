@@ -68,10 +68,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Getting the top customizability working
 
 #### **I WILL DO**  
-- 
+- HW2
 
 #### **BLOCKERS**  
--
+- None
