@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Debug the Department code to cover some edge cases and inconsistence with GOLD API 
 
 #### **I WILL DO**  
-- 
+- Create the UI for RMP data
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
