@@ -28,10 +28,10 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- Finished Jest testing for two screens
+- Refined course detail page UI so it looks neat and use the same type of icons as the rest of the app
 
 #### **I WILL DO**  
-- Fix bug in home
+- Fix bug for the animated search bar so that everything looks right in the user usgae flow
 
 #### **BLOCKERS**  
 - N/A
