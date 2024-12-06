@@ -70,10 +70,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Began work on the header bar design
 
 #### **I WILL DO**  
-- 
+- Finish getting the logo and name on the top
 
 #### **BLOCKERS**  
--
+- None
