@@ -90,7 +90,7 @@ const MoreStackScreen = () => (
                 header: (props) => (
                     <Header
                         {...props}
-                        title="PROFILE"
+                        title="SETTING"
                         showImage={false}
                         showUser={false}
                         showBackButton={false}
