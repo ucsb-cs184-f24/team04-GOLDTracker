@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Seed database in Firestore
 
 #### **I WILL DO**  
-- 
+- Create the Fetch function to get the RMP data in DB
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
