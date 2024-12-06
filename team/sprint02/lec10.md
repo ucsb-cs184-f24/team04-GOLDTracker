@@ -70,10 +70,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Finished HW3
 
 #### **I WILL DO**  
-- 
+- Add the profile photo and name on top
 
 #### **BLOCKERS**  
--
+- None
