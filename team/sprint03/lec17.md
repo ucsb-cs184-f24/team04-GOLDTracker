@@ -28,10 +28,10 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-
+- Synctrenized header bar for all pages
 
 #### **I WILL DO**  
-
+- Improve login screen
 
 #### **BLOCKERS**  
 - N/A
