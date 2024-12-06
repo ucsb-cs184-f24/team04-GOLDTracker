@@ -28,23 +28,25 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- Finished Jest testing for two screens
+
 
 #### **I WILL DO**  
-- Fix bug in home
+
 
 #### **BLOCKERS**  
 - N/A
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- header bar only shown in navigation four screens.
+- Implemented a draft of overlay affects of filters
+- Changed the structure of search components, so we could let search bar activate scroll with the course list but let the filter stack on the top of the screen.
+- Adjust the UI details
 
 #### **I WILL DO**  
 - customized page
 
 #### **BLOCKERS**  
-- N/A
+- The contains of the screen is hard to decide, so there always is a white block cannot delete
 
 ## **Karsten Lansing:**  
 #### **I DID**  
