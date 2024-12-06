@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Corrected the mapping problem in course search as well as search by department. 
 
 #### **I WILL DO**  
-- 
+- Test teammates' PRs  and debug. 
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
