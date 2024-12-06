@@ -15,7 +15,6 @@ import {
   getIndividualClass,
   registerClass,
 } from "../components/ClassRegister";
-import Entypo from "@expo/vector-icons/Entypo";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const CourseDetailScreen = ({ route }) => {
@@ -26,22 +25,16 @@ const CourseDetailScreen = ({ route }) => {
   const [showFullDescription, setShowFullDescription] = useState(false); // State for description toggle
   const [followingAll, setFollowingAll] = useState(false); // Track the state of following all sections
 
-  const courseCode = course.courseId
-    ? course.courseId.replace(/\s+/, " ")
-    : "N/A";
+  const courseCode = course.courseId ? course.courseId.replace(/\s+/, " ") : "N/A";
   const courseTitle = course.title || "No Title";
   const courseDescription = course.description || "No Description";
-  const courseInstructor =
-    course.classSections[0] &&
-    course.classSections[0].instructors &&
-    course.classSections[0].instructors[0]
+  const courseInstructor = course.classSections[0] && course.classSections[0].instructors && course.classSections[0].instructors[0]
       ? course.classSections[0].instructors[0].instructor
       : "N/A";
   const courseDepartment = course.deptCode;
 
   const removeLeadingAndTrailingSpaces = (str) => str.trim();
-  const cleanedDepartmentCode =
-    removeLeadingAndTrailingSpaces(courseDepartment);
+  const cleanedDepartmentCode = removeLeadingAndTrailingSpaces(courseDepartment);
 
   console.log("course department from GOLD: ", cleanedDepartmentCode);
   console.log("course instructor from GOLD: ", courseInstructor);
@@ -49,7 +42,7 @@ const CourseDetailScreen = ({ route }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (courseInstructor == "N/A") {
+        if (courseInstructor == "N/A"){
           console.log("courseInstructor is undefined:", courseInstructor);
         }
         const matchedProfessor = await FetchProfessorsByDepartment(
@@ -64,19 +57,16 @@ const CourseDetailScreen = ({ route }) => {
         console.error("Error fetching professors:", error);
       } finally {
         let sectionCount = 0;
-        for (let i = 0; i < lectureSections.length; i++) {
+        for(let i = 0; i < lectureSections.length; i++) {
           let currentClass = await getIndividualClass(lectureSections[i]);
           sectionCount += currentClass.length;
         }
-        if (course.classSections.length === lectureSections.length) {
-          if (lectureSections.length === sectionCount) {
+        if(course.classSections.length === lectureSections.length){
+          if(lectureSections.length === sectionCount){
             setFollowingAll(true);
           }
         }
-        if (
-          course.classSections.length - lectureSections.length ===
-          sectionCount
-        ) {
+        if((course.classSections.length - lectureSections.length) === sectionCount){
           setFollowingAll(true);
         }
         setLoading(false);
@@ -87,7 +77,7 @@ const CourseDetailScreen = ({ route }) => {
   }, [courseDepartment, courseInstructor]);
 
   const toggleFollowAll = async () => {
-    /*if (followingAll) {
+    if (followingAll) {
       // Deregister all sections
       for (let section of course.classSections) {
         if (section.enrollCode) {
@@ -117,8 +107,7 @@ const CourseDetailScreen = ({ route }) => {
       }
     }
     console.log(await getClasses())
-    setFollowingAll(!followingAll);*/
-    // Toggle the state
+    setFollowingAll(!followingAll); // Toggle the state
   };
 
   return (
@@ -143,17 +132,14 @@ const CourseDetailScreen = ({ route }) => {
 
       {/* Follow all sections button */}
       <TouchableOpacity
-        style={[
-          styles.followAllButton,
-          followingAll ? styles.following : styles.notFollowing,
-        ]}
+        style={[styles.followAllButton, followingAll ? styles.following : styles.notFollowing]}
         onPress={toggleFollowAll}
       >
         <Text style={styles.followAllButtonText}>
           {followingAll ? "Following All Sections" : "Follow All Sections"}
         </Text>
       </TouchableOpacity>
-
+      
       {/* <View style={styles.divider} /> */}
 
       <View style={styles.professorContainer}>

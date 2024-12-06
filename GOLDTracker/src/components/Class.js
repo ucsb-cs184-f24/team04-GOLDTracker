@@ -5,51 +5,97 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { deregisterClass, registerClass } from "./ClassRegister";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ClassRegister from "./ClassRegister";
+import {useFocusEffect} from "@react-navigation/native";
 
-export default function Class(props) {
+export default function Class({course, navigation, setFollow, toggleFollow}) {
   const goToDetails = (lectureSections) => {
-    const course = props.course;
-    const navigation = props.navigation;
-    navigation.navigate("CourseDetailScreen", { course, lectureSections });
+    navigation.navigate("CourseDetailScreen", {course, lectureSections});
   };
 
-    const course = props.course;
-    const toggleFollow = props.toggleFollow;
-    const setFollow = props.setFollow;
-    let lectureSections = [];
-    for(let i = 0; i < course.classSections.length; i++){
-      if(course.classSections[i].section.slice(2,4)==="00"){
-        lectureSections.push(course.classSections[i].enrollCode);
+  let lectureSections = [];
+  for (let i = 0; i < course.classSections.length; i++) {
+    if (course.classSections[i].section.slice(2, 4) === "00") {
+      lectureSections.push(course.classSections[i].enrollCode);
+    }
+  }
+  let noSections = false;
+  if (lectureSections.length === course.classSections.length) {
+    noSections = true;
+  }
+
+  useFocusEffect(React.useCallback(() => {
+    async function runRecheck() {
+      let followedCourses = [];
+      for (let i = 0; i < lectureSections.length; i++) {
+        followedCourses = followedCourses.concat(await ClassRegister.getIndividualClass(lectureSections[i]));
+      }
+      for (let i = 0; i < course.classSections.length; i++) {
+        if (course.classSections[i].following && followedCourses.indexOf(course.classSections[i].enrollCode) === -1) {
+          setFollow(course.courseId.replace(/\s+/, " "), course.classSections[i].section, false);
+          course.classSections[i].following = false;
+        } else if (!course.classSections[i].following && followedCourses.indexOf(course.classSections[i].enrollCode) !== -1) {
+          setFollow(course.courseId.replace(/\s+/, " "), course.classSections[i].section, true);
+          course.classSections[i].following = true;
+        }
       }
     }
-    let noSections = false;
-    if(lectureSections.length === course.classSections.length){
-      noSections = true;
-    }
 
-    const courseCode = course.courseId ? course.courseId.replace(/\s+/," ") : "N/A";
+    runRecheck();
+  }, []))
 
-    return (
+  const courseCode = course.courseId ? course.courseId.replace(/\s+/, " ") : "N/A";
+
+  return (
       <View style={styles.wrapper}>
         <View style={styles.courseContainer}>
           <View style={styles.courseHeader}>
             {/* Course Code */}
             <Text style={styles.courseCode}>{courseCode}</Text>
             <TouchableOpacity
-              onPress={() => goToDetails(lectureSections)}
-              style={styles.detailsButton}
+                onPress={() => goToDetails(lectureSections)}
+                style={styles.detailsButton}
             >
-              <Entypo name="chevron-right" size={24} color={COLORS.black} />
+              <Entypo name="chevron-right" size={24} color={COLORS.black}/>
             </TouchableOpacity>
           </View>
 
           {course.classSections &&
-            course.classSections.filter((section) => section.courseCancelled !== "C         ").map((section, index) => {
-              if(!noSections && section.section.slice(2,4)==="00"){
+              course.classSections.filter((section) => section.courseCancelled !== "C         ").map((section, index) => {
+                if (!noSections && section.section.slice(2, 4) === "00") {
+                  const timeLocation =
+                      section &&
+                      section.timeLocations &&
+                      section.timeLocations[0];
+
+                  const days =
+                      timeLocation && timeLocation.days
+                          ? timeLocation.days.replace(/\s/g, "")
+                          : "N/A";
+
+                  const beginTime = timeLocation && timeLocation.beginTime;
+                  const endTime = timeLocation && timeLocation.endTime;
+
+                  const courseTime =
+                      days && beginTime && endTime
+                          ? `${days} ${beginTime} - ${endTime}`
+                          : "N/A";
+
+                  const courseProfessor =
+                      section && section.instructors && section.instructors[0]
+                          ? section.instructors[0].instructor
+                          : "N/A";
+                  return (
+                      <View key={section.enrollCode} style={styles.courseDetailsContainer}>
+                        <Text style={styles.courseTime}>{courseTime}</Text>
+                        <View style={styles.professorContainer}>
+                          <Text style={styles.courseProfessor}>{courseProfessor}</Text>
+                        </View>
+                      </View>
+                  )
+                }
+
                 const timeLocation =
-                    section &&
-                    section.timeLocations &&
-                    section.timeLocations[0];
+                    section.timeLocations && section.timeLocations[0];
 
                 const days =
                     timeLocation && timeLocation.days
@@ -59,92 +105,62 @@ export default function Class(props) {
                 const beginTime = timeLocation && timeLocation.beginTime;
                 const endTime = timeLocation && timeLocation.endTime;
 
-                const courseTime =
+                const sectionTime =
                     days && beginTime && endTime
                         ? `${days} ${beginTime} - ${endTime}`
                         : "N/A";
 
-                const courseProfessor =
-                    section && section.instructors && section.instructors[0]
-                        ? section.instructors[0].instructor
-                        : "N/A";
-                return(
-                    <View key={section.enrollCode} style={styles.courseDetailsContainer}>
-                      <Text style={styles.courseTime}>{courseTime}</Text>
-                      <View style={styles.professorContainer}>
-                        <Text style={styles.courseProfessor}>{courseProfessor}</Text>
-                      </View>
+                const sectionSpace = `${section.enrolledTotal || 0}/${
+                    section.maxEnroll || 0
+                }`;
+
+
+                return (
+                    <View
+                        key={section.enrollCode}
+                        style={[
+                          styles.sectionContainer,
+                          {
+                            backgroundColor:
+                                index % 2 === 0 ? COLORS.lightGrey : COLORS.darkGrey,
+                          },
+                        ]}
+                    >
+                      <Text style={styles.sectionTime}>{sectionTime}</Text>
+                      <Text style={styles.sectionSpace}>Space: {sectionSpace}</Text>
+                      <TouchableOpacity
+                          testID={`follow-button-${section.section}`}
+                          style={[
+                            styles.followButton,
+                            section.following
+                                ? styles.following
+                                : styles.notFollowing,
+                          ]}
+                          onPress={() => {
+                            toggleFollow(course.courseId.replace(/\s+/, " "), section.section);
+                            if (section.following) {
+                              deregisterClass(
+                                  `${lectureSections[parseInt(section.section.slice(0, 2)) - 1]}`,
+                                  `${section.enrollCode}`
+                              );
+                            } else {
+                              registerClass(
+                                  `${lectureSections[parseInt(section.section.slice(0, 2)) - 1]}`,
+                                  `${section.enrollCode}`
+                              );
+                            }
+                          }}
+                      >
+                        <Text style={styles.followText}>
+                          {section.following ? "Following" : "Follow"}
+                        </Text>
+                      </TouchableOpacity>
                     </View>
-                )
-              }
-
-              const timeLocation =
-                section.timeLocations && section.timeLocations[0];
-
-              const days =
-                timeLocation && timeLocation.days
-                  ? timeLocation.days.replace(/\s/g, "")
-                  : "N/A";
-
-              const beginTime = timeLocation && timeLocation.beginTime;
-              const endTime = timeLocation && timeLocation.endTime;
-
-              const sectionTime =
-                days && beginTime && endTime
-                  ? `${days} ${beginTime} - ${endTime}`
-                  : "N/A";
-
-              const sectionSpace = `${section.enrolledTotal || 0}/${
-                section.maxEnroll || 0
-              }`;
-
-
-              return (
-                <View
-                  key={section.enrollCode}
-                  style={[
-                    styles.sectionContainer,
-                    {
-                      backgroundColor:
-                        index % 2 === 0 ? COLORS.lightGrey : COLORS.darkGrey,
-                    },
-                  ]}
-                >
-                  <Text style={styles.sectionTime}>{sectionTime}</Text>
-                  <Text style={styles.sectionSpace}>Space: {sectionSpace}</Text>
-                  <TouchableOpacity
-                    testID={`follow-button-${section.section}`}
-                    style={[
-                      styles.followButton,
-                      section.following
-                        ? styles.following
-                        : styles.notFollowing,
-                    ]}
-                    onPress={() => {
-                      toggleFollow(course.courseId.replace(/\s+/, " "), section.section);
-                      if (section.following) {
-                        deregisterClass(
-                          `${lectureSections[parseInt(section.section.slice(0,2))-1]}`,
-                          `${section.enrollCode}`
-                        );
-                      } else {
-                        registerClass(
-                          `${lectureSections[parseInt(section.section.slice(0,2))-1]}`,
-                          `${section.enrollCode}`
-                        );
-                      }
-                    }}
-                  >
-                    <Text style={styles.followText}>
-                      {section.following ? "Following" : "Follow"}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              );
-            })}
+                );
+              })}
         </View>
       </View>
-    );
+  );
 }
 
 const styles = StyleSheet.create({
@@ -171,7 +187,6 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     marginBottom: SPACING.space_4,
-    marginTop: SPACING.space_8,
   },
   professorContainer: {
     flexDirection: "row",
