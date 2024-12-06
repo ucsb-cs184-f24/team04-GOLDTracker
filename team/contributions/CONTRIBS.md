@@ -1,6 +1,43 @@
 ## Allen:
 #### Role:
 #### Contribution:
+#### Contribution:
+*1. Ideated and Initiated Project Theme*
+- Proposed the project idea, which was selected as the foundation for the app development.
+
+*2. Data Extraction and Cleaning*
+- Analyzed the API call structure of Rate My Professor (RMP) and developed a web scraping script to retrieve all UCSB professor data.
+- Cleaned and filtered the data, removing duplicates and erroneous entries for accuracy.
+
+*3. Data Categorization and Storage*
+- Reorganized professors into departments for efficient storage and retrieval in Firestore.
+- Seeded the cleaned and categorized data into Firestore for seamless integration.
+
+*4. Data Fetching Functionality*
+- Built a `FetchProfessor` function that retrieves professor RMP data based on the course's department, professor's last name, and the initial of their first name.
+
+*5. Department Mapping Solution*
+- Created a `departmentMapping.json` to resolve discrepancies between GOLD API's department codes and the database's department names.
+- Addressed inconsistencies between the course's department code and subject area for robust data mapping.
+
+*6. UI Design and Integration for Course Details*
+- Designed and implemented the UI for the Course Detail page to display instructors' RMP data, improving the user experience.
+
+*7. Enhanced Professor Comments Accessibility*
+- Scraped professors' comments from RMP using Selenium, leveraging their `legacyId` to generate direct page links.
+- Integrated GPT-4 Mini API to summarize each professor's comments into concise 2-3 sentence overviews and updated Firestore with these summaries.
+
+*8. UI Updates for Professor Comments*
+- Enhanced the Course Detail UI to display summarized professor comments, providing additional insights for students.
+
+*9. Search Component Enhancements*
+- Resolved coverage gaps in the search component for courses and departments.
+- Implemented dual API URL generation for searches by department code and subject area, accounting for distinct content in these fields.
+- Developed a dedicated list for department-based searches to improve search reliability.
+
+*10. Comprehensive Debugging and Optimization*
+- Addressed issues in search functionality and ensured accurate results across different query types.
+- Optimized the system for seamless user interactions and data retrieval processes.
 
 ## Daniel:
 #### Role: 
