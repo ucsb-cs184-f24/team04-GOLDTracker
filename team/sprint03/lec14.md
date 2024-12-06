@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Finished the fetch function for RMP data. 
 
 #### **I WILL DO**  
-- 
+- Display the RMP data and do hw 4
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
