@@ -5,15 +5,10 @@ import {useFocusEffect} from "@react-navigation/native";
 
 const CartScreen = () => {
   const [classes, setClasses] = useState([]);
-  const [errorMessage, setErrorMessage] = useState('');
 
   return (
     <View style={styles.container}>
-      {errorMessage ? (
-        <Text style={styles.errorMessage}>{errorMessage}</Text>
-      ) : (
-        <CartFetch setClasses={setClasses} setErrorMessage={setErrorMessage} />
-      )}
+      <CartFetch setClasses={setClasses} />
     </View>
   );
 };

@@ -46,22 +46,22 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: COLORS.darkBlue,
-        paddingVertical: 8,
+        paddingVertical: 12, 
         paddingHorizontal: 10,
         borderRadius: 12,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginHorizontal: 18
+        alignItems: "center", 
+        justifyContent: "center", 
+        marginHorizontal: 18,
+        marginVertical: 10, 
     },
     text: {
         color: "#fff",
         fontSize: 14,
         fontWeight: "bold",
-        textAlign: "center",
-        paddingRight: 5,
+        textAlign: "center", 
         fontFamily: "Nunito-Regular",
-    }
+    },
 });
+
 
 export default DeveloperOptionsScreen;
