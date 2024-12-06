@@ -28,13 +28,13 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- 
+- Added Jest configuration with Daniel
 
 #### **I WILL DO**  
-- 
+- Impliment unit and component test for screens
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Zhen Bi:**  
 #### **I DID**  
