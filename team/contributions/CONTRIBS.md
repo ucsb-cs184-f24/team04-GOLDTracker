@@ -1,7 +1,6 @@
 ## Allen:
 #### Role:
 #### Contribution:
-#### Contribution:
 *1. Ideated and Initiated Project Theme*
 - Proposed the project idea, which was selected as the foundation for the app development.
 
@@ -82,7 +81,7 @@
 #### Contribution:
 
 ## Simon:
-#### Role: 
+#### Role: UI/UX Design, Frontend
 #### Contribution:
 
 ## Xinyao
