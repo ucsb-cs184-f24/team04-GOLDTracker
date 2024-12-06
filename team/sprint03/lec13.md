@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Set up the fetch function
 
 #### **I WILL DO**  
-- 
+- Debug it and do the UI of RMP data
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
