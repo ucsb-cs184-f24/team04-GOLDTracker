@@ -28,13 +28,13 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- Finished Jest testing for two screens
+- Fixed UI for home so that when user scroll down the category search stop as expected 
 
 #### **I WILL DO**  
-- Fix bug in home
+- Continue to refine this home feature 
 
 #### **BLOCKERS**  
-- N/A
+- there is a unwanted white bar at the bottom when user scroll 
 
 ## **Zhen Bi:**  
 #### **I DID**  
