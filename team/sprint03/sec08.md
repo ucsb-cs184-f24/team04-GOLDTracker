@@ -28,10 +28,13 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- Finished Jest testing for two screens
+- Made sure the flat list animate as expected in home
+- Made sure the 'loading' feature cover the correct space
+- Made sure text search bar hide correctly
+- Edited UI for user who does not have a major in home
 
 #### **I WILL DO**  
-- Fix bug in home
+- Finished documenting contribution file 
 
 #### **BLOCKERS**  
 - N/A
