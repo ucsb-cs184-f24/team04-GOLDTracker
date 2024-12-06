@@ -31,6 +31,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const [isDeptDropdownVisible, setIsDeptDropdownVisible] = useState(false);
   const [isQuarterDropdownVisible, setIsQuarterDropdownVisible] =
     useState(false);
+  const [shouldShowFollow, setShouldShowFollow] = useState(true);
   const animatedDeptHeight = useRef(new Animated.Value(0)).current;
   const animatedQuarterHeight = useRef(new Animated.Value(0)).current;
 
@@ -186,6 +187,12 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       toggleDeptDropdown();
     } else if (type === "quarter") {
       setSelectedQuarter(item.code);
+      console.log(item.code)
+      if(item.code !== "20251"){
+        setShouldShowFollow(false);
+      }else{
+        setShouldShowFollow(true);
+      }
       toggleQuarterDropdown();
     }
   };
@@ -318,6 +325,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       course={item}
       toggleFollow={toggleFollow}
       setFollow={setFollow}
+      shouldFollow={shouldShowFollow}
       navigation={navigation}
     />
   );

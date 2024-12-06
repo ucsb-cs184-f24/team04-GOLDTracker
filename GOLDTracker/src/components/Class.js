@@ -7,7 +7,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import * as ClassRegister from "./ClassRegister";
 import {useFocusEffect} from "@react-navigation/native";
 
-export default function Class({course, navigation, setFollow, toggleFollow}) {
+export default function Class({course, navigation, setFollow, toggleFollow, shouldFollow}) {
   const goToDetails = (lectureSections) => {
     navigation.navigate("CourseDetailScreen", {course, lectureSections});
   };
@@ -128,7 +128,7 @@ export default function Class({course, navigation, setFollow, toggleFollow}) {
                     >
                       <Text style={styles.sectionTime}>{sectionTime}</Text>
                       <Text style={styles.sectionSpace}>Space: {sectionSpace}</Text>
-                      <TouchableOpacity
+                      {shouldFollow &&(<TouchableOpacity
                           testID={`follow-button-${section.section}`}
                           style={[
                             styles.followButton,
@@ -154,7 +154,7 @@ export default function Class({course, navigation, setFollow, toggleFollow}) {
                         <Text style={styles.followText}>
                           {section.following ? "Following" : "Follow"}
                         </Text>
-                      </TouchableOpacity>
+                      </TouchableOpacity>)}
                     </View>
                 );
               })}
