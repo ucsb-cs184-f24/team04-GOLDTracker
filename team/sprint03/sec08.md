@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Finished the UI of RMP data and improved UX by making the design more clear and consistent. 
 
 #### **I WILL DO**  
-- 
+- Do HW 4C and add student comments summarized by GPT to database. 
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
