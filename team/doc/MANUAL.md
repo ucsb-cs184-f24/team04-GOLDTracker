@@ -33,14 +33,14 @@ This section details the main features of the product and how to use them.
 - **Quickly Setup Button** : For users convience, they could find a edit button in the default home screen. Use the major picker to personalize users' infomation. Then, users do not need to search their major course lists again and again, but we will go back to show their major course lists by default.
 - **Manage the notification history** : users could swipe the notification card in the notification screen to delete the specific notification or go to the gold websit.
 
-## 6. FAQs
+#### 6. FAQs
 This section answers frequently asked questions that users may have.  
 Lorem ipsum dolor sit amet, consectetur adipiscing elit.  
 - **How do I change my major?** Click the button in the empty state to navigate to the major modification page. You could check your major information by clicking the Preferences button in the Setting Screen. Clicking Edit button to let you modify your major again.
 - **How do I log out?** Click the logout button in Setting and confirm the action.
 - **Could I see more information of a course more than time and instructors?** Yes, clicking the right arrow in each course card. You could see the course title, description in the course details page. We also provided instructors' rating system and comments, cited from ratemyprofessor. 
 
-## 7. Screenshots
+#### 7. Screenshots
 This section includes screenshots of various features to help users understand how to operate the product.  
 - **Login Screen**
   ![image](https://github.com/user-attachments/assets/8adcbcd1-2741-498d-afc5-11112bda09a9)
