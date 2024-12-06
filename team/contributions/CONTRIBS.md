@@ -33,7 +33,7 @@
 *9. Search Component Enhancements*
 - Resolved coverage gaps in the search component for courses and departments.
 - Implemented dual API URL generation for searches by department code and subject area, accounting for distinct content in these fields.
-- Developed a dedicated list for department-based searches to improve search reliability.
+- Developed a dedicated list `departmentList.json` for department-based searches to improve search reliability.
 
 *10. Comprehensive Debugging and Optimization*
 - Addressed issues in search functionality and ensured accurate results across different query types.
