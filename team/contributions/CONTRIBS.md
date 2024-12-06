@@ -7,8 +7,38 @@
 #### Contribution:
 
 ## June:
-#### Role: 
+#### Role: Frontend, Database, UI/UX coordinator
 #### Contribution:
+*1. Developed and Debugged Bottom Bar Navigation*
+- Implemented a functional bottom bar with navigation capabilities.
+- Debugged duplicate headers for a seamless user experience.
+- Added a blur effect to enhance the visual appeal and usability of the bottom bar.
+- 
+*2. Designed Clean UI*
+- Collaborated on a draft of a modern and user-friendly interface using Figma.
+
+*3. Integrated Login Functionality*
+- Implemented a secure Google login page that allows users to authenticate with their Google accounts.
+- Ensured user information is stored in the database upon successful login.
+
+*4. Built and Enhanced the Settings Screen*
+- Developed a logout feature with a confirmation alert to prevent accidental logouts.
+- Designed a customizable interface for users to update their major and specify their passtimes.
+- Added a quick-access button for direct navigation to the "GOLD" page.
+- Created a profile page displaying detailed information about team members.
+
+*5. Improved Major Modification Accessibility*
+- Added a button in the empty state, enabling users to navigate to the major change page and update their major effortlessly.
+
+*6. Refined Cart and Notification UI*
+- Standardized the UI design for the cart and notification features for a consistent appearance.
+- Implemented swipe interactions to keep the interface clean and responsive.
+
+*7. Enabled Easy Enrollment Code Access*
+- Created a "Copy ID" button allowing users to directly retrieve the enrollment code for sections of interest.
+
+*8. Enhanced Search and Filter Usability*
+- Added a crocs button in the search bar to clear search input and a "Cancel Selection" option in the Major filter, enabling users to reset their course list to the default major view easily.
 
 ## Karsten:
 #### Role: 
