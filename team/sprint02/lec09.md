@@ -28,13 +28,13 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- 
+- Edited the Class.js component design 
 
 #### **I WILL DO**  
-- 
+- Refine Class.js to show correct grey white color orientation
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Zhen Bi:**  
 #### **I DID**  
