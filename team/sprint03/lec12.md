@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Set up the fetch function and display the RMP data
 
 #### **I WILL DO**  
-- 
+- Build up the fetch function for RMP data
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
