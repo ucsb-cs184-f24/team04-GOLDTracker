@@ -43,7 +43,7 @@ make UX better by
   - change the major selection format to the flatlist so users could see more majors at once.
 
 #### **I WILL DO**  
-- Improve UI
+- Modified UI of cart screen
 
 #### **BLOCKERS**  
 - N/A
