@@ -28,13 +28,13 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- 
+- Removed unwanted UI for home and header
 
 #### **I WILL DO**  
-- 
+- Sync header and navigation logic for all page
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Zhen Bi:**  
 #### **I DID**  
