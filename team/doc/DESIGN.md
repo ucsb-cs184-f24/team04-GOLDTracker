@@ -1,7 +1,7 @@
 # GOLDTracker Design Document
 
 **Team members:**   
-Simranjit Mann, Daniel Jesen, Xinyao Song, Karsten Lansing, June Bi, Allen Hu  
+#### Simranjit Mann, Daniel Jesen, Xinyao Song, Karsten Lansing, June Bi, Allen Hu  
 ---
 
 ## Introduction 
@@ -58,8 +58,12 @@ These requirements are designed to address common pain points faced by UCSB stud
 - **Backend**   
   - Manages user data, handles authentication, and provides real-time notifications when a course has available spots.  
   - Interfaces with the UCSB GOLD API to fetch and update course information.
-
+  - Integrated with the OpenAI API for summary the comments of professors from RateMyProfessor
+  - Pythons the data from the RateMyProfessor and saved all of professors scores in the database.
 - ### User experience
+  1. After users clear the search input, we will not show the empty screen but always shows the course list of users' major.
+  2. Notifications will show detailed information to show which specific
+  3. In many places, such as the unfollow button in the cart screen and the log out button, we implemented alerts to avoid prevent accidental actions.
 
 #### **Task/User Flow**
 
@@ -67,16 +71,11 @@ These requirements are designed to address common pain points faced by UCSB stud
    * User logs in via UCSB email.  
    * Authentication validated through Firebase.  
 2. **Course Search Flow**  
-   * User searches for courses by department or course ID  
+   * User searches for courses by department or course ID 
 3. **Cart and Notification Flow**  
    * User adds courses to their cart.  
-   * Receives notifications when availability changes.  
+   * Receives notifications when availability changes.
+   course has spare spaces.
 4. **Course Details Flow**  
    * User views detailed course information, including professor ratings.  
    * Makes informed registration decisions.
-
-
-an overview system architecture diagram and associated explanation.
-a Section summarizing important team decisions since the start of the project, referring to meetings logged in your GitHub repo
-the beginnings of a Section talking about your User Experience (UX) considerations. A high-level task/user flow (Task/User Flow Links to an external site.) might be the first thing to document there, and it will also be helpful for determining the structure of your manual.
-
