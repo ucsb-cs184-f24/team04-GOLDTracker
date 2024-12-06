@@ -43,7 +43,7 @@
 - Adjust the UI details
 
 #### **I WILL DO**  
-- customized page
+- improve UI, made more animations
 
 #### **BLOCKERS**  
 - The contains of the screen is hard to decide, so there always is a white block cannot delete
