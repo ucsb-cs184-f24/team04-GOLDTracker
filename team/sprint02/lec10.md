@@ -28,13 +28,13 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- 
+- Re worked on Home page UI to fit the original Figma Design
 
 #### **I WILL DO**  
-- 
+- Design new navigator icons
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Zhen Bi:**  
 #### **I DID**  
