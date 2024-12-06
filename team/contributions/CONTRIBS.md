@@ -7,7 +7,7 @@
 #### Contribution:
 
 ## June:
-#### Role: Frontend, Database, UI/UX coordinator
+#### Role: Frontend, Database, UI/UX coordinator, First Retro Leader
 #### Contribution:
 *1. Developed and Debugged Bottom Bar Navigation*
 - Implemented a functional bottom bar with navigation capabilities.
