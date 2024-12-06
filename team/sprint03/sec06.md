@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Set up the database for RateMyProfessor Data. 
 
 #### **I WILL DO**  
-- 
+- Set up the fetch function and display the RMP data
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
