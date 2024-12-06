@@ -68,10 +68,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Completed HW1
 
 #### **I WILL DO**  
-- 
+- Work on the bottom bar
 
 #### **BLOCKERS**  
--
+- none
