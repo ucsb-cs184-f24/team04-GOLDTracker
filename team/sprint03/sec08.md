@@ -38,10 +38,12 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- header bar only shown in navigation four screens.
+make UX better by
+  - navigate to major selection page with the edit status
+  - change the major selection format to the flatlist so users could see more majors at once.
 
 #### **I WILL DO**  
-- customized page
+- Improve UI
 
 #### **BLOCKERS**  
 - N/A
