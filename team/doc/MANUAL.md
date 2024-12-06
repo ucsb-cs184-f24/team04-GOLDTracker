@@ -24,3 +24,6 @@ This is a placeholder that will be documented later.
 ### Setting your pass time
 
 This is a placeholder that will be documented later.
+
+
+ very least a description of the product purpose, lists the intended user audience, and has section headings (which are allowed to change later on) with placeholder information (could even be Lorem Ipsum text Links to an external site. for now) that in the future should document the various features of your product and how to operate them (with plenty of screenshots). 
