@@ -68,10 +68,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Finished getting the basic header bar set up
 
 #### **I WILL DO**  
-- 
+- HW3
 
 #### **BLOCKERS**  
--
+- None
