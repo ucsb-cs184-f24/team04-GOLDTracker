@@ -28,13 +28,13 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- 
+- FInished Icon Design
 
 #### **I WILL DO**  
-- 
+- HW3
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Zhen Bi:**  
 #### **I DID**  
