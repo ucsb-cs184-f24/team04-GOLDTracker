@@ -38,11 +38,13 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- header bar only shown in navigation four screens.
+- Improve Cart Screen Ui with swipe feature
+- implemented copy button to let users copy the course code.
+- modify the fetching following course function, so course has no sections could show successfully in the cart with swipe feature.
 
 #### **I WILL DO**  
-- customized page
-
+- Adjust details of the customized page and improve UX.
+  
 #### **BLOCKERS**  
 - N/A
 
