@@ -12,7 +12,7 @@
 - [x] Zhen Bi 
 - [x] Karsten Lansing 
 - [x] Daniel Jensen 
-- [x] Simranjit Mann 
+- [ ] Simranjit Mann 
 
 # **Scribed Discussion:**
 
@@ -38,10 +38,13 @@
 
 ## **Zhen Bi:**  
 #### **I DID**  
-- header bar only shown in navigation four screens.
+- Saved users infomation in the firestore database well-structured
+- Updated values of modified major or pass time, fetched them again to show on the preference page and use them as the default home screen page.
 
 #### **I WILL DO**  
-- customized page
+- make UX better by
+  - navigate to major selection page with the edit status
+  - change the major selection format to the flatlist so users could see more majors at once.
 
 #### **BLOCKERS**  
 - N/A
