@@ -28,10 +28,10 @@
 
 ## **Xinyao Song:**  
 #### **I DID**  
-- Finished Jest testing for two screens
+- Refined Login Page to new color theme and made new asset
 
 #### **I WILL DO**  
-- Fix bug in home
+- Fix bug on email login 
 
 #### **BLOCKERS**  
 - N/A
