@@ -20,6 +20,7 @@ import { COLORS } from "../theme/theme";
 import departmentMapping from "../assets/departmentList.json";
 import AntDesign from "react-native-vector-icons/AntDesign";
 import EmptyState from "../components/EmptyState"; // Import EmptyState
+import { CollectionReference } from "firebase/firestore";
 
 const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const [results, setResults] = useState([]);
@@ -28,7 +29,8 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
   const [selectedQuarter, setSelectedQuarter] = useState("20251");
   const [isLoading, setIsLoading] = useState(false);
   const [isDeptDropdownVisible, setIsDeptDropdownVisible] = useState(false);
-  const [isQuarterDropdownVisible, setIsQuarterDropdownVisible] = useState(false);
+  const [isQuarterDropdownVisible, setIsQuarterDropdownVisible] =
+    useState(false);
   const animatedDeptHeight = useRef(new Animated.Value(0)).current;
   const animatedQuarterHeight = useRef(new Animated.Value(0)).current;
 
@@ -219,13 +221,12 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
     setIsLoading(true);
 
     let searchTerm = "";
-    if(deptCode){
+    if (deptCode) {
       searchTerm = deptCode;
-    }
-    else if (!search && major && major !== "") {
+    } else if (!search && major && major !== "") {
       searchTerm = major;
       setIsLoading(true);
-    }else{
+    } else {
       searchTerm = search.trim();
     }
 
@@ -237,25 +238,23 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
         setIsSearching(false); // Stop searching
         return;
       }
-      apiUrl = ""
-      if (deptCode){
+      apiUrl = "";
+      if (deptCode) {
         apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
-
-        ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
-            searchTerm
-          )}&includeClassSections=true`
-        : `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
-            searchTerm
-          )}&includeClassSections=true&pageNumber=1&pageSize=30`;
-      }
-      else{
+          ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
+              searchTerm
+            )}&includeClassSections=true`
+          : `${API_URL}?quarter=${quarter}&deptCode=${encodeURIComponent(
+              searchTerm
+            )}&includeClassSections=true&pageNumber=1&pageSize=30`;
+      } else {
         apiUrl = /^[A-Z|a-z]{2,}\s[\d(A-Z|a-z]+$/.test(searchTerm)
-        ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
-            searchTerm
-          )}&includeClassSections=true`
-        : `${API_URL}?quarter=${quarter}&subjectCode=${encodeURIComponent(
-            searchTerm
-          )}&includeClassSections=true&pageNumber=1&pageSize=30`;
+          ? `${API_URL}?quarter=${quarter}&courseId=${encodeURIComponent(
+              searchTerm
+            )}&includeClassSections=true`
+          : `${API_URL}?quarter=${quarter}&subjectCode=${encodeURIComponent(
+              searchTerm
+            )}&includeClassSections=true&pageNumber=1&pageSize=30`;
       }
       const headers = new Headers();
       headers.append("authorization", await auth.currentUser.getIdToken());
@@ -267,25 +266,39 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       if (data.classes && data.classes.length > 0) {
         const coursesWithFollowing = data.classes.map((course) => {
           let lectureSections = [];
-          for(let i = 0; i < course.classSections.length; i++){
-            if(course.classSections[i].section.slice(2,4)==="00"){
+          for (let i = 0; i < course.classSections.length; i++) {
+            if (course.classSections[i].section.slice(2, 4) === "00") {
               lectureSections.push(course.classSections[i].enrollCode);
             }
           }
-          return{
-          ...course,
-          classSections: course.classSections.map((section) => {
-            let isFollowing = false;
-            if(followedCourses && typeof followedCourses === "object" && followedCourses.hasOwnProperty(lectureSections[parseInt(section.section.slice(0,2))-1])) {
-              if(followedCourses[`${lectureSections[parseInt(section.section.slice(0,2))-1]}`].indexOf(section.enrollCode) !== -1){
-                isFollowing = true;
+          return {
+            ...course,
+            classSections: course.classSections.map((section) => {
+              let isFollowing = false;
+              if (
+                followedCourses &&
+                typeof followedCourses === "object" &&
+                followedCourses.hasOwnProperty(
+                  lectureSections[parseInt(section.section.slice(0, 2)) - 1]
+                )
+              ) {
+                if (
+                  followedCourses[
+                    `${
+                      lectureSections[parseInt(section.section.slice(0, 2)) - 1]
+                    }`
+                  ].indexOf(section.enrollCode) !== -1
+                ) {
+                  isFollowing = true;
+                }
               }
-            }
-            return{
-            ...section,
-            following: isFollowing,
-          }}),
-        }});
+              return {
+                ...section,
+                following: isFollowing,
+              };
+            }),
+          };
+        });
         setResults(coursesWithFollowing);
         setErrorMessage("");
       } else {
@@ -296,7 +309,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       console.error("Error fetching data:", error);
       setResults([]);
       setErrorMessage("An error occurred while fetching data.");
-    }finally {
+    } finally {
       setIsLoading(false);
     }
   };
@@ -339,7 +352,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       >
         {/* Search Bar */}
         <SearchBar
-          placeholder='Search by ID or Subject Area'
+          placeholder="Search by ID or Subject Area"
           onChangeText={updateSearch}
           value={search}
           lightTheme
@@ -384,7 +397,8 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
             <Text style={styles.toggleButtonText}>
               {selectedQuarter
                 ? `${selectedQuarter.slice(0, 4)} ${
-                    quarterOptions.find((q) => q.code === selectedQuarter)
+                    quarterOptions
+                      .find((q) => q.code === selectedQuarter)
                       ?.label.split(" ")[0][0]
                   }`
                 : "Select Quarter"}
@@ -401,9 +415,7 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
 
       {(isDeptDropdownVisible || isQuarterDropdownVisible) && (
         <TouchableWithoutFeedback onPress={closeDropdowns}>
-          <Animated.View
-            style={[styles.overlay, { top: animatedDropdownTop }]}
-          >
+          <Animated.View style={[styles.overlay, { top: animatedDropdownTop }]}>
             {isDeptDropdownVisible && (
               <Animated.View
                 style={[
@@ -466,9 +478,16 @@ const SearchComponent = ({ search, setSearch, setIsSearching, major }) => {
       )}
 
       {isLoading && (
-        <View style={[styles.loadingContainer, { top: totalHeaderHeight }]}>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
+        <Animated.View
+          style={[
+            styles.loadingContainer,
+            {
+              top: Animated.add(totalHeaderHeight, animatedSearchBarTranslate),
+            },
+          ]}
+        >
+          <ActivityIndicator size="large" color={COLORS.orange} />
+        </Animated.View>
       )}
 
       {/* Error Message or Results */}

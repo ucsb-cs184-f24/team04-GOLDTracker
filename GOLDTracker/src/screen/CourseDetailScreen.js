@@ -1,8 +1,22 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
-import { FetchProfessorsByDepartment } from "../components/FetchProfessors"
+import {
+  View,
+  Text,
+  StyleSheet,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity,
+} from "react-native";
+import { FetchProfessorsByDepartment } from "../components/FetchProfessors";
 import { COLORS, SPACING } from "../theme/theme";
-import {deregisterClass, getClasses, getIndividualClass, registerClass} from "../components/ClassRegister";
+import {
+  deregisterClass,
+  getClasses,
+  getIndividualClass,
+  registerClass,
+} from "../components/ClassRegister";
+import Entypo from "@expo/vector-icons/Entypo";
+import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 
 const CourseDetailScreen = ({ route }) => {
   const { course, lectureSections } = route.params;
@@ -12,16 +26,22 @@ const CourseDetailScreen = ({ route }) => {
   const [showFullDescription, setShowFullDescription] = useState(false); // State for description toggle
   const [followingAll, setFollowingAll] = useState(false); // Track the state of following all sections
 
-  const courseCode = course.courseId ? course.courseId.replace(/\s+/, " ") : "N/A";
+  const courseCode = course.courseId
+    ? course.courseId.replace(/\s+/, " ")
+    : "N/A";
   const courseTitle = course.title || "No Title";
   const courseDescription = course.description || "No Description";
-  const courseInstructor = course.classSections[0] && course.classSections[0].instructors && course.classSections[0].instructors[0]
+  const courseInstructor =
+    course.classSections[0] &&
+    course.classSections[0].instructors &&
+    course.classSections[0].instructors[0]
       ? course.classSections[0].instructors[0].instructor
       : "N/A";
   const courseDepartment = course.deptCode;
 
   const removeLeadingAndTrailingSpaces = (str) => str.trim();
-  const cleanedDepartmentCode = removeLeadingAndTrailingSpaces(courseDepartment);
+  const cleanedDepartmentCode =
+    removeLeadingAndTrailingSpaces(courseDepartment);
 
   console.log("course department from GOLD: ", cleanedDepartmentCode);
   console.log("course instructor from GOLD: ", courseInstructor);
@@ -29,7 +49,7 @@ const CourseDetailScreen = ({ route }) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (courseInstructor == "N/A"){
+        if (courseInstructor == "N/A") {
           console.log("courseInstructor is undefined:", courseInstructor);
         }
         const matchedProfessor = await FetchProfessorsByDepartment(
@@ -44,16 +64,19 @@ const CourseDetailScreen = ({ route }) => {
         console.error("Error fetching professors:", error);
       } finally {
         let sectionCount = 0;
-        for(let i = 0; i < lectureSections.length; i++) {
+        for (let i = 0; i < lectureSections.length; i++) {
           let currentClass = await getIndividualClass(lectureSections[i]);
           sectionCount += currentClass.length;
         }
-        if(course.classSections.length === lectureSections.length){
-          if(lectureSections.length === sectionCount){
+        if (course.classSections.length === lectureSections.length) {
+          if (lectureSections.length === sectionCount) {
             setFollowingAll(true);
           }
         }
-        if((course.classSections.length - lectureSections.length) === sectionCount){
+        if (
+          course.classSections.length - lectureSections.length ===
+          sectionCount
+        ) {
           setFollowingAll(true);
         }
         setLoading(false);
@@ -94,7 +117,8 @@ const CourseDetailScreen = ({ route }) => {
       }
     }
     console.log(await getClasses())
-    setFollowingAll(!followingAll);*/ // Toggle the state
+    setFollowingAll(!followingAll);*/
+    // Toggle the state
   };
 
   return (
@@ -109,7 +133,9 @@ const CourseDetailScreen = ({ route }) => {
       >
         {courseDescription}
       </Text>
-      <TouchableOpacity onPress={() => setShowFullDescription(!showFullDescription)}>
+      <TouchableOpacity
+        onPress={() => setShowFullDescription(!showFullDescription)}
+      >
         <Text style={styles.readMoreButton}>
           {showFullDescription ? "Read less" : "Read more"}
         </Text>
@@ -117,13 +143,18 @@ const CourseDetailScreen = ({ route }) => {
 
       {/* Follow all sections button */}
       <TouchableOpacity
-        style={[styles.followAllButton, followingAll ? styles.following : styles.notFollowing]}
+        style={[
+          styles.followAllButton,
+          followingAll ? styles.following : styles.notFollowing,
+        ]}
         onPress={toggleFollowAll}
       >
         <Text style={styles.followAllButtonText}>
           {followingAll ? "Following All Sections" : "Follow All Sections"}
         </Text>
       </TouchableOpacity>
+
+      {/* <View style={styles.divider} /> */}
 
       <View style={styles.professorContainer}>
         <Text style={styles.sectionHeader}>Instructor's RateMyProfessor</Text>
@@ -137,47 +168,110 @@ const CourseDetailScreen = ({ route }) => {
                 {professor.firstName} {professor.lastName}
               </Text>
               <View style={styles.professorStats}>
-                <Text
-                  style={[
-                    styles.rating,
-                    {
-                      color: professor.avgRating > 3 ? "#2e8b57" : "#ff4500",
-                    },
-                  ]}
-                >
-                  ⭐ Rating: {professor.avgRating} / 5
-                </Text>
-                <Text
-                  style={[
-                    styles.difficulty,
-                    {
-                      color: professor.avgDifficulty < 3 ? "#2e8b57" : "#ff4500",
-                    },
-                  ]}
-                >
-                  🔥 Difficulty: {professor.avgDifficulty} / 5
-                </Text>
-                <Text
-                  style={[
-                    styles.takeAgain,
-                    {
-                      color: professor.wouldTakeAgainPercent > 70
-                        ? "#2e8b57"
-                        : "#ff4500",
-                    },
-                  ]}
-                >
-                  💯 Would Take Again: {professor.wouldTakeAgainPercent}%
-                </Text>
-                <Text style={styles.numRatings}>
-                  🗳 Number of Ratings: {professor.numRatings}
-                </Text>
+                {/* Rating */}
+                {professor && (
+                  <>
+                    <View style={styles.statContainer}>
+                      {(() => {
+                        const ratingColor =
+                          professor.avgRating > 3 ? "#2e8b57" : "#ff4500";
+                        return (
+                          <>
+                            <MaterialIcons
+                              name="star"
+                              size={24}
+                              color={ratingColor}
+                            />
+                            <Text
+                              style={[styles.rating, { color: ratingColor }]}
+                            >
+                              {"  "}Rating: {professor.avgRating} / 5
+                            </Text>
+                          </>
+                        );
+                      })()}
+                    </View>
+
+                    {/* Difficulty */}
+                    <View style={styles.statContainer}>
+                      {(() => {
+                        const difficultyColor =
+                          professor.avgDifficulty < 3 ? "#2e8b57" : "#ff4500";
+                        return (
+                          <>
+                            <MaterialIcons
+                              name="local-fire-department"
+                              size={24}
+                              color={difficultyColor}
+                            />
+                            <Text
+                              style={[
+                                styles.difficulty,
+                                { color: difficultyColor },
+                              ]}
+                            >
+                              {"  "}Difficulty: {professor.avgDifficulty} / 5
+                            </Text>
+                          </>
+                        );
+                      })()}
+                    </View>
+
+                    {/* Would Take Again */}
+                    <View style={styles.statContainer}>
+                      {(() => {
+                        const takeAgainColor =
+                          professor.wouldTakeAgainPercent > 70
+                            ? "#2e8b57"
+                            : "#ff4500";
+                        return (
+                          <>
+                            <MaterialIcons
+                              name="menu-book"
+                              size={24}
+                              color={takeAgainColor}
+                            />
+                            <Text
+                              style={[
+                                styles.takeAgain,
+                                { color: takeAgainColor },
+                              ]}
+                            >
+                              {"  "}Would Take Again:{" "}
+                              {professor.wouldTakeAgainPercent}%
+                            </Text>
+                          </>
+                        );
+                      })()}
+                    </View>
+
+                    {/* Number of Ratings */}
+                    <View style={styles.statContainer}>
+                      <MaterialIcons
+                        name="how-to-vote"
+                        size={24}
+                        color="#555" // or choose a color consistent with your design
+                      />
+                      <Text style={styles.numRatings}>
+                        {"  "}Number of Ratings: {professor.numRatings}
+                      </Text>
+                    </View>
+                  </>
+                )}
               </View>
             </View>
 
             {/* New Comments Card */}
             <View style={styles.commentsCard}>
-              <Text style={styles.commentTitle}>💬 Summarized Comments:</Text>
+              <Text style={styles.commentTitle}>
+                <MaterialIcons
+                  name="rate-review"
+                  size={20}
+                  color={COLORS.ucsbBlue}
+                />
+                {"  "}
+                Summarized Comments:
+              </Text>
               <Text style={styles.commentContent}>
                 {professor.commentsSummarizedByGPT || "Not enough comments"}
               </Text>
@@ -194,18 +288,19 @@ const CourseDetailScreen = ({ route }) => {
 };
 
 const styles = StyleSheet.create({
-
   container: {
     flex: 1,
     padding: 16,
   },
   courseCode: {
     fontSize: 24,
-    fontWeight: "bold",
+    fontFamily: "Nunito-Bold",
   },
   courseTitle: {
     fontSize: 20,
-    marginVertical: 8,
+    marginVertical: 2,
+    marginBottom: 20,
+    color: "#555",
   },
   courseDescription: {
     fontSize: 16,
@@ -216,7 +311,8 @@ const styles = StyleSheet.create({
   },
   sectionHeader: {
     fontSize: 20,
-    fontWeight: "bold",
+    fontFamily: "Nunito-Bold",
+    textAlign: "center",
     marginBottom: 8,
   },
   professorCard: {
@@ -224,7 +320,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#f0f8ff",
     borderRadius: 8,
     marginBottom: 0,
-    marginTop: 8, 
+    marginTop: 8,
     shadowColor: "#000",
     shadowOpacity: 0.1,
     shadowRadius: 8,
@@ -232,73 +328,84 @@ const styles = StyleSheet.create({
   },
   professorName: {
     fontSize: 20,
-    fontWeight: "bold",
     marginBottom: 8,
+    fontFamily: "Nunito-Bold",
   },
   professorStats: {
     marginTop: 8,
   },
-  rating: {
-    fontSize: 18,
+  statContainer: {
+    flexDirection: "row",
+    alignItems: "center",
     marginBottom: 4,
+  },
+  rating: {
+    fontSize: 17,
+    marginVertical: 4,
+    fontFamily: "Nunito-Bold",
   },
   difficulty: {
-    fontSize: 18,
-    marginBottom: 4,
+    fontSize: 17,
+    marginVertical: 4,
+    fontFamily: "Nunito-Bold",
   },
   takeAgain: {
-    fontSize: 18, 
-    marginBottom: 4,
+    fontSize: 17,
+    marginVertical: 4,
+    fontFamily: "Nunito-Bold",
   },
   numRatings: {
-    fontSize: 18,
+    fontSize: 17,
     color: "#555",
-    marginBottom: 0,
+    marginVertical: 4,
+    fontFamily: "Nunito-Bold",
   },
   commentContainer: {
     marginBottom: 10,
   },
   commentsCard: {
-    marginTop: 16, // Add spacing from the professor card
-    padding: 16, // Padding inside the card
-    backgroundColor: "#f0f8ff", // Light background color for contrast
-    borderRadius: 8, // Rounded corners
-    shadowColor: "#000", // Shadow for iOS
-    shadowOpacity: 0.1, // Shadow opacity for iOS
-    shadowRadius: 8, // Shadow radius for iOS
-    elevation: 4, // Shadow for Android
-    borderWidth: 1, // Optional: Add border
-    borderColor: "#ddd", // Optional: Border color
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: "#f0f8ff",
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 4,
+    borderWidth: 1,
+    borderColor: "#ddd",
     marginBottom: 120,
   },
   commentTitle: {
-    fontSize: 18, // Font size for the title
-    // Bold for the title
-    lineHeight: 28, 
+    fontSize: 18,
+    lineHeight: 28,
+    fontFamily: "Nunito-Bold",
   },
   commentContent: {
-    fontSize: 18, // Font size for the content
-    color: "#555", // Text color
-    textAlign: "justify", // Justifies text to align edges
-    marginLeft: 28, // Indent subsequent lines
+    fontSize: 16,
+    color: "#555",
+    textAlign: "justify",
     lineHeight: 24,
-    maxWidth: 290,
-    
+    marginLeft: 0,
+    maxWidth: "100%",
+    paddingHorizontal: 8,
+    fontFamily: "Nunito-Regular",
   },
   readMoreButton: {
     fontSize: 16,
-    color: "#007bff", // Blue color for the link
-    fontWeight: "bold",
+    color: COLORS.darkBlue,
+    fontFamily: "Nunito-Bold",
     marginTop: -14,
     marginBottom: 8,
   },
   followAllButton: {
-    width: "100%",
+    width: "50%",
     paddingVertical: SPACING.space_8,
     borderRadius: 16,
     alignItems: "center",
     marginTop: 10,
     marginBottom: 10,
+    alignSelf: "center",
   },
   following: {
     backgroundColor: COLORS.lightBlue,
@@ -307,14 +414,26 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.darkBlue,
   },
   followAllButtonText: {
-    fontSize: 18,
-    color: "#fff", // Blue color for "Follow"
-    fontWeight: "500",
-    textShadowColor: "#007BFF", // Shadow color (black)
-    textShadowOffset: { width: 1, height: 1 }, // Shadow offset
-    textShadowRadius: 3, // Shadow blur radius
-    fontFamily:"Nunito-Regular",
+    fontSize: 14,
+    color: "#fff",
+    textShadowColor: "#007BFF",
+    textShadowOffset: { width: 1, height: 1 },
+    textShadowRadius: 3,
+    fontFamily: "Nunito-Bold",
   },
+  divider: {
+    height: 1,
+    backgroundColor: "#ddd", 
+    marginVertical: 20, 
+    alignSelf: "stretch", 
+  },
+  noProfessorText: {  
+    fontSize: 16,
+    color: "#555",
+    textAlign: "center",
+    fontFamily: "Nunito-Regular",
+  },
+  
 });
 
 export default CourseDetailScreen;
