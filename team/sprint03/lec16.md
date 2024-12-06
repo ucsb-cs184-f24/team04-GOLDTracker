@@ -18,13 +18,13 @@
 
 ## **Allen Hu:**  
 #### **I DID**  
-- 
+- Create the UI for RMP data
 
 #### **I WILL DO**  
-- 
+- Improve the UI and do hw4
 
 #### **BLOCKERS**  
-- 
+- N/A
 
 ## **Xinyao Song:**  
 #### **I DID**  
