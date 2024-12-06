@@ -43,7 +43,7 @@
 - modify the fetching following course function, so course has no sections could show successfully in the cart with swipe feature.
 
 #### **I WILL DO**  
-- Adjust details of the customized page and improve UX.
+- Improve UI, implemente more animations
   
 #### **BLOCKERS**  
 - N/A
