@@ -58,7 +58,7 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- Added jest to package list
+- Worked on Jest configuration
 
 #### **I WILL DO**  
 - investigate Jest mocks
