@@ -59,10 +59,10 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Worked on bugs
 
 #### **I WILL DO**  
-- 
+- Corrected bugs
 
 #### **BLOCKERS**  
 -
