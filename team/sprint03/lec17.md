@@ -61,10 +61,10 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Worked on background notifications
 
 #### **I WILL DO**  
-- 
+- Correct various bugs
 
 #### **BLOCKERS**  
 -
