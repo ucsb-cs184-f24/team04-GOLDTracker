@@ -58,13 +58,13 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Added jest to package list
 
 #### **I WILL DO**  
-- 
+- investigate Jest mocks
 
 #### **BLOCKERS**  
--
+- N/A
 
 ## **Simranjit Mann:**  
 #### **I DID**  
