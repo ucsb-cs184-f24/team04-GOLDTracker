@@ -39,8 +39,46 @@
 - Optimized the system for seamless user interactions and data retrieval processes.
 
 ## Daniel:
-#### Role: 
+#### Role:  Backend, Database, Testing, Security
 #### Contribution:
+##### Security:
+- Created a Firebase Cloud Functions hosting project that injects the UCSB API key as a passthrough to prevent decompiling the app for the API key
+- Properly secured the Firebase Realtime Database and Firebase Cloud Functions by ensuring that only authorized users have access to their data, and only signed-in users can make use of the UCSB API
+- Ensured all app requests pass through the Firebase Cloud Functions
+- 
+##### Backend:
+*1. Course Register:*
+- Created a central register for followed courses
+- Set up firebase sync for followed courses
+- Integrated use of AsyncStorage into the app for local storage of saved classes
+-
+*2. Notifications:*
+- Set up a background task on both Android and iPhone to check if courses have available seats while in the user's pass time
+- Set up notifications for each course when there is a seat available
+- Stored previously sent notifications to a notification history
+
+*3. Login Functionality:*
+- Enabled login functionality for android by adding the app's fingerprints to the Firebase console
+
+##### Miscellaneous:
+*4. Follow All:*
+- Enabled functionality of the follow all button by ensuring that it stays in sync with the course register and the buttons on the previous page
+
+*5. Button Sync:*
+- Tracked down errors in the follow buttons on the Home Screen Page
+- Forced them to stay in sync with the course register for the rest of the app
+
+*6. Data Synchronicity:*
+- Ensured pages properly reload when navigated to to ensure that they correctly display the state of the courses
+
+*7. Lecture detection:*
+- Programmed the Search Component and Class components to properly detect labs, classes without sections, and sections so that display correctly and are followable as designed.
+
+*8. Notifications Page:*
+- Filled in the Notifications section of the app to properly display previously sent notifications and allow the user to delete them
+
+*9. Expo CNG Generation:*
+- Ensured the app was configured correctly to allow Expo to continuously generated the native code for both Android and iOS without having to require developer modification to either of the actual native apps.
 
 ## June:
 #### Role: Frontend, Database, UI/UX coordinator, First Retro Leader
