@@ -61,10 +61,10 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Wrote the majority of unit tests
 
 #### **I WILL DO**  
-- 
+- Finish writing unit tests
 
 #### **BLOCKERS**  
 -
