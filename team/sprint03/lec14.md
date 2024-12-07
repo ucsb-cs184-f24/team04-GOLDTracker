@@ -58,10 +58,10 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Removed API requirement in the app 
 
 #### **I WILL DO**  
-- 
+- Write unit tests
 
 #### **BLOCKERS**  
 -
