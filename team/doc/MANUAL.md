@@ -62,4 +62,6 @@ This section includes screenshots of various features to help users understand h
 - **Following Button**  
   <img src="https://github.com/user-attachments/assets/aa8936d4-e2c1-414b-a452-75fc0d953625" width="400"/>
 
+#### 8. Security Considerations
 
+In order to access the Firebase cloud functions, you must be signed into the application. The application will check the firebase authentication token that is provided against the registry to ensure that the api is being used by actual app users and not bad actors. We can also use this to identify users who are abusing the token. This strategy also prevents the users from decompiling the app to get the APK token, as it is not present in the application at all.
