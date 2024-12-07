@@ -63,10 +63,10 @@ make UX better by
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Finished writing unit tests
 
 #### **I WILL DO**  
-- 
+- Work on notifications
 
 #### **BLOCKERS**  
 -
