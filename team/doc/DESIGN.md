@@ -80,3 +80,9 @@ These requirements are designed to address common pain points faced by UCSB stud
 4. **Course Details Flow**  
    * User views detailed course information, including professor ratings.  
    * Makes informed registration decisions.
+  
+## **UI/UX Decisions**
+1. Initially, the application was designed based solely on the classic UCSB theme colors. However, after collecting feedback from our MVP, we realized that the UCSB theme was not as appealing to our target audience. As a result, our team redesigned the app's theme, introducing a new mascot, the "Gaucho Raccoon," to represent the application. This decision not only added vibrancy to the design but also differentiated our app from other academic and curricular apps, fostering a sense of uniqueness and diversity.
+2. Our team devoted significant time to ensuring that the home UI is both user-friendly and visually appealing. Given that our application relies heavily on textual data, it was a challenge to present all the information on a single page without overwhelming users. To address this, we implemented animated views in both the home screen and cart, creating a smoother and more dynamic user experience. This approach made the app feel less rigid and more engaging for users.
+
+
