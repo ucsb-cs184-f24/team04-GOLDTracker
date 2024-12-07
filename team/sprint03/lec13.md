@@ -58,13 +58,13 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Worked on HW4
 
 #### **I WILL DO**  
-- 
+- Remove direct UCSB API calls
 
 #### **BLOCKERS**  
--
+- N/A
 
 ## **Simranjit Mann:**  
 #### **I DID**  
