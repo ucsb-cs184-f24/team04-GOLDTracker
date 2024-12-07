@@ -60,13 +60,13 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Made the Class Register useful for the frontend
 
 #### **I WILL DO**  
-- 
+- Continue working on the firebase cloud functions
 
 #### **BLOCKERS**  
--
+- N/A
 
 ## **Simranjit Mann:**  
 #### **I DID**  
