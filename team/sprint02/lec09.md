@@ -60,13 +60,13 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Looked into background tasks for react apps
 
 #### **I WILL DO**  
-- 
+- Work on making the ClassRegister useful for frontend
 
 #### **BLOCKERS**  
--
+- N/A
 
 ## **Simranjit Mann:**  
 #### **I DID**  
