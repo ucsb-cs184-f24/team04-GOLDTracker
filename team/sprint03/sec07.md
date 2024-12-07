@@ -61,10 +61,10 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Worked on HW 4
 
 #### **I WILL DO**  
-- 
+- Remove UCSB API direct calls
 
 #### **BLOCKERS**  
 -
