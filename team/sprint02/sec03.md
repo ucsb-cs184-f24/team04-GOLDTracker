@@ -58,13 +58,13 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- started HW2 
 
 #### **I WILL DO**  
-- 
+- Work on HW2
 
 #### **BLOCKERS**  
--
+- N/A
 
 ## **Simranjit Mann:**  
 #### **I DID**  
