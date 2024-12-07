@@ -60,10 +60,10 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- looked into changing libraries
 
 #### **I WILL DO**  
-- 
+- work on notifications
 
 #### **BLOCKERS**  
 -
