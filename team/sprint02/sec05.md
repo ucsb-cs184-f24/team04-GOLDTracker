@@ -58,10 +58,11 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Worked on Firebase Cloud Functions
 
 #### **I WILL DO**  
-- 
+- Finish the Firebase cloud functions to make them useful for frontend
+- HW 3
 
 #### **BLOCKERS**  
 -
