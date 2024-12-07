@@ -83,6 +83,29 @@
 ## Simon:
 #### Role: UI/UX Design, Frontend
 #### Contribution:
+*1. Designed and Implemented the Header Bar*
+- Created a reusable header.js component for the app.
+- Incorporated a sleek and functional design for the header bar to ensure it aligns with the overall app theme.
+
+*2. Added Branding Elements to the Header*
+- Integrated the app's logo into the header bar for consistent branding across all pages.
+- Added the app's name next to the logo, ensuring it was styled appropriately for visibility and readability.
+
+*3. Incorporated User Profile Features*
+- Added functionality to display the user's profile photo in the header.
+- Ensured the profile photo dynamically updates based on the logged-in user's data.
+
+*4. Enhanced Navigation in the Header*
+- Modified the header bar to display the names of different pages dynamically, making navigation intuitive for users.
+- Designed the page name display to update seamlessly as users navigate between app sections.
+
+*5. Refined and Optimized the Header Bar*
+- Collaborated with the team to make adjustments to the header design based on user feedback and testing.
+- Improved the layout to maintain a balance between aesthetics and functionality.
+
+*6. Supported Team Members in Header Implementation*
+- Provided guidance on integrating the header bar with other app components.
+- Assisted with troubleshooting and resolving bugs related to the header's responsiveness and functionality.
 
 ## Xinyao
 ### Role:
