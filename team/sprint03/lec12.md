@@ -59,10 +59,10 @@
 
 ## **Daniel Jensen:**  
 #### **I DID**  
-- 
+- Worked on Jest configuration with Xinyao
 
 #### **I WILL DO**  
-- 
+- Work on writing unit tests
 
 #### **BLOCKERS**  
 -
