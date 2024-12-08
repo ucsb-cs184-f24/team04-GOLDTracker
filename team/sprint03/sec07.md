@@ -51,10 +51,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Worked on HW4A 
 
 #### **I WILL DO**  
-- 
+- Complete design document
 
 #### **BLOCKERS**  
 - 
