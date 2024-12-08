@@ -50,10 +50,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Finished Search Dropdown list funcitonality
 
 #### **I WILL DO**  
-- 
+- Cart/Follow bug fix
 
 #### **BLOCKERS**  
 - 
