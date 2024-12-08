@@ -1,6 +1,5 @@
 # team04-GOLDTracker
 <br />
-![6fe51f34c643e30de09781ff2040634c](https://github.com/user-attachments/assets/ebfde149-2328-4ce0-93d9-7cd5e75d75c0)
 
 ### Description: 
 This is a class availability notification app. <br />
