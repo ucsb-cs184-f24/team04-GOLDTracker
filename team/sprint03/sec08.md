@@ -53,10 +53,10 @@ make UX better by
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Worked on Cart and Search Page
 
 #### **I WILL DO**  
-- 
+- Work on Cart and Search Bugs
 
 #### **BLOCKERS**  
 - 
