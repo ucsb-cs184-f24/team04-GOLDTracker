@@ -48,10 +48,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Finished design Document 
 
 #### **I WILL DO**  
-- 
+- Drop down list for search component
 
 #### **BLOCKERS**  
 - 
