@@ -118,25 +118,25 @@
 #### Role: Front end, UI/UX Design 
 #### Contribution:
 
-* 1. Added Search Bar Component and List Department Search * 
+*1. Added Search Bar Component and List Department Search* 
 - Created the search bar component for class or department search via a text field.
 - Created a Dropdown list for a class search done by department.
 
-* 2. Created Cart Page and Class Display * 
+*2. Created Cart Page and Class Display* 
 - Created the initial Cart display page that showed users followed sections fetched from the Firebase database.
 - Added functionality to allow users to refresh the Cart page manually.
 
-* 3. Created the initial Manual and Design Document * 
+*3. Created the initial Manual and Design Document* 
 - Started the Manual Document.
 - Created the Design Document.
 
-* 4. Set up and acquired UCSB academic calendar API * 
+*4. Set up and acquired UCSB academic calendar API* 
 - Acquired the API credentials from UCSB that allows the app to function.
 
-* 5. Helped initialize Firebase Auth * 
+*5. Helped initialize Firebase Auth* 
 - Set up the Firebase Authorization for email/password (Not Google OAuth), this was for the early testing stages of the app.
 
-* 6. Bug Fixing * 
+*6. Bug Fixing* 
 - Fixed various visual and technical bugs related to search and the cart page.
 
 
