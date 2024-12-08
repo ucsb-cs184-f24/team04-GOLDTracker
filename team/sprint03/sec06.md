@@ -48,10 +48,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Worked on Cart page
 
 #### **I WILL DO**  
-- 
+- Fix unfollow button for Cart page 
 
 #### **BLOCKERS**  
 - 
