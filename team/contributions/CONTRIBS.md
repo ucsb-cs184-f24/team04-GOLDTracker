@@ -146,7 +146,7 @@
 - Assisted with troubleshooting and resolving bugs related to the header's responsiveness and functionality.
 
 ## Xinyao
-### Role:
+### Role: UI/UX Design, Frontend, Second Retro Leader
 ### Contributions:
 1. Designed the app logo and assets, including all navigation images, icons, and the selection of new fonts.
 2. Ensured consistency across all style sheets within the app including icons and color themes.
