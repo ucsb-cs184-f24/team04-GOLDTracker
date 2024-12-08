@@ -51,10 +51,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Looked into Cart/Search inconsistencies 
 
 #### **I WILL DO**  
-- 
+- Fix unfollow/follow inconsistency 
 
 #### **BLOCKERS**  
 - 
