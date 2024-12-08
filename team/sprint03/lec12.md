@@ -49,10 +49,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Fixed unfollow button on Cart page 
 
 #### **I WILL DO**  
-- 
+- Create design document
 
 #### **BLOCKERS**  
 - 
