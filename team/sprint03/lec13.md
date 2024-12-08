@@ -48,10 +48,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Worked on HW4
 
 #### **I WILL DO**  
-- 
+- Finish Design Document
 
 #### **BLOCKERS**  
 - 
