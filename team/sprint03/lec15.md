@@ -51,10 +51,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Worked on Drop down list for search component
 
 #### **I WILL DO**  
-- 
+- Made search switch component
 
 #### **BLOCKERS**  
 - 
