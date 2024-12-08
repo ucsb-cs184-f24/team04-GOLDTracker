@@ -49,10 +49,10 @@
 
 ## **Karsten Lansing:**  
 #### **I DID**  
-- 
+- Worked on bugs
 
 #### **I WILL DO**  
-- 
+- Review PRs
 
 #### **BLOCKERS**  
 - 
