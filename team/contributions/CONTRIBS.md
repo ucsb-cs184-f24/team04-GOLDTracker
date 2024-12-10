@@ -1,5 +1,5 @@
 ## Allen:
-#### Role:
+#### Role: Backend, Frontend, Database
 #### Contribution:
 *1. Ideated and Initiated Project Theme*
 - Proposed the project idea, which was selected as the foundation for the app development.
