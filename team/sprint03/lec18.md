@@ -69,10 +69,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Worked on issues with the header blocking certain elements
 
 #### **I WILL DO**  
-- 
+- Photo customization
 
 #### **BLOCKERS**  
 -
