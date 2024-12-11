@@ -62,10 +62,10 @@ blockers: npm packages are giving me a headache
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- Finished Homework 1
+- Testing basic login for app
 
 #### **I WILL DO**  
-- Continue work on the app with React and work specifically on my delegated issues
+- Continue work on the top bar
 
 #### **BLOCKERS**  
 - N/A
