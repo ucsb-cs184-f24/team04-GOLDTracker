@@ -68,10 +68,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Worked on profile photo and name display
 
 #### **I WILL DO**  
-- 
+- Improve header bar look
 
 #### **BLOCKERS**  
 -
