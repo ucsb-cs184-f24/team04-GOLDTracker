@@ -71,10 +71,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Implemented new change on header bar
 
 #### **I WILL DO**  
-- 
+- Photo customization
 
 #### **BLOCKERS**  
 -
