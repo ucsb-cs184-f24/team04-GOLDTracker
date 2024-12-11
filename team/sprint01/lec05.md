@@ -49,16 +49,24 @@
 - N/A
 
 ## **Karsten Lansing:**  
+#### **I DID**  
+- Got started creating ios auth with firebase through google
 
-I did: got started creating ios auth with firebase through google
-I will: complete ios auth login process
-Blockers: Most resources expect you to be in xcode making it very hard to figure out what to do next
+#### **I WILL DO**  
+- Complete ios auth login process
+
+#### **BLOCKERS** 
+- Most resources expect you to be in xcode making it very hard to figure out what to do next
 
 ## **Daniel Jensen:**  
+#### **I DID**  
+- Added a background class register to add/remove classes students are following
+  
+#### **I WILL DO**  
+- Add a background task register to check whether or not classes are open
 
-I did: added a background class register to add/remove classes students are following:
-I will: add a background task register to check whether or not classes are open
-blockers: npm packages are giving me a headache
+#### **BLOCKERS**  
+- Npm packages are giving me a headache
 
 ## **Simranjit Mann:**  
 #### **I DID**  
