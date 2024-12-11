@@ -68,10 +68,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- HW4
 
 #### **I WILL DO**  
-- 
+- Photo customization
 
 #### **BLOCKERS**  
 -
