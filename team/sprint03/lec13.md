@@ -68,10 +68,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Fixed header bar with Zhen
 
 #### **I WILL DO**  
-- 
+- HW4
 
 #### **BLOCKERS**  
 -
