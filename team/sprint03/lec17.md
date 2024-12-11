@@ -71,10 +71,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Testing of search components for various pull requests
 
 #### **I WILL DO**  
-- 
+- Photo customization
 
 #### **BLOCKERS**  
 -
