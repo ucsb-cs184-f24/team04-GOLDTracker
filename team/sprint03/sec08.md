@@ -73,10 +73,10 @@ make UX better by
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Finished photo and name display and better look of the header bar
 
 #### **I WILL DO**  
-- 
+- Profile photo editing (allowing user to pick their UCSB account photo)
 
 #### **BLOCKERS**  
 -
