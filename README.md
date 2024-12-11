@@ -17,6 +17,16 @@ This is a class availability notification app. <br />
 ### Which tech stack(s) your group plans to evaluate/use? 
 We are planning to use React Native with Expo Go
 
+### Used Libraries
+- react-native-navigation
+- expo framework and related libraries
+- firebase
+- @react-native-google-signin
+- react-native-community/blur
+- react-native-community/datetimepicker
+- react-native-async-storage
+- dotenv
+
 ### User Roles
 - UCSB students
   1. They could check information of courses they are interested in.
@@ -46,13 +56,16 @@ We are planning to use React Native with Expo Go
    ```bash
    npm install
    ```
-4. Linke assests
+4. Add the `.env` to the directory
+   - Add the `.env` file pinned in the team04 channel on slack into the GOLDTracker directory
+   
+6. Linke assests
    ```
    npx react-native-asset
    ```
 
 
-5. For iOS only:
+7. For iOS only:
    - Navigate to the ios folder:
      ```bash
      cd ios
@@ -66,7 +79,7 @@ We are planning to use React Native with Expo Go
      cd ..
      ```
 
-6. Run the app:
+8. Run the app:
    - iOS:
      ```bash
      npx expo run:ios
@@ -75,4 +88,3 @@ We are planning to use React Native with Expo Go
      ```bash
      npx expo run:android
      ```
-### Additional Note: You have to set up your own firebase and create the client ID inside .env file to have information saved in the backend. 
