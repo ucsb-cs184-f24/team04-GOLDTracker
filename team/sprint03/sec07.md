@@ -71,10 +71,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Finished HW part A
 
 #### **I WILL DO**  
-- 
+- The rest of HW4
 
 #### **BLOCKERS**  
 -
