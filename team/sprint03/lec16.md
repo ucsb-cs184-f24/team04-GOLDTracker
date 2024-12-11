@@ -70,10 +70,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Finished header bar look for HW4
 
 #### **I WILL DO**  
-- 
+- Editing profile photo
 
 #### **BLOCKERS**  
 -
