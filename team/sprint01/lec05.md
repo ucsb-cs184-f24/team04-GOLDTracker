@@ -61,3 +61,11 @@ I will: add a background task register to check whether or not classes are open
 blockers: npm packages are giving me a headache
 
 ## **Simranjit Mann:**  
+#### **I DID**  
+- Finished Homework 1
+
+#### **I WILL DO**  
+- Continue work on the app with React and work specifically on my delegated issues
+
+#### **BLOCKERS**  
+- N/A
