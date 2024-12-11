@@ -69,10 +69,10 @@
 
 ## **Simranjit Mann:**  
 #### **I DID**  
-- 
+- Fixed issue with profile photo not showing up
 
 #### **I WILL DO**  
-- 
+- Add Name
 
 #### **BLOCKERS**  
 -
